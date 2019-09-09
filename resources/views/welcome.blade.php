@@ -26,20 +26,7 @@
 </head>
 
 <body id="page-top" class="landing-page no-skin-config">
-    <div class="flex-center position-ref full-height">
-        @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-            <a href="{{ url('/home') }}">Home</a>
-            @else
-            <a href="{{ route('login') }}">Login</a>
-
-            @if (Route::has('register'))
-            <a href="{{ route('register') }}">Register</a>
-            @endif
-            @endauth
-        </div>
-        @endif
+    
         <div class="navbar-wrapper">
             <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
                 <div class="container">
@@ -53,14 +40,18 @@
                         <a class="navbar-brand" href="index.html">WEBAPPLAYERS</a>
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
+                        @if (Route::has('login'))
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a class="page-scroll" href="#page-top">Home</a></li>
-                            <li><a class="page-scroll" href="#features">Features</a></li>
-                            <li><a class="page-scroll" href="#team">Team</a></li>
-                            <li><a class="page-scroll" href="#testimonials">Testimonials</a></li>
-                            <li><a class="page-scroll" href="#pricing">Pricing</a></li>
-                            <li><a class="page-scroll" href="#contact">Contact</a></li>
+                            @auth
+                            <li><a class="page-scroll" href="{{ url('/home') }}">Home</a></li>
+                            @else
+                            <li><a class="page-scroll" href="{{ route('login') }}">Login</a></li>
+                            @if (Route::has('register'))
+                            <li><a class="page-scroll" href="{{ route('register') }}">Register</a></li>
+                            @endif
+                            @endauth
                         </ul>
+                        @endif
                     </div>
                 </div>
             </nav>
@@ -85,7 +76,7 @@
                             </p>
                         </div>
                         <div class="carousel-image wow zoomIn">
-                            <img src="img/landing/laptop.png" alt="laptop" />
+                            <img src="{{ asset('/theme/img/landing/laptop.png') }}" alt="laptop" />
                         </div>
                     </div>
                     <!-- Set background for slide in css -->
