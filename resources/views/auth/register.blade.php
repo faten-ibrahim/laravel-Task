@@ -90,12 +90,11 @@
                                         </div>
                                         <br>
                                         <div class="form-group mb-0">
-                                            <div class="btn btn-sm btn-primary pull-right m-t-n-xs">
-                                                <button type="submit" class="btn btn-primary">
-                                                    {{ __('Register') }}
-                                                </button>
 
-                                            </div>
+                                            <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px;">
+                                                {{ __('Register') }}
+                                            </button>
+
                                         </div>
                                     </form>
                                 </div>
