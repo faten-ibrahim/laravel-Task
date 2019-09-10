@@ -19,7 +19,7 @@
                                         @csrf
                                         <div class="form-group ">
                                             <label>{{ __('E-Mail Address') }}</label>
-                                            <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email or Pnone" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                            <input id="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email or Pnone" value="{{ old('email') }}" required autocomplete="email" autofocus>
                                             <div class="col-md-6">
                                                 @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -41,7 +41,13 @@
                                         </div>
                                         <div>
                                             <!-- ************* -->
-                                           
+                                            {!! htmlFormSnippet() !!}
+                                            <!-- <input type="submit"> -->
+                                            @if ($errors->has('g-recaptcha-response'))
+                                            <span class="help-block">
+                                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                            </span>
+                                            @endif
                                             <!-- ************** -->
                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
                                             <label class="">

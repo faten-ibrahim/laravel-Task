@@ -21,6 +21,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {!! htmlScriptTagJsApi() !!}
+
 </head>
 
 <body style="background-color:#f5f5f5;">
