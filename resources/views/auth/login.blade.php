@@ -43,11 +43,14 @@
 
                                             <!-- ************* -->
                                             @error('recaptcha')
-                                            <span class="help-block">
-                                                {!! htmlFormSnippet() !!}
-
-                                                <strong>{{ $errors->first('recaptcha') }}</strong>
-                                            </span>
+                                            <div class="col-md-12">
+                                                <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                                    <label class="col-md-4 control-label">Captcha</label>
+                                                    <div class="col-md-6 pull-center">
+                                                        {!! htmlFormSnippet() !!}
+                                                    </div>
+                                                </div>
+                                            </div>
                                             @enderror
                                             <!-- ************** -->
                                             <br>

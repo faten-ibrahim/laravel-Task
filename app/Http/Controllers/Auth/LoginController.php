@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\Response;
+
 class LoginController extends Controller
 {
     /*
@@ -48,6 +49,7 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
+            'g-recaptcha-response' => 'sometimes|recaptcha',
         ]);
     }
 
@@ -64,16 +66,14 @@ class LoginController extends Controller
 
     protected function sendLockoutResponse(Request $request)
     {
-        $message=" ";
+        $message = " ";
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
-        
+
         throw ValidationException::withMessages([
             // $this->username() => [Lang::get('auth.throttle', ['seconds' => $seconds])],
             'recaptcha' => $message
         ])->status(Response::HTTP_TOO_MANY_REQUESTS);
     }
-
-
 }
