@@ -43,11 +43,11 @@
                                             <!-- ************* -->
                                             {!! htmlFormSnippet() !!}
                                             <!-- <input type="submit"> -->
-                                            @if ($errors->has('g-recaptcha-response'))
+                                            @error('recaptcha')
                                             <span class="help-block">
                                                 <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
                                             </span>
-                                            @endif
+                                            @enderror
                                             <!-- ************** -->
                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
                                             <label class="">

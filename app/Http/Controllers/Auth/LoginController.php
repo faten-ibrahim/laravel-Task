@@ -78,13 +78,15 @@ class LoginController extends Controller
 
     protected function sendLockoutResponse(Request $request)
     {
+        $message="error login";
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
-
+        
         throw ValidationException::withMessages([
-            $this->username() => [Lang::get('auth.throttle', ['seconds' => $seconds])],
-        ])->status(Response::HTTP_TOO_MANY_REQUESTS)->redirectTo("/re-login");
+            // $this->username() => [Lang::get('auth.throttle', ['seconds' => $seconds])],
+            'recaptcha' => $message
+        ])->status(Response::HTTP_TOO_MANY_REQUESTS);
     }
 
 

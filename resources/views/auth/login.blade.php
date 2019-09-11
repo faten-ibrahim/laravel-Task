@@ -40,8 +40,17 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <!-- ************* -->
-                                           
+                                          
+                                         <!-- ************* -->
+                                         
+                                            <!-- <input type="submit"> -->
+                                            @error('recaptcha')
+                                            <span class="help-block">
+                                            {!! htmlFormSnippet() !!}
+
+                                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                            </span>
+                                            @enderror
                                             <!-- ************** -->
                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
                                             <label class="">
