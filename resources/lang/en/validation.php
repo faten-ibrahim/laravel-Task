@@ -135,6 +135,18 @@ return [
         ],
     ],
 
+    'custom' => [
+        'password' => [
+            'regex' => 'Your password must be more than 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character',
+        ],
+    ],
+
+    'custom' => [
+        'phone' => [
+            'regex' => 'Your phone must be 11 number long, should start with 01 ',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

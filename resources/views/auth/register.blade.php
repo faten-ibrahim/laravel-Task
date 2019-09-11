@@ -18,7 +18,7 @@
                                         <div class="form-group">
                                             <label for="first_name">{{ __('First Name') }}</label>
                                             <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
                                                 @error('first_name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -30,7 +30,7 @@
                                         <div class="form-group">
                                             <label for="last_name">{{ __('Last Name') }}</label>
                                             <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
 
                                                 @error('last_name')
                                                 <span class="invalid-feedback" role="alert">
@@ -43,7 +43,7 @@
                                         <div class="form-group">
                                             <label for="email">{{ __('E-Mail Address') }}</label>
                                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
 
                                                 @error('email')
                                                 <span class="invalid-feedback" role="alert">
@@ -56,7 +56,7 @@
                                         <div class="form-group">
                                             <label for="phone">{{ __('Phone') }}</label>
                                             <input id="phone" type="number" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
 
 
                                                 @error('phone')
@@ -71,7 +71,7 @@
                                             <label for="password">{{ __('Password') }}</label>
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
 
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">
