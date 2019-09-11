@@ -57,7 +57,7 @@ class RegisterController extends Controller
             'first_name' => ['required', 'string', 'max:255', 'min:3'],
             'last_name' => ['required', 'string', 'max:255', 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed', 'regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'regex:/(01)[0-9]{9}/', 'unique:users'],
         ]);
     }
@@ -88,22 +88,22 @@ class RegisterController extends Controller
     //     }
     // }
 
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
+    // public function register(Request $request)
+    // {
+    //     $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+    //     event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+    //     $this->guard()->login($user);
 
-        if ($user->verified == false) {
-            // \Auth::logout();
+    //     if ($user->verified == false) {
+    //         // \Auth::logout();
 
-            $this->redirectTo = '/verified';
-        } else {
-            $this->redirectTo = '/home';
-        }
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectPath());
-    }
+    //         $this->redirectTo = '/verified';
+    //     } else {
+    //         $this->redirectTo = '/home';
+    //     }
+    //     return $this->registered($request, $user)
+    //         ?: redirect($this->redirectPath());
+    // }
 }
