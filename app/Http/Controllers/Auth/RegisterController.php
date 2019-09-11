@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 class RegisterController extends Controller
 {
     /*
@@ -53,7 +54,7 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required','regex:/(01)[0-9]{9}/','unique:users'],
+            'phone' => ['required', 'regex:/(01)[0-9]{9}/', 'unique:users'],
         ]);
     }
 
@@ -73,5 +74,32 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    // public function authenticated(Request $request, $user)
+    // {
+    //     if ($user->verified == false) {
+    //         \Auth::logout();
+    //         return redirect('/verified');
+    //     }
+    // }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($user->verified == false) {
+            // \Auth::logout();
+
+            $this->redirectTo = '/verified';
+        } else {
+            $this->redirectTo = '/home';
+        }
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
     }
 }

@@ -20,7 +20,7 @@
                                         <div class="form-group ">
                                             <label>{{ __('E-Mail Address') }}</label>
                                             <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email or Pnone" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
                                                 @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -31,7 +31,7 @@
                                         <div class="form-group ">
                                             <label for="password">{{ __('Password') }}</label>
                                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12 error">
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -40,18 +40,17 @@
                                             </div>
                                         </div>
                                         <div>
-                                          
-                                         <!-- ************* -->
-                                         
-                                            <!-- <input type="submit"> -->
+
+                                            <!-- ************* -->
                                             @error('recaptcha')
                                             <span class="help-block">
-                                            {!! htmlFormSnippet() !!}
+                                                {!! htmlFormSnippet() !!}
 
-                                                <strong>{{ $errors->first('g-recaptcha-response') }}</strong>
+                                                <strong>{{ $errors->first('recaptcha') }}</strong>
                                             </span>
                                             @enderror
                                             <!-- ************** -->
+                                            <br>
                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
                                             <label class="">
                                                 <div class="form-check">

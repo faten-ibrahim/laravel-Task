@@ -62,23 +62,20 @@ class LoginController extends Controller
         }
     }
 
-    // protected function sendFailedLoginResponse(Request $request)
-    // {
-        // if ($this->maxAttempts > 3) {
-        //     throw ValidationException::withMessages([
-        //         $this->username() => [trans('auth.failed')],
-        //     ])->redirectTo("/re-login");
-        // } else {
-        //     throw ValidationException::withMessages([
-        //         $this->username() => [trans('auth.failed')],
-        //     ]);
-        // }
-       
-    // }
+    public function authenticated(Request $request, $user)
+    {
+        if($user->verified==false) {
+            // \Auth::logout();
+            return redirect('/verified');
+        }else{
+            return redirect('/home');
+        }
+    }
+
 
     protected function sendLockoutResponse(Request $request)
     {
-        $message="error login";
+        $message=" ";
         $seconds = $this->limiter()->availableIn(
             $this->throttleKey($request)
         );
