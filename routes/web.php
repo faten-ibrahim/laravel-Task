@@ -16,8 +16,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/re-login',function () {
-    return view('auth.loginRecapcha');
-});
+Route::get('profile', function () {
+    // Only verified users may enter...
+})->middleware('verified');
