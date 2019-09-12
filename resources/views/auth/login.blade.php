@@ -45,15 +45,23 @@
                                             @error('recaptcha')
                                             <div class="col-md-12">
                                                 <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
-                                                    <label class="col-md-4 control-label">Captcha</label>
-                                                    <div class="col-md-6 pull-center">
+                                                    <label class="col-md-12 control-label">Captcha</label>
+                                                    <div class="col-md-4">
                                                         {!! htmlFormSnippet() !!}
                                                     </div>
+
                                                 </div>
                                             </div>
                                             @enderror
+                                            <div class="col-md-12 error">
+                                                @error('g-recaptcha-response')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
                                             <!-- ************** -->
-                                            <br>
+
                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>
                                             <label class="">
                                                 <div class="form-check">
