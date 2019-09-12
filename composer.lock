@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d7e518eaeb0aae9805ac49e93c1e5ec",
+    "content-hash": "63fc7d602acd425d49d036b90ea96dbf",
     "packages": [
         {
             "name": "biscolab/laravel-recaptcha",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/biscolab/laravel-recaptcha.git",
-                "reference": "c758067368038ae1d706b078930d5c82102bad13"
+                "reference": "3e990f54b712d5c82c004139840f48dd34662cff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/biscolab/laravel-recaptcha/zipball/c758067368038ae1d706b078930d5c82102bad13",
-                "reference": "c758067368038ae1d706b078930d5c82102bad13",
+                "url": "https://api.github.com/repos/biscolab/laravel-recaptcha/zipball/3e990f54b712d5c82c004139840f48dd34662cff",
+                "reference": "3e990f54b712d5c82c004139840f48dd34662cff",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 "recaptcha",
                 "validation"
             ],
-            "time": "2019-09-09T21:37:18+00:00"
+            "time": "2019-09-11T19:01:40+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -533,16 +533,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v6.0.1",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f38711564c642ee88a58bf180010a0c7a7ab062e"
+                "reference": "56789e9dec750e0fbe8e9e6ae90a01a4e6887902"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f38711564c642ee88a58bf180010a0c7a7ab062e",
-                "reference": "f38711564c642ee88a58bf180010a0c7a7ab062e",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/56789e9dec750e0fbe8e9e6ae90a01a4e6887902",
+                "reference": "56789e9dec750e0fbe8e9e6ae90a01a4e6887902",
                 "shasum": ""
             },
             "require": {
@@ -674,7 +674,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2019-09-05T20:31:10+00:00"
+            "time": "2019-09-10T18:46:24+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -1534,6 +1534,74 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "spatie/laravel-permission",
+            "version": "3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-permission.git",
+                "reference": "5bac2326fe73c7da9a3ae07dcf5fb44224e45f6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-permission/zipball/5bac2326fe73c7da9a3ae07dcf5fb44224e45f6f",
+                "reference": "5bac2326fe73c7da9a3ae07dcf5fb44224e45f6f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/auth": "^5.8|^6.0",
+                "illuminate/container": "^5.8|^6.0",
+                "illuminate/contracts": "^5.8|^6.0",
+                "illuminate/database": "^5.8|^6.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.8",
+                "phpunit/phpunit": "^8.0",
+                "predis/predis": "^1.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\Permission\\PermissionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Permission\\": "src"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Permission handling for Laravel 5.8 and up",
+            "homepage": "https://github.com/spatie/laravel-permission",
+            "keywords": [
+                "acl",
+                "laravel",
+                "permission",
+                "permissions",
+                "rbac",
+                "roles",
+                "security",
+                "spatie"
+            ],
+            "time": "2019-09-02T14:57:53+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -2956,16 +3024,16 @@
         },
         {
             "name": "vlucas/phpdotenv",
-            "version": "v3.5.0",
+            "version": "v3.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vlucas/phpdotenv.git",
-                "reference": "95cb0fa6c025f7f0db7fc60f81e9fb231eb2d222"
+                "reference": "1bdf24f065975594f6a117f0f1f6cabf1333b156"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/95cb0fa6c025f7f0db7fc60f81e9fb231eb2d222",
-                "reference": "95cb0fa6c025f7f0db7fc60f81e9fb231eb2d222",
+                "url": "https://api.github.com/repos/vlucas/phpdotenv/zipball/1bdf24f065975594f6a117f0f1f6cabf1333b156",
+                "reference": "1bdf24f065975594f6a117f0f1f6cabf1333b156",
                 "shasum": ""
             },
             "require": {
@@ -2974,12 +3042,12 @@
                 "symfony/polyfill-ctype": "^1.9"
             },
             "require-dev": {
-                "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0"
+                "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.5-dev"
+                    "dev-master": "3.6-dev"
                 }
             },
             "autoload": {
@@ -3009,7 +3077,7 @@
                 "env",
                 "environment"
             ],
-            "time": "2019-08-27T17:00:38+00:00"
+            "time": "2019-09-10T21:37:39+00:00"
         }
     ],
     "packages-dev": [
@@ -3071,16 +3139,16 @@
         },
         {
             "name": "facade/flare-client-php",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/flare-client-php.git",
-                "reference": "a276603dbb7b9b35636d573d5709df5816dd4d2b"
+                "reference": "7128b251b48f24ef64e5cddd7f8d40cc3a06fd3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/a276603dbb7b9b35636d573d5709df5816dd4d2b",
-                "reference": "a276603dbb7b9b35636d573d5709df5816dd4d2b",
+                "url": "https://api.github.com/repos/facade/flare-client-php/zipball/7128b251b48f24ef64e5cddd7f8d40cc3a06fd3e",
+                "reference": "7128b251b48f24ef64e5cddd7f8d40cc3a06fd3e",
                 "shasum": ""
             },
             "require": {
@@ -3121,26 +3189,26 @@
                 "flare",
                 "reporting"
             ],
-            "time": "2019-09-05T20:24:51+00:00"
+            "time": "2019-09-11T14:19:56+00:00"
         },
         {
             "name": "facade/ignition",
-            "version": "1.4.17",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "52cf237a9ec53062e344a53d50428ca2f989035a"
+                "reference": "6d0f5a2ef475bee5851f9919d1b5665368550128"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/52cf237a9ec53062e344a53d50428ca2f989035a",
-                "reference": "52cf237a9ec53062e344a53d50428ca2f989035a",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/6d0f5a2ef475bee5851f9919d1b5665368550128",
+                "reference": "6d0f5a2ef475bee5851f9919d1b5665368550128",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "facade/flare-client-php": "^1.0",
+                "facade/flare-client-php": "^1.0.4",
                 "facade/ignition-contracts": "^1.0",
                 "filp/whoops": "^2.4",
                 "illuminate/support": "~5.5.0 || ~5.6.0 || ~5.7.0 || ~5.8.0 || ^6.0",
@@ -3189,7 +3257,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2019-09-06T09:15:50+00:00"
+            "time": "2019-09-12T09:25:07+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -3347,77 +3415,6 @@
             "time": "2018-07-12T10:23:15+00:00"
         },
         {
-            "name": "guzzlehttp/psr7",
-            "version": "1.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/psr7.git",
-                "reference": "239400de7a173fe9901b9ac7c06497751f00727a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/239400de7a173fe9901b9ac7c06497751f00727a",
-                "reference": "239400de7a173fe9901b9ac7c06497751f00727a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0",
-                "psr/http-message": "~1.0",
-                "ralouphie/getallheaders": "^2.0.5 || ^3.0.0"
-            },
-            "provide": {
-                "psr/http-message-implementation": "1.0"
-            },
-            "require-dev": {
-                "ext-zlib": "*",
-                "phpunit/phpunit": "~4.8.36 || ^5.7.27 || ^6.5.8"
-            },
-            "suggest": {
-                "zendframework/zend-httphandlerrunner": "Emit PSR-7 responses"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.6-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Psr7\\": "src/"
-                },
-                "files": [
-                    "src/functions_include.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Tobias Schultze",
-                    "homepage": "https://github.com/Tobion"
-                }
-            ],
-            "description": "PSR-7 message implementation that also provides common utility methods",
-            "keywords": [
-                "http",
-                "message",
-                "psr-7",
-                "request",
-                "response",
-                "stream",
-                "uri",
-                "url"
-            ],
-            "time": "2019-07-01T23:21:34+00:00"
-        },
-        {
             "name": "hamcrest/hamcrest-php",
             "version": "v2.0.0",
             "source": {
@@ -3464,145 +3461,6 @@
                 "test"
             ],
             "time": "2016-01-20T08:20:44+00:00"
-        },
-        {
-            "name": "intervention/image",
-            "version": "2.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Intervention/image.git",
-                "reference": "39eaef720d082ecc54c64bf54541c55f10db546d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Intervention/image/zipball/39eaef720d082ecc54c64bf54541c55f10db546d",
-                "reference": "39eaef720d082ecc54c64bf54541c55f10db546d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "guzzlehttp/psr7": "~1.1",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "~0.9.2",
-                "phpunit/phpunit": "^4.8 || ^5.7"
-            },
-            "suggest": {
-                "ext-gd": "to use GD library based image processing.",
-                "ext-imagick": "to use Imagick based image processing.",
-                "intervention/imagecache": "Caching extension for the Intervention Image library"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Intervention\\Image\\ImageServiceProvider"
-                    ],
-                    "aliases": {
-                        "Image": "Intervention\\Image\\Facades\\Image"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Intervention\\Image\\": "src/Intervention/Image"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Oliver Vogel",
-                    "email": "oliver@olivervogel.com",
-                    "homepage": "http://olivervogel.com/"
-                }
-            ],
-            "description": "Image handling and manipulation library with support for Laravel integration",
-            "homepage": "http://image.intervention.io/",
-            "keywords": [
-                "gd",
-                "image",
-                "imagick",
-                "laravel",
-                "thumbnail",
-                "watermark"
-            ],
-            "time": "2019-06-24T14:06:31+00:00"
-        },
-        {
-            "name": "mews/captcha",
-            "version": "3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mewebstudio/captcha.git",
-                "reference": "bef0db3663f1fe442ae803fb207dbe2bbfa10890"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mewebstudio/captcha/zipball/bef0db3663f1fe442ae803fb207dbe2bbfa10890",
-                "reference": "bef0db3663f1fe442ae803fb207dbe2bbfa10890",
-                "shasum": ""
-            },
-            "require": {
-                "ext-gd": "*",
-                "illuminate/config": "~5.0|^6.0",
-                "illuminate/filesystem": "~5.0|^6.0",
-                "illuminate/hashing": "~5.0|^6.0",
-                "illuminate/session": "~5.0|^6.0",
-                "illuminate/support": "~5.0|^6.0",
-                "intervention/image": "~2.5",
-                "php": "^7.2"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1.0",
-                "phpunit/phpunit": "^8.0"
-            },
-            "type": "package",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Mews\\Captcha\\CaptchaServiceProvider"
-                    ],
-                    "aliases": {
-                        "Captcha": "Mews\\Captcha\\Facades\\Captcha"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Mews\\Captcha\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Muharrem ERİN",
-                    "email": "me@mewebstudio.com",
-                    "homepage": "https://github.com/mewebstudio",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel 5 & 6 Captcha Package",
-            "homepage": "https://github.com/mewebstudio/captcha",
-            "keywords": [
-                "captcha",
-                "laravel5 Security",
-                "laravel6 Captcha",
-                "laravel6 Security"
-            ],
-            "time": "2019-09-05T22:33:04+00:00"
         },
         {
             "name": "mockery/mockery",
@@ -4432,96 +4290,6 @@
                 "xunit"
             ],
             "time": "2019-08-11T06:56:55+00:00"
-        },
-        {
-            "name": "psr/http-message",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-message.git",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-message/zipball/f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "reference": "f6561bf28d520154e4b0ec72be95418abe6d9363",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\Http\\Message\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Common interface for HTTP messages",
-            "homepage": "https://github.com/php-fig/http-message",
-            "keywords": [
-                "http",
-                "http-message",
-                "psr",
-                "psr-7",
-                "request",
-                "response"
-            ],
-            "time": "2016-08-06T14:39:51+00:00"
-        },
-        {
-            "name": "ralouphie/getallheaders",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ralouphie/getallheaders.git",
-                "reference": "120b605dfeb996808c31b6477290a714d356e822"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/120b605dfeb996808c31b6477290a714d356e822",
-                "reference": "120b605dfeb996808c31b6477290a714d356e822",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.6"
-            },
-            "require-dev": {
-                "php-coveralls/php-coveralls": "^2.1",
-                "phpunit/phpunit": "^5 || ^6.5"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "src/getallheaders.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
-                }
-            ],
-            "description": "A polyfill for getallheaders.",
-            "time": "2019-03-08T08:55:37+00:00"
         },
         {
             "name": "scrivo/highlight.php",

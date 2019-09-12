@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
 
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -174,7 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
+        
 
     ],
 
