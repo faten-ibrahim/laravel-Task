@@ -55,7 +55,10 @@
                                             @enderror
                                             <div class="col-md-12 error">
                                                 @error('g-recaptcha-response')
-                                                <span class="invalid-feedback" role="alert">
+                                                <div class="col-md-4">
+                                                    {!! htmlFormSnippet() !!}
+                                                </div>
+                                                <span class="invalid-feedback recapcha-response" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror

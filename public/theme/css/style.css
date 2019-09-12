@@ -8566,3 +8566,10 @@ body.md-skin {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
+
+.recapcha-response{
+  position: absolute;
+  width: 80%;
+  top: -30%;
+  right: 10%;
+}
