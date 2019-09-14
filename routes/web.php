@@ -1,4 +1,5 @@
 <?php
+use Carbon\Traits\Rounding;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,15 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => true]);
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('roles', 'Roles\RolesController@index')->name('roles.index');
+// datatables route
+Route::get('/get_roles', 'Roles\RolesController@get_roles')->name('get.roles');
+
+Route::get('roles/create ', 'Roles\RolesController@create')->name('roles.create');
+Route::post('roles', 'Roles\RolesController@store')->name('roles.sotre');
+Route::get('roles/{role}/edit', 'Roles\RolesController@edit')->name('roles.edit');
+Route::put('roles/{role}', 'Roles\RolesController@update')->name('roles.update');
+Route::delete('roles/{role}', 'Roles\RolesController@delete')->name('roles.delete');
