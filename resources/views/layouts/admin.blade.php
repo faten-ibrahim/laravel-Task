@@ -81,7 +81,8 @@
 
                         <li class="nav-body" style="margin-top:20px;">
                             <ul>
-                                <li><a href="{{ route('roles.index') }}" style="color: #fff;font-size: 15px;">Roles</a></li>
+                                <li style="padding-bottom:5px"><a href="{{ route('roles.index') }}" style="color: #fff;font-size: 15px;">Roles</a></li>
+                                <li style="padding-bottom:5px"><a href="{{ route('cities.index') }}" style="color: #fff;font-size: 15px;">Cities</a></li>
                             </ul>
                         </li>
                     </ul>

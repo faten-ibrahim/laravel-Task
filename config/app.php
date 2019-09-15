@@ -168,6 +168,7 @@ return [
 
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        'Webpatser\Countries\CountriesServiceProvider',
         /*
          * Application Service Providers...
          */
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Countries' => 'Webpatser\Countries\CountriesFacade',
 
     ],
 

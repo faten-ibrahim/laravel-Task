@@ -1,10 +1,12 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+
 use App\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Spatie\Permission\Models\Role;
+use App\City;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'first_name' => $faker->name,
         'last_name' => $faker->name,
-        'phone' =>$faker->phoneNumber,
+        'phone' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
@@ -34,6 +36,13 @@ $factory->define(Role::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'description' => $faker->sentence,
-        'guard_name' =>$faker->name
+        'guard_name' => $faker->name
+    ];
+});
+
+$factory->define(City::class, function (Faker $faker) {
+    return [
+        'name' => $faker->city,
+        // 'country_id' => mt_rand(4, 894)
     ];
 });
