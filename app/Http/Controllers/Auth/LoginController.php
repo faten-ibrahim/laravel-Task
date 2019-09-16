@@ -56,11 +56,15 @@ class LoginController extends Controller
 
     protected function credentials(Request $request)
     {
-        if (is_numeric($request->get($this->username()))) {
-            return ['phone' => $request->get($this->username()), 'password' => $request->get('password')];
-        } elseif (filter_var($request->get($this->username()), FILTER_VALIDATE_EMAIL)) {
-            return ['email' => $request->get($this->username()), 'password' => $request->get('password')];
+        $credentials_arr=[];
+        $credentials_arr=['password' => $request->get('password')];
+        if (is_numeric($request->get('email'))) {
+            $credentials_arr += ['phone' =>$request->get('email')];
+        } elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+            $credentials_arr += ['email' =>$request->get('email')];
         }
+
+        return $credentials_arr;
     }
 
 
