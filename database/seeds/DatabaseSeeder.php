@@ -22,5 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Seeded the countries!');
 
         factory(City::class, 20)->create();
+        $this->call(CreateAdminUserSeeder::class);
+        $this->call(PermissionTableSeeder::class);
     }
 }
