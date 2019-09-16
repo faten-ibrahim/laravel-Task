@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Hash;
+use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Registered;
-
 class RegisterController extends Controller
 {
     /*
@@ -50,9 +46,6 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        // $message = [
-        //     'password.regex' => 'Your password must be more than 8 characters long, should contain at-least 1 Uppercase, 1 Lowercase, 1 Numeric and 1 special character'
-        // ];
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255', 'min:3'],
             'last_name' => ['required', 'string', 'max:255', 'min:3'],
@@ -69,41 +62,8 @@ class RegisterController extends Controller
      * @return \App\User
      */
     protected function create(array $data)
-    {
-        // dd($data['last_name']);
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'password' => Hash::make($data['password']),
-        ]);
+    { 
+        return User::create($data);
     }
 
-    // public function authenticated(Request $request, $user)
-    // {
-    //     if ($user->verified == false) {
-    //         \Auth::logout();
-    //         return redirect('/verified');
-    //     }
-    // }
-
-    // public function register(Request $request)
-    // {
-    //     $this->validator($request->all())->validate();
-
-    //     event(new Registered($user = $this->create($request->all())));
-
-    //     $this->guard()->login($user);
-
-    //     if ($user->verified == false) {
-    //         // \Auth::logout();
-
-    //         $this->redirectTo = '/verified';
-    //     } else {
-    //         $this->redirectTo = '/home';
-    //     }
-    //     return $this->registered($request, $user)
-    //         ?: redirect($this->redirectPath());
-    // }
 }
