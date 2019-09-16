@@ -41,6 +41,20 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-group">
+                                            <strong>Permission:</strong>
+                                            <br />
+                                            @foreach($permission as $value)
+                                            <label> 
+                                                <input type="checkbox" name="permission[]" value="{{ $value->id }}"
+                                                @if( in_array($value->id, $rolePermissions) ) checked="1" @endif />
+                                                {{ $value->name }}
+                                            </label>
+                                            <br>
+                                            @endforeach
+                                        </div>
+
+
 
                                         <div class="form-group mb-0">
 

@@ -121,7 +121,7 @@
                 /************************/
                 /************************/
                  -->
-                <div class="wrapper wrapper-content">
+                <div class="wrapper wrapper-content" style="min-height: 600px;">
                     <!-- content  -->
                     <main class="py-4">
                         @yield('content')
