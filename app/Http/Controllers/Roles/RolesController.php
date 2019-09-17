@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Roles;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreRoleRequest;
 use Spatie\Permission\Models\Role;
 use DataTables;
 use Spatie\Permission\Models\Permission;
 use DB;
+
 
 class RolesController extends Controller
 {
@@ -18,7 +20,10 @@ class RolesController extends Controller
 
     public function index()
     {
-        return view('roles.index');
+        $roles = Role::latest()->paginate(10);
+        return view('roles.index',[
+            'roles'=>$roles
+        ]);
     }
 
     public function get_roles()
@@ -34,13 +39,8 @@ class RolesController extends Controller
         return view('roles.create', compact('permission'));
     }
 
-    public function store(Request $request)
+    public function store(StoreRoleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:roles|max:150|min:3',
-            'description' => 'required|max:250|min:10',
-            'permission' => 'required',
-        ]);
         $role = Role::create([
             'name' => $request->name,
             'description' => $request->description
@@ -58,13 +58,8 @@ class RolesController extends Controller
         return view('roles.edit',compact('role','permission','rolePermissions'));
     }
 
-    public function update(Role $role, Request $request)
+    public function update(Role $role, StoreRoleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|max:150|min:3',
-            'description' => 'required|max:250|min:10',
-            'permission' => 'required',
-        ]);
         $role->update([
             'name' => $request->name,
             'description' => $request->description

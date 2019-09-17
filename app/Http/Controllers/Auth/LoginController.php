@@ -33,7 +33,7 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
     protected $maxAttempts = 3;
-    protected $decayMinutes = 0.1; // Default is 1
+    protected $decayMinutes = 0.3; // Default is 1
     /**
      * Create a new controller instance.
      *
@@ -72,8 +72,7 @@ class LoginController extends Controller
     {
         
         $value = $this->limiter()->attempts($this->throttleKey($request));
-        // dd($value);
-        Log::info(session('attempts'));
+        // Log::info(session('attempts'));
         if ($value >= $this->maxAttempts) {
             session(['attempts' => $value]);
         }

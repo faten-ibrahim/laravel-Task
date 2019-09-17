@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\City;
 use App\Country;
+use App\Http\Requests\StoreCityRequest;
 use DataTables;
 
 class CitiesController extends Controller
@@ -34,12 +35,8 @@ class CitiesController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreCityRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:cities|max:150|min:3',
-            'country_id' => 'required',
-        ]);
         City::create($request->all());
         return redirect()->route('cities.index')->with('status', 'City Created successfully !');
     }
@@ -53,12 +50,8 @@ class CitiesController extends Controller
         ]);
     }
 
-    public function update(City $city, Request $request)
+    public function update(City $city, StoreCityRequest $request)
     {
-        $request->validate([
-            'name' => 'required|unique:cities|max:150|min:3',
-            'country_id' => 'required',
-        ]);
         $city->update($request->all());
         return redirect()->route('cities.index')->with('status', 'City Updated successfully !');
     }

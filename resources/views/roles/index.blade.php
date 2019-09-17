@@ -19,7 +19,6 @@
         </tr>
     </thead>
 </table>
-
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script>
     $('#example').DataTable({
@@ -56,6 +55,7 @@
         'info': true,
         'autoWidth': true,
         'paging': true,
+
     });
 
     //confirm deleting
@@ -68,7 +68,6 @@
         }
     }
 </script>
-
 
 </div>
 
