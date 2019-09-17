@@ -32,13 +32,13 @@ $factory->define(User::class, function (Faker $faker) {
 });
 
 
-$factory->define(Role::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'description' => $faker->sentence,
-        'guard_name' => $faker->name
-    ];
-});
+// $factory->define(Role::class, function (Faker $faker) {
+//     return [
+//         'name' => $faker->name,
+//         'description' => $faker->sentence,
+//         'guard_name' => $faker->name
+//     ];
+// });
 
 $factory->define(City::class, function (Faker $faker) {
     return [
