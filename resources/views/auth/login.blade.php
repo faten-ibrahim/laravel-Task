@@ -41,9 +41,17 @@
                                         </div>
                                         <div>
 
-                                            <!-- ************* -->
-                                            @error('recaptcha')
-                                            <div class="col-md-12">
+
+                                            <!-- ************* -->        
+                                            @if(Session::get('attempts'))
+                                            <div class="col-md-12 error">
+                                                @error('g-recaptcha-response')
+                                                <span class="invalid-feedback recapcha-response" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-12" style="margin-bottom:30px;">
                                                 <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
                                                     <label class="col-md-12 control-label">Captcha</label>
                                                     <div class="col-md-4">
@@ -52,17 +60,10 @@
 
                                                 </div>
                                             </div>
-                                            @enderror
-                                            <div class="col-md-12 error">
-                                                @error('g-recaptcha-response')
-                                                <div class="col-md-4">
-                                                    {!! htmlFormSnippet() !!}
-                                                </div>
-                                                <span class="invalid-feedback recapcha-response" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
+
+                                            @endif
+
+                                            <br>
                                             <!-- ************** -->
 
                                             <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit"><strong>Log in</strong></button>

@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -31,7 +32,7 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/home';
-    protected $maxAttempts = 2;
+    protected $maxAttempts = 3;
     protected $decayMinutes = 0.1; // Default is 1
     /**
      * Create a new controller instance.
@@ -53,31 +54,33 @@ class LoginController extends Controller
         ]);
     }
 
-
     protected function credentials(Request $request)
     {
-        $credentials_arr=[];
-        $credentials_arr=['password' => $request->get('password')];
+        $credentials_arr = [];
+        $credentials_arr = ['password' => $request->get('password')];
         if (is_numeric($request->get('email'))) {
-            $credentials_arr += ['phone' =>$request->get('email')];
+            $credentials_arr += ['phone' => $request->get('email')];
         } elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
-            $credentials_arr += ['email' =>$request->get('email')];
+            $credentials_arr += ['email' => $request->get('email')];
         }
 
         return $credentials_arr;
     }
 
 
-    protected function sendLockoutResponse(Request $request)
+    protected function sendFailedLoginResponse(Request $request)
     {
-        $message = " ";
-        $seconds = $this->limiter()->availableIn(
-            $this->throttleKey($request)
-        );
-
+        
+        $value = $this->limiter()->attempts($this->throttleKey($request));
+        // dd($value);
+        Log::info(session('attempts'));
+        if ($value >= $this->maxAttempts) {
+            session(['attempts' => $value]);
+        }
         throw ValidationException::withMessages([
-            // $this->username() => [Lang::get('auth.throttle', ['seconds' => $seconds])],
-            'recaptcha' => $message
-        ])->status(Response::HTTP_TOO_MANY_REQUESTS);
+            $this->username() => [trans('auth.failed')],
+
+        ]);
     }
+
 }
