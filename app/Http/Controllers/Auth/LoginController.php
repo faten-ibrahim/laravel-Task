@@ -56,21 +56,18 @@ class LoginController extends Controller
 
     protected function credentials(Request $request)
     {
-        $credentials_arr = [];
         $credentials_arr = ['password' => $request->get('password')];
         if (is_numeric($request->get('email'))) {
-            $credentials_arr += ['phone' => $request->get('email')];
-        } elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
-            $credentials_arr += ['email' => $request->get('email')];
+            return array_merge($credentials_arr, ['phone' => $request->get('email')]);
         }
 
-        return $credentials_arr;
+        return array_merge($credentials_arr, ['email' => $request->get('email')]);
     }
 
 
     protected function sendFailedLoginResponse(Request $request)
     {
-        
+
         $value = $this->limiter()->attempts($this->throttleKey($request));
         // Log::info(session('attempts'));
         if ($value >= $this->maxAttempts) {
@@ -81,5 +78,4 @@ class LoginController extends Controller
 
         ]);
     }
-
 }
