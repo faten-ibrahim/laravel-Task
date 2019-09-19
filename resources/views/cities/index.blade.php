@@ -8,7 +8,7 @@
 @endif
 <br>
 
-@if(auth()->user()->can('city-create')
+@if(auth()->user()->can('city-create'))
 <a class="btn btn-info btn-sm" href="cities/create"><i class="fa fa-plus"></i><span>Add New City</span></a><br><br>
 @endif
 <table id="example" class="table table-striped">
@@ -49,7 +49,7 @@
 
                 }
             },
-            @if(auth() - > user() - > can('city-edit') || auth() - > user() - > can('city-delete')) {
+            @if(auth()->user()->can('city-edit') || auth()->user()->can('city-delete')) {
                 data: 'action',
                 name: 'action',
                 orderable: false,

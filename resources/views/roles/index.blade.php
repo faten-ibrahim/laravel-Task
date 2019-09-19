@@ -11,6 +11,7 @@
 
 <a class="btn btn-info btn-sm" href="roles/create"><i class="fa fa-plus"></i><span>Add New Role</span></a><br><br>
 @endif
+
 <table id="example" class="table table-striped">
     <thead>
         <tr>
