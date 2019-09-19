@@ -14,17 +14,35 @@ class CitiesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('permission:city-list');
+        $this->middleware('permission:city-create', ['only' => ['create','store']]);
+        $this->middleware('permission:city-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:city-delete', ['only' => ['destroy']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if($request->ajax()){
+            return $this->get_cities();
+            
+        }
         return view('cities.index');
     }
 
     public function get_cities()
     {
         $cities = City::with('country');
-        return datatables()->of($cities)->make(true);
+        return datatables()->of($cities)
+            ->addIndexColumn()
+
+            ->addColumn('action', function ($row) {
+                $rowId=$row->id;
+                return  view('cities.actions',compact('rowId'));
+            })
+
+            ->rawColumns(['action'])
+            ->make(true);
+        
     }
 
     public function create()

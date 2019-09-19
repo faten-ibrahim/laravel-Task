@@ -5,8 +5,8 @@
 use App\User;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
-use Spatie\Permission\Models\Role;
 use App\City;
+use Spatie\Permission\Models\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,13 +32,13 @@ $factory->define(User::class, function (Faker $faker) {
 });
 
 
-// $factory->define(Role::class, function (Faker $faker) {
-//     return [
-//         'name' => $faker->name,
-//         'description' => $faker->sentence,
-//         'guard_name' => $faker->name
-//     ];
-// });
+$factory->define(Role::class, function (Faker $faker) {
+    return [
+        'name' => $faker->name,
+        'description' => $faker->sentence,
+        'guard_name' => $faker->name
+    ];
+});
 
 $factory->define(City::class, function (Faker $faker) {
     return [

@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
         factory(User::class, 10)->create();
         factory(Role::class, 200)->create();
         //Seed the countries
@@ -22,8 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->command->info('Seeded the countries!');
 
         factory(City::class, 20)->create();
-        $this->call(CreateAdminUserSeeder::class);
-        $this->call(PermissionTableSeeder::class);
-        $this->call(CreateVisitorUserSeeder::class);
+        $this->call(CreateRolesAndPermissionsSeeder::class);
     }
 }
