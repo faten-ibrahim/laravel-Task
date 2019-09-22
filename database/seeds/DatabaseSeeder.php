@@ -22,5 +22,6 @@ class DatabaseSeeder extends Seeder
 
         factory(City::class, 20)->create();
         $this->call(CreateRolesAndPermissionsSeeder::class);
+        $this->call(JobsTableSeeder::class);
     }
 }

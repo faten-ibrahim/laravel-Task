@@ -25,7 +25,11 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'city-list',
             'city-create',
             'city-edit',
-            'city-delete'
+            'city-delete', 
+            'job-list',
+            'job-create',
+            'job-edit',
+            'job-delete'
          ];
  
  
@@ -62,6 +66,7 @@ class CreateRolesAndPermissionsSeeder extends Seeder
         // $role->syncPermissions($permissions);
         $role2->givePermissionTo('role-list');
         $role2->givePermissionTo('city-list');
+        $role2->givePermissionTo('job-list');
         $user->assignRole([$role2->id]);
     }
 }

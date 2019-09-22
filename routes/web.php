@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('get_roles','Roles\RolesController@get_roles');
 Route::get('get_cities','Cities\CitiesController@get_cities');
+Route::get('get_jobs','JobsController@get_jobs');
 
 Route::get('/', function () {
     return view('welcome');
@@ -52,3 +53,9 @@ Route::post('cities', 'Cities\CitiesController@store')->name('cities.sotre');
 Route::get('cities/{city}/edit', 'Cities\CitiesController@edit')->name('cities.edit');
 Route::put('cities/{city}', 'Cities\CitiesController@update')->name('cities.update');
 Route::delete('cities/{city}', 'Cities\CitiesController@delete')->name('cities.delete');
+
+/*************************
+    Jobs CRUD Operations
+ ***************************/
+Route::resource('jobs', 'JobController',
+                array('except' => 'show'));
