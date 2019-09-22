@@ -7,6 +7,7 @@
 </div>
 @endif
 <br>
+
 @if(auth()->user()->can('role-create'))
 
 <a class="btn btn-info btn-sm" href="roles/create"><i class="fa fa-plus"></i><span>Add New Role</span></a><br><br>

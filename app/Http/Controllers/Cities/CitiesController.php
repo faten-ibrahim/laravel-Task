@@ -32,6 +32,7 @@ class CitiesController extends Controller
     public function get_cities()
     {
         $cities = City::with('country');
+        $cities=$cities->take(10);
         return datatables()->of($cities)
             ->addIndexColumn()
 
@@ -39,7 +40,7 @@ class CitiesController extends Controller
                 $rowId=$row->id;
                 return  view('cities.actions',compact('rowId'));
             })
-
+            ->setTotalRecords($cities->count())
             ->rawColumns(['action'])
             ->make(true);
         

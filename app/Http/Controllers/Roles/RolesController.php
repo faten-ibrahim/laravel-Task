@@ -33,15 +33,20 @@ class RolesController extends Controller
 
     public function get_roles()
     {
+        // $count_total=Role::count();
         $roles = Role::query();
-        return datatables()->of($roles)
-            ->addIndexColumn()
-            ->addColumn('action', function ($row) {
-                $rowId = $row->id;
-                return view('roles.actions', compact('rowId'));
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+        $roles = $roles->take(10);
+        return Datatables::of($roles)
+                ->addColumn('action', function ($row) {
+                    $rowId = $row->id;
+                    return view('roles.actions', compact('rowId'));
+                    })
+                    // ->with([
+                    //         "recordsTotal"    => $count_total,
+                    // ])
+                ->setTotalRecords($roles->count())
+                ->rawColumns(['action'])
+                ->make(TRUE);
     }
 
     public function create()

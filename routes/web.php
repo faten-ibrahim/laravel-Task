@@ -2,6 +2,7 @@
 
 use Carbon\Traits\Rounding;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\DB;
 // DB::listen(function($sql) {
 
 // });
+
+Route::get('get_roles','Roles\RolesController@get_roles');
+Route::get('get_cities','Cities\CitiesController@get_cities');
 
 Route::get('/', function () {
     return view('welcome');
