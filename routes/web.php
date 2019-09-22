@@ -57,5 +57,5 @@ Route::delete('cities/{city}', 'Cities\CitiesController@delete')->name('cities.d
 /*************************
     Jobs CRUD Operations
  ***************************/
-Route::resource('jobs', 'JobController',
+Route::resource('jobs', 'JobsController',
                 array('except' => 'show'));

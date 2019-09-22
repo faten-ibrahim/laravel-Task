@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<h1>Manage Roles</h1>
+<h1>Manage Jobs</h1>
 @if (session('status'))
 <div class="alert alert-success">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('status') }}
@@ -10,7 +10,7 @@
 
 @if(auth()->user()->can('job-create'))
 
-<a class="btn btn-info btn-sm" href="roles/create"><i class="fa fa-plus"></i><span>Add New Role</span></a><br><br>
+<a class="btn btn-info btn-sm" href="{{route('jobs.create')}}"><i class="fa fa-plus"></i><span>Add New Role</span></a><br><br>
 @endif
 
 <table id="example" class="table table-striped">

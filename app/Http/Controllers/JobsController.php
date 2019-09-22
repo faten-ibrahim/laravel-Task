@@ -39,7 +39,8 @@ class JobsController extends Controller
 
             ->addColumn('action', function ($row) {
                 $rowId=$row->id;
-                return  view('jobs.actions',compact('rowId'));
+                $jobName=$row->name;
+                return  view('jobs.actions',compact(['rowId','jobName']));
             })
             ->setTotalRecords($jobs->count())
             ->rawColumns(['action'])
@@ -91,7 +92,8 @@ class JobsController extends Controller
      */
     public function edit($id)
     {
-        return view('jobs.edit');
+        $job=Job::find($id);
+        return view('jobs.edit',compact('job'));
     }
 
     /**
@@ -104,6 +106,10 @@ class JobsController extends Controller
     public function update(Request $request, $id)
     {
         $job=Job::find($id);
+        if($job->name=='reporter')
+        {
+            return redirect()->route('jobs.index')->with('status', 'Job can not be Updated !');
+        }
         $job->update([
             'name' => $request->name,
             'description' => $request->description
@@ -121,7 +127,11 @@ class JobsController extends Controller
     public function destroy($id)
     {
         $job=Job::find($id);
+        if($job->name=='reporter')
+        {
+            return redirect()->route('jobs.index')->with('status', 'Job can not be Deleted !');
+        }
         $job->delete();
-        return redirect()->route('roles.index')->with('status', 'Role Deleted successfully !');
+        return redirect()->route('jobs.index')->with('status', 'Job Deleted successfully !');
     }
 }

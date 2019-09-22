@@ -83,6 +83,7 @@
                             <ul>
                                 <li style="padding-bottom:5px"><a href="{{ route('roles.index') }}" style="color: #fff;font-size: 15px;">Roles</a></li>
                                 <li style="padding-bottom:5px"><a href="{{ route('cities.index') }}" style="color: #fff;font-size: 15px;">Cities</a></li>
+                                <li style="padding-bottom:5px"><a href="{{ route('jobs.index') }}" style="color: #fff;font-size: 15px;">Jobs</a></li>
                             </ul>
                         </li>
                     </ul>

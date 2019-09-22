@@ -13,12 +13,12 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form role="form" method="POST" action="{{route('jobs.update',['role' => $role->id])}}" style=" width:90% ">
+                                    <form role="form" method="POST" action="{{route('jobs.update',['job' => $job->id])}}" style=" width:90% ">
                                         @csrf
                                         @method('PUT')
                                         <div class="form-group">
                                             <label for="name">Name</label>
-                                            <input id="name" type="text" value="{{ $role->name }}" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                            <input id="name" type="text" value="{{ $job->name }}" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                             <div class="col-md-12 error">
                                                 @error('name')
                                                 <span class="invalid-feedback" role="alert">
@@ -31,7 +31,7 @@
 
                                         <div class="form-group">
                                             <label for="description">Description</label>
-                                            <input id="description" type="text" value="{{ $role->description }}" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description">
+                                            <input id="description" type="text" value="{{ $job->description }}" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description">
                                             <div class="col-md-12 error">
                                                 @error('description')
                                                 <span class="invalid-feedback" role="alert">

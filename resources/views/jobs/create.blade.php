@@ -13,7 +13,7 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form role="form" method="POST" action="{{ route('jobs.sotre') }}" style=" width:90% ">
+                                    <form role="form" method="POST" action="{{ route('jobs.store') }}" style=" width:90% ">
                                         @csrf
                                         <div class="form-group">
                                             <label for="name">Name</label>
