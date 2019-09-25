@@ -14,14 +14,11 @@ class CitiesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('permission:city-list');
-        $this->middleware('permission:city-create', ['only' => ['create','store']]);
-        $this->middleware('permission:city-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:city-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', City::class);
         if($request->ajax()){
             return $this->get_cities();
             
@@ -37,8 +34,7 @@ class CitiesController extends Controller
             ->addIndexColumn()
 
             ->addColumn('action', function ($row) {
-                $rowId=$row->id;
-                return  view('cities.actions',compact('rowId'));
+                return  view('cities.actions',compact('row'));
             })
             ->setTotalRecords($cities->count())
             ->rawColumns(['action'])
@@ -48,6 +44,7 @@ class CitiesController extends Controller
 
     public function create()
     {
+        $this->authorize('create', City::class);
         $countries = Country::all();
         return view('cities.create',[
             'countries' => $countries,
@@ -62,6 +59,7 @@ class CitiesController extends Controller
 
     public function edit(City $city)
     {
+        $this->authorize('update', $city);
         $countries = Country::all();
         return view('cities.edit', [
             'city' => $city,
@@ -71,12 +69,14 @@ class CitiesController extends Controller
 
     public function update(City $city, StoreCityRequest $request)
     {
+        $this->authorize('update', $city);
         $city->update($request->all());
         return redirect()->route('cities.index')->with('status', 'City Updated successfully !');
     }
    
     public function destroy(City $city)
     {
+        $this->authorize('delete', $city);
         $city->delete();
         return redirect()->route('cities.index')->with('status', 'City Deleted successfully !');
     }

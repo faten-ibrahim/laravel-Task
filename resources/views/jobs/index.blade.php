@@ -8,10 +8,10 @@
 @endif
 <br>
 
-@if(auth()->user()->can('job-create'))
 
+@can('create',App\City::class) 
 <a class="btn btn-info btn-sm" href="{{route('jobs.create')}}"><i class="fa fa-plus"></i><span>Add New Job</span></a><br><br>
-@endif
+@endcan
 
 <table id="example" class="table table-striped">
     <thead>

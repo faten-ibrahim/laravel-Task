@@ -8,10 +8,10 @@
 @endif
 <br>
 
-@if(auth()->user()->can('role-create'))
 
+@can('create',App\Role::class) 
 <a class="btn btn-info btn-sm" href="roles/create"><i class="fa fa-plus"></i><span>Add New Role</span></a><br><br>
-@endif
+@endcan
 
 <table id="example" class="table table-striped">
     <thead>
