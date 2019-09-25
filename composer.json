@@ -17,6 +17,7 @@
         "spatie/laravel-permission": "^3.0",
         "yajra/laravel-datatables-oracle": "^9.6",
         "webpatser/laravel-countries": "dev-master"
+
     },
     "require-dev": {
         "facade/ignition": "^1.4",

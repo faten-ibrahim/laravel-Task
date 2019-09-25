@@ -43,6 +43,6 @@ $factory->define(Role::class, function (Faker $faker) {
 $factory->define(City::class, function (Faker $faker) {
     return [
         'name' => $faker->city,
-        // 'country_id' => mt_rand(4, 894)
+        'country_id' => 4
     ];
 });

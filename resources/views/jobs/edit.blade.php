@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>Edit Role</h5>
+                            <h5>Edit Job</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="row">

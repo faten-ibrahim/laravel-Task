@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Roles;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -86,7 +86,7 @@ class RolesController extends Controller
     }
 
 
-    public function delete(Role $role)
+    public function destroy(Role $role)
     {
         $role->delete();
         return redirect()->route('roles.index')->with('status', 'Role Deleted successfully !');

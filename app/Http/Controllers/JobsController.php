@@ -11,8 +11,8 @@ class JobsController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('permission:job-list');
-        $this->middleware('permission:job-create', ['only' => ['create','store']]);
-        $this->middleware('permission:job-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:job-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:job-edit', ['only' => ['edit', 'update']]);
         $this->middleware('permission:job-delete', ['only' => ['destroy']]);
     }
 
@@ -23,9 +23,8 @@ class JobsController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             return $this->get_jobs();
-            
         }
         return view('jobs.index');
     }
@@ -33,19 +32,16 @@ class JobsController extends Controller
     public function get_jobs()
     {
         $jobs = Job::query();
-        $jobs=$jobs->take(10);
+        $jobs = $jobs->take(10);
         return datatables()->of($jobs)
             ->addIndexColumn()
 
             ->addColumn('action', function ($row) {
-                $rowId=$row->id;
-                $jobName=$row->name;
-                return  view('jobs.actions',compact(['rowId','jobName']));
+                return  view('jobs.actions', compact('row'));
             })
             ->setTotalRecords($jobs->count())
             ->rawColumns(['action'])
             ->make(true);
-        
     }
 
     /**
@@ -73,16 +69,6 @@ class JobsController extends Controller
         return redirect()->route('jobs.index')->with('status', 'Job Created successfully !');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -90,10 +76,9 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Job $job)
     {
-        $job=Job::find($id);
-        return view('jobs.edit',compact('job'));
+        return view('jobs.edit', compact('job'));
     }
 
     /**
@@ -103,11 +88,9 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Job $job)
     {
-        $job=Job::find($id);
-        if($job->name=='reporter')
-        {
+        if ($job->is_reserved()) {
             return redirect()->route('jobs.index')->with('status', 'Job can not be Updated !');
         }
         $job->update([
@@ -115,7 +98,7 @@ class JobsController extends Controller
             'description' => $request->description
         ]);
 
-        return redirect()->route('jobs.index')->with('status', 'Job Updated successfully !');
+    return redirect()->route('jobs.index')->with('status', 'Job Updated successfully !');
     }
 
     /**
@@ -124,11 +107,9 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Job $job)
     {
-        $job=Job::find($id);
-        if($job->name=='reporter')
-        {
+        if ($job->is_reserved()) {
             return redirect()->route('jobs.index')->with('status', 'Job can not be Deleted !');
         }
         $job->delete();

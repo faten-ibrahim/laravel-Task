@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<h1>Manage Jobs</h1>
+<h1>Manage Staff Members</h1>
 @if (session('status'))
 <div class="alert alert-success">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('status') }}
@@ -8,18 +8,25 @@
 @endif
 <br>
 
-@if(auth()->user()->can('job-create'))
+@if(auth()->user()->can('user-create'))
 
-<a class="btn btn-info btn-sm" href="{{route('jobs.create')}}"><i class="fa fa-plus"></i><span>Add New Job</span></a><br><br>
+<a class="btn btn-info btn-sm" href="{{ route('staff.create') }}"><i class="fa fa-plus"></i><span>Add New User</span></a><br><br>
 @endif
 
 <table id="example" class="table table-striped">
     <thead>
         <tr>
             <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            @if(auth()->user()->can('job-edit') ||auth()->user()->can('job-delete') )
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>gender</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Job</th>
+            <th>Role</th>
+            @if(auth()->user()->can('user-edit') ||auth()->user()->can('user-delete') )
             <th>Actions</th>
             @endif
 
@@ -34,7 +41,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "{{ route('jobs.index') }}",
+            url: "{{ route('staff.index') }}",
             dataType: 'json',
             type: 'get',
         },
@@ -42,12 +49,34 @@
                 data: 'id'
             },
             {
-                data: 'name'
+                data: 'first_name'
             },
             {
-                data: 'description'
+                data: 'last_name'
             },
-            @if(auth()->user()->can('job-edit') ||auth()->user()->can('job-delete') )
+            {
+                data: 'email'
+            },
+            {
+                data: 'phone'
+            },
+            {
+                data: 'gender'
+            },
+            {
+                data: 'city_name'
+            },
+            {
+                data: 'country_name'
+            },
+            {
+                data: 'job_name'
+            },
+            {
+                data: 'role_name'
+            },
+            
+            @if(auth()->user()->can('user-edit') ||auth()->user()->can('user-delete') )
             {
                 data: 'action',
                 name: 'action',

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Cities;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -74,10 +74,11 @@ class CitiesController extends Controller
         $city->update($request->all());
         return redirect()->route('cities.index')->with('status', 'City Updated successfully !');
     }
-
-    public function delete(City $city)
+   
+    public function destroy(City $city)
     {
         $city->delete();
         return redirect()->route('cities.index')->with('status', 'City Deleted successfully !');
     }
 }
+

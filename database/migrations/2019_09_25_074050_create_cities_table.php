@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCitiesTable extends Migration
 {
@@ -14,14 +14,12 @@ class CreateCitiesTable extends Migration
     public function up()
     {
         Schema::create('cities', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name',150);
-            $table->integer('country_id')->unsigned()->nullable();
-            $table->foreign('country_id')
-            ->references('id')
-            ->on('countries')
-            ->onDelete('cascade');
+            $table->Increments('id');
+            $table->string('name', 150);
+            $table->bigInteger('country_id')->unsigned()->nullable();
             $table->timestamps();
+
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
 

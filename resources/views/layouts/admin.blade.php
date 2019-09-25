@@ -19,9 +19,6 @@
     <!-- Scripts
     <script src="{{ asset('js/app.js') }}" defer></script> -->
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
@@ -37,8 +34,7 @@
     <!-- Google Font -->
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link href="/bower_components/admin-lte/dist/css/admin.css" rel="stylesheet">
-
+   
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
 </head>
@@ -84,6 +80,8 @@
                                 <li style="padding-bottom:5px"><a href="{{ route('roles.index') }}" style="color: #fff;font-size: 15px;">Roles</a></li>
                                 <li style="padding-bottom:5px"><a href="{{ route('cities.index') }}" style="color: #fff;font-size: 15px;">Cities</a></li>
                                 <li style="padding-bottom:5px"><a href="{{ route('jobs.index') }}" style="color: #fff;font-size: 15px;">Jobs</a></li>
+                                <li style="padding-bottom:5px"><a href="{{ route('staff.index') }}" style="color: #fff;font-size: 15px;">Staff Members</a></li>
+                                <li style="padding-bottom:5px"><a href="{{ route('visitors.index') }}" style="color: #fff;font-size: 15px;">Visitors</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -121,8 +119,8 @@
                 /***** Start Content ****/
                 /************************/
                 /************************/
-                 -->
-                <div class="wrapper wrapper-content" style="min-height: 600px;">
+                 -->   
+                <div class="wrapper wrapper-content" style="min-height: 653px;">
                     <!-- content  -->
                     <main class="py-4">
                         @yield('content')
