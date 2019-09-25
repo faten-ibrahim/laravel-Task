@@ -12,11 +12,6 @@ use DB;
 
 class RolesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index(Request $request)
     {
         $this->authorize('viewAny', Role::class);
@@ -31,7 +26,7 @@ class RolesController extends Controller
         $roles = Role::query();
         return Datatables::of($roles)
             ->addColumn('action', function ($row) {
-                $rowId=$row->id;
+                $rowId = $row->id;
                 return view('roles.actions', compact('rowId'));
             })
             ->setTotalRecords($roles->count())
