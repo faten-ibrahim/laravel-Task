@@ -8578,3 +8578,7 @@ body.md-skin {
 {
     margin-right: 3px;
 }
+
+.mystyle .form-group{
+  margin-bottom: -20px;
+}

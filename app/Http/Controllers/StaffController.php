@@ -6,11 +6,14 @@ use App\City;
 use App\Country;
 use App\Http\Requests\StoreStaffMemberRequest;
 use App\Job;
+use App\StaffMember;
 use App\User;
 use Illuminate\Http\Request;
 use DB;
 use DataTables;
 use Spatie\Permission\Models\Role;
+use App\Upload;
+use JD\Cloudder\Facades\Cloudder as Cloudder;
 
 class StaffController extends Controller
 {
@@ -37,12 +40,12 @@ class StaffController extends Controller
             ->join('staff_members', 'staff_members.user_id', '=', 'users.id')
             ->Join('roles', 'staff_members.role_id', '=', 'roles.id')
             ->Join('jobs', 'staff_members.job_id', '=', 'jobs.id')
-            ->select('staff_members.user_id', 'roles.name as role_name', 'jobs.name as job_name', 'countries.full_name as country_name', 'cities.name as city_name', 'users.*');
-
+            ->select('staff_members.id as id', 'roles.name as role_name', 'jobs.name as job_name', 'countries.full_name as country_name', 'cities.name as city_name', 'users.first_name', 'users.last_name', 'users.email', 'users.gender', 'users.phone');
+        // dd($staff_members);
         return Datatables::of($staff_members)
             ->addColumn('action', function ($row) {
-                $rowId = $row->id;
-                return view('staff.actions', compact('rowId'));
+                // $rowId = $row->id;
+                return view('staff.actions', compact('row'));
             })
             ->rawColumns(['action'])
             ->make(TRUE);
@@ -68,11 +71,10 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreStaffMemberRequest $request)
+    public function store(Request $request)
     {
-        dd("yytttttttttttttt");
+        $image_url = $this->validate_image($request);
         $user = User::create([
-            'name' => $request->name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone' => $request->phone,
@@ -83,8 +85,11 @@ class StaffController extends Controller
             'password' => '123456',
 
         ]);
-
-        DB::table('staff_members')->create([
+        if ($image_url) {
+            // Save images
+            $this->saveImages($request, $image_url, $user->id);
+        }
+        DB::table('staff_members')->insert([
             'user_id' => $user->id,
             'job_id' => $request->job_id,
             'role_id' => $request->role_id,
@@ -98,13 +103,15 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(StaffMember $staff)
     {
+        // dd($staff);
         $roles = Role::get();
         $jobs = Job::all();
         $cities = City::all();
         $countries = Country::all();
-        return view('staff.edit', compact('roles', 'jobs', 'cities', 'countries','user'));
+        $user = User::find($staff->user_id);
+        return view('staff.edit', compact('roles', 'jobs', 'cities', 'countries', 'user', 'staff'));
     }
 
     /**
@@ -114,10 +121,16 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreStaffMemberRequest $request, User $user)
+    public function update(Request $request, StaffMember $staff)
     {
+
+        $image_url = $this->validate_image($request);
+        $staff->update([
+            'job_id' => $request->job_id,
+            'role_id' => $request->role_id,
+        ]);
+        $user = User::find($staff->user_id);
         $user->update([
-            'name' => $request->name,
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone' => $request->phone,
@@ -127,11 +140,10 @@ class StaffController extends Controller
             'country_id' => $request->country_id,
 
         ]);
-
-        DB::table('staff_members')->update([
-            'job_id' => $request->job_id,
-            'role_id' => $request->role_id,
-        ]);
+        if ($image_url) {
+            // Save images
+            $this->saveImages($request, $image_url, $user->id);
+        }
 
         return redirect()->route('staff.index')->with('status', 'User Updated successfully !');
     }
@@ -142,9 +154,46 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(StaffMember $staff)
     {
-        $user->delete();
+        $staff->delete();
         return redirect()->route('staff.index')->with('status', 'Staff Member deleted successfully !');
+    }
+
+    public function uploadImages($image, $name, $image_name)
+    {
+        Cloudder::upload($image_name);
+        list($width, $height) = getimagesize($image_name); // filesize($image_name);//$image_name->getSize();
+        $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
+        //save to uploads directory
+        $image->move(public_path("uploads"), $name);
+
+        return $image_url;
+    }
+
+    public function saveImages(Request $request, $image_url, $user_id)
+    {
+        $image = new Upload();
+        $image->user_id = $user_id;
+        $image->image_name = $request->file('image_name')->getClientOriginalName();
+        $image->image_url = $image_url;
+        $image->save();
+    }
+
+    public function validate_image($request)
+    {
+        $this->validate($request, [
+            'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
+        ]);
+        if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
+            $image = $request->file('image_name');
+            $name = $request->file('image_name')->getClientOriginalName();
+            $image_name = $request->file('image_name')->getRealPath();
+            $image_url = $this->uploadImages($image, $name, $image_name);
+
+            return $image_url;
+        }
+
+        return 0;
     }
 }

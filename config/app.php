@@ -169,6 +169,7 @@ return [
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         'Webpatser\Countries\CountriesServiceProvider',
+        'JD\Cloudder\CloudderServiceProvider',
 
         /*
          * Application Service Providers...
@@ -233,7 +234,7 @@ return [
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Countries' => 'Webpatser\Countries\CountriesFacade',
-
+        'Cloudder' => 'JD\Cloudder\Facades\Cloudder'
 
     ],
 

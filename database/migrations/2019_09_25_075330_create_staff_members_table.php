@@ -14,6 +14,7 @@ class CreateStaffMembersTable extends Migration
     public function up()
     {
         Schema::create('staff_members', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
                 ->references('id')->on('users')->onDelete('cascade');

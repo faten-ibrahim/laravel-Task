@@ -18,7 +18,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'phone', 'email', 'password',
+        'first_name', 'last_name', 'phone', 'email', 'password','gender','country_id','city_id'
     ];
 
     /**
@@ -42,5 +42,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }
+
+    public function staff_member()
+    {
+        return $this->hasOne(StaffMember::class);
     }
 }

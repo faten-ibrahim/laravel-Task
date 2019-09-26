@@ -12,8 +12,9 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" method="POST" action="{{ route('staff.store') }}" style=" width:90% ">
+                            <form role="form" class="mystyle" enctype="multipart/form-data" method="POST" action="{{ route('staff.store') }}" style=" width:90% ">
                                 @csrf
+
                                 <div class="form-group" style="float:left; max-width:45%; margin-right:10%">
                                     <label for="first_name">{{ __('First Name') }}</label>
                                     <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
@@ -30,7 +31,6 @@
                                     <label for="last_name">{{ __('Last Name') }}</label>
                                     <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
                                     <div class="col-md-12 error">
-
                                         @error('last_name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -140,10 +140,10 @@
                                                 <label for="gender" class="col-md-4 control-label">Gender</label>
 
                                                 <div class="col-md-6">
-                                                    <input id="female" type="radio"  name="gender"  value="Female" {{ (old('sex') == 'female') ? 'checked' : '' }}>Female
-                                                 
-                                                   <input id="male"  type="radio" name="gender" value="Male" {{ (old('sex') == 'male') ? 'checked' : '' }}>Male
-                                
+                                                    <input id="female" type="radio" name="gender" value="Female" {{ (old('sex') == 'female') ? 'checked' : '' }}>Female
+
+                                                    <input id="male" type="radio" name="gender" value="Male" {{ (old('sex') == 'male') ? 'checked' : '' }}>Male
+
                                                     @error('gender')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -152,6 +152,13 @@
                                                 </div>
                                             </div>
 
+                                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                                <input type="file" name="image_name" class="form-control" id="name" value="">
+                                                @if($errors->has('image_name'))
+                                                <span class="help-block">{{ $errors->first('image_name') }}</span>
+                                                @endif
+                                            </div>
+                                            <br>
                                             <br>
                                             <div class="form-group mb-0">
 
