@@ -69,6 +69,7 @@
                                 <div class="form-group">
                                     <label for="role_id">Role</label>
                                     <select class="form-control col-md-4" name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
+                                        <option value="" selected disabled>Select</option>
                                         @foreach($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
                                         @endforeach
@@ -87,6 +88,7 @@
                                     <div class="form-group">
                                         <label for="job_id">Job</label>
                                         <select class="form-control col-md-4" name="job_id" class="form-control @error('job_id') is-invalid @enderror" required>
+                                            <option value="" selected disabled>Select</option>
                                             @foreach($jobs as $job)
                                             <option value="{{$job->id}}">{{$job->name}}</option>
                                             @endforeach
@@ -102,9 +104,10 @@
 
                                         <div class="form-group">
                                             <label for="country_id">Country</label>
-                                            <select class="form-control col-md-4" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
-                                                @foreach($countries as $country)
-                                                <option value="{{$country->id}}">{{$country->full_name}}</option>
+                                            <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
+                                                <option value="" selected disabled>Select</option>
+                                                @foreach($countries as $key => $country)
+                                                <option value="{{$key}}"> {{$country}}</option>
                                                 @endforeach
                                             </select>
 
@@ -118,12 +121,10 @@
 
 
 
+
                                             <div class="form-group">
-                                                <label for="city_id">City</label>
-                                                <select class="form-control col-md-4" name="city_id" class="form-control @error('city_id') is-invalid @enderror" required>
-                                                    @foreach($cities as $city)
-                                                    <option value="{{$city->id}}">{{$city->name}}</option>
-                                                    @endforeach
+                                                <label for="title">Select City:</label>
+                                                <select name="city" id="city" class="form-control" style="width:350px">
                                                 </select>
 
                                                 <div class="col-md-12 error">
@@ -175,6 +176,34 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $('#country').change(function() {
+        var countryID = $(this).val();
+        // alert(countryID);
+        if (countryID) {
+            $.ajax({
+                type: "GET",
+                url: "{{url('get-city-list')}}?country_id=" + countryID,
+                success: function(res) {
+                    if (res) {
+                        $("#city").empty();
+                        $("#city").append('<option>Select</option>');
+                        $.each(res, function(key, value) {
+                            $("#city").append('<option value="' + key + '">' + value + '</option>');
+                        });
+
+                    } else {
+                        $("#city").empty();
+                    }
+                }
+            });
+        } else {
+            $("#city").empty();
+        }
+    });
+</script>
 
 
 @endsection

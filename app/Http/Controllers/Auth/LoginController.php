@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use App\Rules\R_ecapcha;
 
 class LoginController extends Controller
 {
@@ -51,6 +52,7 @@ class LoginController extends Controller
             $this->username() => 'required|string',
             'password' => 'required|string',
             'g-recaptcha-response' => 'sometimes|recaptcha',
+            // 'g-recaptcha-response' => [new R_ecapcha,'recaptcha']
         ]);
     }
 
@@ -69,7 +71,7 @@ class LoginController extends Controller
     {
 
         $value = $this->limiter()->attempts($this->throttleKey($request));
-        // Log::info(session('attempts'));
+        Log::info("hhhhhhhhhhhhhh");
         if ($value >= $this->maxAttempts) {
             session(['attempts' => $value]);
         }

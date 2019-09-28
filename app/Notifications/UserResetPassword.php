@@ -42,7 +42,7 @@ class UserResetPassword extends Notification
     {
         return (new MailMessage)
         ->subject(config('app.name').' '.'Account Recovery')
-        ->greeting('Hi ' .$notifiable->name.',')
+        ->greeting('Hi ' .$notifiable->first_name.',')
         ->line('We received a request to reset your account password.')
         ->action('Click here to reset your password.', url('password/reset', $this->token).'?email='.urlencode($notifiable->email))
         ->line('Thanks,')

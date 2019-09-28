@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
     );
 
     Route::get('get_staff', 'StaffController@get_staff_members');
+    Route::get('get-city-list','StaffController@getCityList');
 
     /*************************
         Visitors CRUD Operations

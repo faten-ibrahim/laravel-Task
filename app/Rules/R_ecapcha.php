@@ -3,6 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class R_ecapcha implements Rule
 {
@@ -25,7 +26,8 @@ class R_ecapcha implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+        return session('attempts') == null;
+        // return session('attempts') < 4;
     }
 
     /**
@@ -35,6 +37,6 @@ class R_ecapcha implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        return 'Maximum login attempts ';
     }
 }

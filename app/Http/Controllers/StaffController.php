@@ -14,9 +14,16 @@ use DataTables;
 use Spatie\Permission\Models\Role;
 use App\Upload;
 use JD\Cloudder\Facades\Cloudder as Cloudder;
+use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class StaffController extends Controller
 {
+    use SendsPasswordResetEmails {
+        sendResetLinkEmail as protected send_resetLink_email;
+    }
+
 
     /**
      * Display a listing of the resource.
@@ -61,7 +68,7 @@ class StaffController extends Controller
         $roles = Role::all();
         $jobs = Job::all();
         $cities = City::all();
-        $countries = Country::all();
+        $countries = Country::pluck("full_name", "id");
         return view('staff.create', compact('roles', 'jobs', 'cities', 'countries'));
     }
 
@@ -74,27 +81,30 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $image_url = $this->validate_image($request);
-        $user = User::create([
+        $staff_user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'phone' => $request->phone,
             'email' => $request->email,
             'gender' => $request->gender,
-            'city_id' => $request->city_id,
+            'city_id' => $request->city,
             'country_id' => $request->country_id,
-            'password' => '123456',
+            'password' => Hash::make('123456'),
 
         ]);
         if ($image_url) {
             // Save images
-            $this->saveImages($request, $image_url, $user->id);
+            $this->saveImages($request, $image_url, $staff_user->id);
         }
         DB::table('staff_members')->insert([
-            'user_id' => $user->id,
+            'user_id' => $staff_user->id,
             'job_id' => $request->job_id,
             'role_id' => $request->role_id,
         ]);
-        return redirect()->route('staff.index')->with('status', 'User Created successfully !');
+
+        $this->send_resetLink_email($request);
+
+        return redirect()->route('staff.index')->with('status', 'Staff Member Created successfully !');
     }
 
     /**
@@ -145,7 +155,7 @@ class StaffController extends Controller
             $this->saveImages($request, $image_url, $user->id);
         }
 
-        return redirect()->route('staff.index')->with('status', 'User Updated successfully !');
+        return redirect()->route('staff.index')->with('status', 'Staff Member Updated successfully !');
     }
 
     /**
@@ -195,5 +205,12 @@ class StaffController extends Controller
         }
 
         return 0;
+    }
+
+    public function getCityList(Request $request)
+    {
+        $cities = City::where("country_id", $request->country_id)
+            ->pluck("name", "id");
+        return response()->json($cities);
     }
 }

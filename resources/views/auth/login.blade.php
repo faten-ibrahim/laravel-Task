@@ -42,7 +42,7 @@
                                         <div>
 
 
-                                            <!-- ************* -->        
+                                            <!-- ************* -->
                                             @if(Session::get('attempts'))
                                             <div class="col-md-12 error">
                                                 @error('g-recaptcha-response')

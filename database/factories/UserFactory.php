@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use App\City;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,7 @@ $factory->define(User::class, function (Faker $faker) {
         'phone' => $faker->phoneNumber,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => Hash::make('12345678') , // password
         'remember_token' => Str::random(10),
     ];
 });
@@ -43,6 +44,6 @@ $factory->define(Role::class, function (Faker $faker) {
 $factory->define(City::class, function (Faker $faker) {
     return [
         'name' => $faker->city,
-        'country_id' => 4
+        'country_id' => mt_rand(1, 5)
     ];
 });

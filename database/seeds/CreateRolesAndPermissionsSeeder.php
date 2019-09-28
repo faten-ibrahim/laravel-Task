@@ -4,6 +4,7 @@ use App\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class CreateRolesAndPermissionsSeeder extends Seeder
 {
@@ -16,7 +17,7 @@ class CreateRolesAndPermissionsSeeder extends Seeder
     {
          // Reset cached roles and permissions
          app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
-       
+
         $permissions = [
             'role-list',
             'role-create',
@@ -25,14 +26,14 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'city-list',
             'city-create',
             'city-edit',
-            'city-delete', 
+            'city-delete',
             'job-list',
             'job-create',
             'job-edit',
             'job-delete'
          ];
- 
- 
+
+
          foreach ($permissions as $permission) {
               Permission::create(['name' => $permission]);
          }
@@ -43,7 +44,7 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'last_name' => 'Hai sdugu',
             'email' => 'admin@gmail.com',
             'phone' =>'01155959747',
-            'password' => '12345678'
+            'password' => Hash::make('12345678')
         ]);
 
         $role = Role::create(['name' => 'Admin','description'=>'any description']);
@@ -56,7 +57,7 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'last_name' => 'ali',
             'email' => 'visitor@gmail.com',
             'phone' => '01155959788',
-            'password' => '12345678'
+            'password' => Hash::make('12345678')
         ]);
 
         $role2 = Role::create(['name' => 'Visitor', 'description' => 'any description']);
