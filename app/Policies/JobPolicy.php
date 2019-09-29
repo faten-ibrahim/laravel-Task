@@ -18,7 +18,7 @@ class JobPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('job-list');
+        return $user->hasAnyPermission(['job-list', 'job-delete', 'job-edit', 'job-create']);
     }
 
     /**
@@ -41,7 +41,7 @@ class JobPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('job-create');
+        return $user->hasAnyPermission(['job-delete', 'job-edit', 'job-create']);
     }
 
     /**
@@ -53,7 +53,7 @@ class JobPolicy
      */
     public function update(User $user, Job $job)
     {
-        return $user->hasPermissionTo('job-edit');
+        return $user->hasAnyPermission(['job-delete', 'job-edit']);
     }
 
     /**
@@ -65,7 +65,7 @@ class JobPolicy
      */
     public function delete(User $user, Job $job)
     {
-        return $user->hasPermissionTo('job-delete');
+        return $user->hasAnyPermission(['job-delete', 'job-edit']);
     }
 
     /**

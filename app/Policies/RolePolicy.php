@@ -18,7 +18,7 @@ class RolePolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('role-list');
+        return $user->hasAnyPermission(['role-list', 'role-delete', 'role-edit', 'role-create']);
     }
 
     /**
@@ -41,7 +41,7 @@ class RolePolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('role-create');
+        return $user->hasAnyPermission(['role-delete', 'role-edit', 'role-create']);
     }
 
     /**
@@ -53,7 +53,7 @@ class RolePolicy
      */
     public function update(User $user, Role $role)
     {
-        return $user->hasPermissionTo('role-edit');
+        return $user->hasAnyPermission(['role-delete', 'role-edit']);
     }
 
     /**
@@ -65,7 +65,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role)
     {
-        return $user->hasPermissionTo('role-delete');
+        return $user->hasAnyPermission(['role-delete', 'role-edit']);
     }
 
     /**

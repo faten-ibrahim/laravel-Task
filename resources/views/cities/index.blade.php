@@ -8,7 +8,7 @@
 @endif
 <br>
 
-@can('create',App\City::class) 
+@can('create',App\City::class)
 <a class="btn btn-info btn-sm" href="cities/create"><i class="fa fa-plus"></i><span>Add New City</span></a><br><br>
 @endcan
 <table id="example" class="table table-striped">
@@ -17,9 +17,9 @@
             <th>Id</th>
             <th>Name</th>
             <th>Country</th>
-            @if(auth()->user()->can('city-edit') ||auth()->user()->can('city-delete') )
+            @can('delete',App\City::class)
             <th>Actions</th>
-            @endif
+            @endcan
 
         </tr>
     </thead>
@@ -49,13 +49,13 @@
 
                 }
             },
-            @if(auth()->user()->can('city-edit') ||auth()->user()->can('city-delete') ) {
+            @can('delete', App\ City::class) {
                 data: 'action',
                 name: 'action',
                 orderable: false,
                 searchable: false
             },
-            @endif
+            @endcan
 
         ],
 

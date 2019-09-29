@@ -18,7 +18,7 @@ class StaffMemberPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissionTo('staff-list');
+        return $user->hasAnyPermission(['staff-list', 'staff-delete', 'staff-edit', 'staff-create']);
     }
 
     /**
@@ -41,7 +41,7 @@ class StaffMemberPolicy
      */
     public function create(User $user)
     {
-        return $user->hasPermissionTo('staff-create');
+        return $user->hasAnyPermission(['staff-create','staff-delete','staff-edit']);
     }
 
     /**
@@ -53,7 +53,7 @@ class StaffMemberPolicy
      */
     public function update(User $user, StaffMember $staff)
     {
-        return $user->hasPermissionTo('staff-edit');
+        return $user->hasAnyPermission(['staff-delete','staff-edit']);
     }
 
     /**
@@ -65,7 +65,7 @@ class StaffMemberPolicy
      */
     public function delete(User $user, StaffMember $staff)
     {
-        return $user->hasPermissionTo('staff-delete');
+        return $user->hasAnyPermission(['staff-delete','staff-edit']);
     }
 
     public function active(User $user, StaffMember $staff){

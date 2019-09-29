@@ -9,7 +9,7 @@
 <br>
 
 
-@can('create',App\Role::class) 
+@can('create',App\Role::class)
 <a class="btn btn-info btn-sm" href="roles/create"><i class="fa fa-plus"></i><span>Add New Role</span></a><br><br>
 @endcan
 
@@ -19,9 +19,9 @@
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
-            @if(auth()->user()->can('role-edit') ||auth()->user()->can('role-delete') )
+            @can('delete',App\Role::class)
             <th>Actions</th>
-            @endif
+            @endcan
 
         </tr>
     </thead>
@@ -47,14 +47,13 @@
             {
                 data: 'description'
             },
-            @if(auth()->user()->can('role-edit') ||auth()->user()->can('role-delete') )
-            {
+            @can('delete', App\Role::class) {
                 data: 'action',
                 name: 'action',
                 orderable: false,
                 searchable: false
             },
-            @endif
+            @endcan
         ],
 
         'lengthChange': true,

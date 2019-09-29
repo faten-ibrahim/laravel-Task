@@ -9,7 +9,7 @@
 <br>
 
 
-@can('create',App\City::class) 
+@can('create',App\Job::class)
 <a class="btn btn-info btn-sm" href="{{route('jobs.create')}}"><i class="fa fa-plus"></i><span>Add New Job</span></a><br><br>
 @endcan
 
@@ -19,9 +19,9 @@
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
-            @if(auth()->user()->can('job-edit') ||auth()->user()->can('job-delete') )
+            @can('delete',App\Job::class)
             <th>Actions</th>
-            @endif
+            @endcan
 
         </tr>
     </thead>
@@ -47,14 +47,13 @@
             {
                 data: 'description'
             },
-            @if(auth()->user()->can('job-edit') ||auth()->user()->can('job-delete') )
-            {
+            @can('delete', App\ Job::class) {
                 data: 'action',
                 name: 'action',
                 orderable: false,
                 searchable: false
             },
-            @endif
+            @endcan
         ],
 
         'lengthChange': true,

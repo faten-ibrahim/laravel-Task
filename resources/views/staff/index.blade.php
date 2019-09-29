@@ -8,7 +8,7 @@
 @endif
 <br>
 
-@can('create',App\StaffMember::class) 
+@can('create',App\StaffMember::class)
 <a class="btn btn-info btn-sm" href="{{ route('staff.create') }}"><i class="fa fa-plus"></i><span>Add Staff Member</span></a><br><br>
 @endcan
 
@@ -25,9 +25,9 @@
             <th>Country</th>
             <th>Job</th>
             <th>Role</th>
-            @if(auth()->user()->can('user-edit') ||auth()->user()->can('user-delete') )
+            @can('delete',App\StaffMember::class)
             <th>Actions</th>
-            @endif
+            @endcan
 
         </tr>
     </thead>
@@ -74,15 +74,14 @@
             {
                 data: 'role_name'
             },
-            
-            @if(auth()->user()->can('user-edit') ||auth()->user()->can('user-delete') )
-            {
+
+            @can('delete', App\StaffMember::class) {
                 data: 'action',
                 name: 'action',
                 orderable: false,
                 searchable: false
             },
-            @endif
+            @endcan
         ],
 
         'lengthChange': true,
