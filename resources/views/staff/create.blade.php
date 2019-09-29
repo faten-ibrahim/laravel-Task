@@ -124,7 +124,7 @@
 
                                             <div class="form-group">
                                                 <label for="title">Select City:</label>
-                                                <select name="city" id="city" class="form-control" style="width:350px">
+                                                <select name="city_id" id="city" class="form-control" style="width:350px">
                                                 </select>
 
                                                 <div class="col-md-12 error">

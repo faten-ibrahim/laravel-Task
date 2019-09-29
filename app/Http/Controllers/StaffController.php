@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\StoreStaffMemberRequest;
+use App\Http\Requests\UpdateStaffMemberRequest;
 use App\Job;
 use App\StaffMember;
 use App\User;
@@ -47,7 +48,7 @@ class StaffController extends Controller
             ->join('staff_members', 'staff_members.user_id', '=', 'users.id')
             ->Join('roles', 'staff_members.role_id', '=', 'roles.id')
             ->Join('jobs', 'staff_members.job_id', '=', 'jobs.id')
-            ->select('staff_members.id as id', 'roles.name as role_name', 'jobs.name as job_name', 'countries.full_name as country_name', 'cities.name as city_name', 'users.first_name', 'users.last_name', 'users.email', 'users.gender', 'users.phone');
+            ->select('staff_members.id as id', 'roles.name as role_name', 'jobs.name as job_name', 'countries.full_name as country_name', 'cities.name as city_name', 'users.first_name', 'users.last_name', 'users.email', 'users.gender', 'users.phone', 'users.is_active');
         // dd($staff_members);
         return Datatables::of($staff_members)
             ->addColumn('action', function ($row) {
@@ -78,7 +79,7 @@ class StaffController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStaffMemberRequest $request)
     {
         $image_url = $this->validate_image($request);
         $staff_user = User::create([
@@ -87,7 +88,7 @@ class StaffController extends Controller
             'phone' => $request->phone,
             'email' => $request->email,
             'gender' => $request->gender,
-            'city_id' => $request->city,
+            'city_id' => $request->city_id,
             'country_id' => $request->country_id,
             'password' => Hash::make('123456'),
 
@@ -131,9 +132,8 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, StaffMember $staff)
+    public function update(UpdateStaffMemberRequest $request, StaffMember $staff)
     {
-
         $image_url = $this->validate_image($request);
         $staff->update([
             'job_id' => $request->job_id,
@@ -192,9 +192,9 @@ class StaffController extends Controller
 
     public function validate_image($request)
     {
-        $this->validate($request, [
-            'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
-        ]);
+        // $this->validate($request, [
+        //     'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
+        // ]);
         if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
             $image = $request->file('image_name');
             $name = $request->file('image_name')->getClientOriginalName();
@@ -212,5 +212,30 @@ class StaffController extends Controller
         $cities = City::where("country_id", $request->country_id)
             ->pluck("name", "id");
         return response()->json($cities);
+    }
+
+    public function ban(StaffMember $staff)
+    {
+        $id = $staff->user_id;
+        if (!empty($id)) {
+            $user = User::find($id);
+            $user->bans()->create([
+                'expired_at' => '+1 month',
+            ]);
+            $user->is_active = 0;
+            $user->save();
+        }
+        return redirect()->route('staff.index')->with('success', 'Staff Member de-activated Successfully..');
+    }
+    public function unban(StaffMember $staff)
+    {
+        $id = $staff->user_id;
+        if (!empty($id)) {
+            $user = User::find($id);
+            $user->unban();
+            $user->is_active = 1;
+            $user->save();
+        }
+        return redirect()->route('staff.index')->with('success', 'Staff Member activated Successfully..');
     }
 }

@@ -51,8 +51,8 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => 'sometimes|recaptcha',
-            // 'g-recaptcha-response' => [new R_ecapcha,'recaptcha']
+            // 'g-recaptcha-response' => 'sometimes|recaptcha',
+            'g-recaptcha-response' => [ new R_ecapcha]
         ]);
     }
 
@@ -71,7 +71,7 @@ class LoginController extends Controller
     {
 
         $value = $this->limiter()->attempts($this->throttleKey($request));
-        Log::info("hhhhhhhhhhhhhh");
+        // Log::info("hhhhhhhhhhhhhh");
         if ($value >= $this->maxAttempts) {
             session(['attempts' => $value]);
         }

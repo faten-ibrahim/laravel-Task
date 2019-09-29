@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         // 'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+        'is-active' => \App\Http\Middleware\ForbidBannedUserCustom::class,
     ];
 
     /**

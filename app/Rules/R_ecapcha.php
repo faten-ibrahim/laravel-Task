@@ -26,7 +26,7 @@ class R_ecapcha implements Rule
      */
     public function passes($attribute, $value)
     {
-        return session('attempts') == null;
+        return session('attempts');
         // return session('attempts') < 4;
     }
 
@@ -37,6 +37,6 @@ class R_ecapcha implements Rule
      */
     public function message()
     {
-        return 'Maximum login attempts ';
+        return 'Hey!!! g-recaptcha-response is wrong!';
     }
 }

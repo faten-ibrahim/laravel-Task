@@ -170,6 +170,7 @@ return [
         Yajra\DataTables\DataTablesServiceProvider::class,
         'Webpatser\Countries\CountriesServiceProvider',
         'JD\Cloudder\CloudderServiceProvider',
+        Cog\Laravel\Ban\Providers\BanServiceProvider::class,
 
         /*
          * Application Service Providers...

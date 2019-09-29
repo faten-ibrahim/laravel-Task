@@ -10,7 +10,7 @@
 
 @if(auth()->user()->can('user-create'))
 
-<a class="btn btn-info btn-sm" href="{{ route('staff.create') }}"><i class="fa fa-plus"></i><span>Add New User</span></a><br><br>
+<a class="btn btn-info btn-sm" href="{{ route('staff.create') }}"><i class="fa fa-plus"></i><span>Add Staff Member</span></a><br><br>
 @endif
 
 <table id="example" class="table table-striped">

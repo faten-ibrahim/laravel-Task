@@ -8563,8 +8563,9 @@ body.md-skin {
 
 .error{
   color: red !important;
-  margin-top: 10px !important;
-  margin-bottom: 10px !important;
+  margin-top: 3px !important;
+  margin-bottom: 13px !important;
+  font-size: x-small;
 }
 
 .recapcha-response{
@@ -8581,4 +8582,8 @@ body.md-skin {
 
 .mystyle .form-group{
   margin-bottom: -20px;
+}
+
+.btn-xs{
+  margin-bottom: 3px;
 }

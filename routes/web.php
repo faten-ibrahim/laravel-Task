@@ -29,58 +29,65 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::group(['middleware' => 'is-active'], function () {
+        Route::get('/home', 'HomeController@index')->name('home');
 
-    // Route::get('roles', 'Roles\RolesController@index')->name('roles.index');
+        // Route::get('roles', 'Roles\RolesController@index')->name('roles.index');
 
-    // Route::get('cities', 'Cities\CitiesController@index')->name('cities.index');
+        // Route::get('cities', 'Cities\CitiesController@index')->name('cities.index');
 
 
-    /***********************
+        /***********************
         Roles CRUD Operations
-     *************************/
-    Route::resource(
-        'roles',
-        'RolesController',
-        array('except' => 'show')
-    );
+         *************************/
+        Route::resource(
+            'roles',
+            'RolesController',
+            array('except' => 'show')
+        );
 
-    /*************************
+        /*************************
         Cities CRUD Operations
-     ***************************/
-    Route::resource(
-        'cities',
-        'CitiesController',
-        array('except' => 'show')
-    );
+         ***************************/
+        Route::resource(
+            'cities',
+            'CitiesController',
+            array('except' => 'show')
+        );
 
-    /*************************
+        /*************************
         Jobs CRUD Operations
-     ***************************/
-    Route::resource(
-        'jobs',
-        'JobsController',
-        array('except' => 'show')
-    );
+         ***************************/
+        Route::resource(
+            'jobs',
+            'JobsController',
+            array('except' => 'show')
+        );
 
-    /*************************
+        /*************************
         Staff Members CRUD Operations
-     ***************************/
-    Route::resource(
-        'staff',
-        'StaffController',
-        array('except' => 'show')
-    );
+         ***************************/
+        Route::resource(
+            'staff',
+            'StaffController',
+            array('except' => 'show')
+        );
 
-    Route::get('get_staff', 'StaffController@get_staff_members');
-    Route::get('get-city-list','StaffController@getCityList');
+        Route::get('get_staff', 'StaffController@get_staff_members');
+        Route::get('get-city-list', 'StaffController@getCityList');
 
-    /*************************
+        Route::get('/staff/{staff}/ban', 'StaffController@ban')
+            ->name('staff.ban');
+        Route::get('/staff/{staff}/unban', 'StaffController@unban')
+            ->name('staff.unban');
+
+        /*************************
         Visitors CRUD Operations
-     ***************************/
-    Route::resource(
-        'visitors',
-        'VisitorsController',
-        array('except' => 'show')
-    );
+         ***************************/
+        Route::resource(
+            'visitors',
+            'VisitorsController',
+            array('except' => 'show')
+        );
+    });
 });
