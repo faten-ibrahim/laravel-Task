@@ -33,7 +33,7 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-
+        $this->authorize('viewAny', StaffMember::class);
         if ($request->ajax()) {
             return $this->get_staff_members();
         }
@@ -66,6 +66,7 @@ class StaffController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', StaffMember::class);
         $roles = Role::all();
         $jobs = Job::all();
         $cities = City::all();
@@ -81,6 +82,7 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
+        $this->authorize('create', StaffMember::class);
         $image_url = $this->validate_image($request);
         $staff_user = User::create([
             'first_name' => $request->first_name,
@@ -117,6 +119,7 @@ class StaffController extends Controller
     public function edit(StaffMember $staff)
     {
         // dd($staff);
+        $this->authorize('update', $staff);
         $roles = Role::get();
         $jobs = Job::all();
         $cities = City::all();
@@ -134,6 +137,7 @@ class StaffController extends Controller
      */
     public function update(UpdateStaffMemberRequest $request, StaffMember $staff)
     {
+        $this->authorize('update', $staff);
         $image_url = $this->validate_image($request);
         $staff->update([
             'job_id' => $request->job_id,
@@ -166,7 +170,9 @@ class StaffController extends Controller
      */
     public function destroy(StaffMember $staff)
     {
-        $staff->delete();
+        $this->authorize('delete', $staff);
+        // $staff->delete();
+        User::find($staff->user_id)->delete();
         return redirect()->route('staff.index')->with('status', 'Staff Member deleted successfully !');
     }
 
@@ -216,6 +222,7 @@ class StaffController extends Controller
 
     public function ban(StaffMember $staff)
     {
+        $this->authorize('active', $staff);
         $id = $staff->user_id;
         if (!empty($id)) {
             $user = User::find($id);
@@ -229,6 +236,7 @@ class StaffController extends Controller
     }
     public function unban(StaffMember $staff)
     {
+        $this->authorize('active', $staff);
         $id = $staff->user_id;
         if (!empty($id)) {
             $user = User::find($id);

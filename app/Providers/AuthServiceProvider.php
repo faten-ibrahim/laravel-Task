@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\City;
 use App\Job;
+use App\Policies\CityPolicy;
 use App\Policies\JobPolicy;
 use App\Policies\RolePolicy;
+use App\Policies\StaffMemberPolicy;
+use App\StaffMember;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Spatie\Permission\Models\Role;
@@ -19,7 +23,9 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
         Role::class => RolePolicy::class,
-        Job::class => JobPolicy::class
+        Job::class => JobPolicy::class,
+        City::class=>CityPolicy::class,
+        StaffMember::class => StaffMemberPolicy::class,
     ];
 
     /**

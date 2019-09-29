@@ -8,10 +8,9 @@
 @endif
 <br>
 
-@if(auth()->user()->can('user-create'))
-
+@can('create',App\StaffMember::class) 
 <a class="btn btn-info btn-sm" href="{{ route('staff.create') }}"><i class="fa fa-plus"></i><span>Add Staff Member</span></a><br><br>
-@endif
+@endcan
 
 <table id="example" class="table table-striped">
     <thead>

@@ -30,7 +30,12 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'job-list',
             'job-create',
             'job-edit',
-            'job-delete'
+            'job-delete',
+            'staff-list',
+            'staff-create',
+            'staff-edit',
+            'staff-delete',
+            'staff-active',
          ];
 
 
