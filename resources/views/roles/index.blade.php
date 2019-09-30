@@ -19,7 +19,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
-            @can('delete',App\Role::class)
+            @canAny(['role-update','role-delete'])
             <th>Actions</th>
             @endcan
 
@@ -47,7 +47,7 @@
             {
                 data: 'description'
             },
-            @can('delete', App\Role::class) {
+            @canAny(['role-update','role-delete']){
                 data: 'action',
                 name: 'action',
                 orderable: false,

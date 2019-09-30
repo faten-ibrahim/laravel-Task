@@ -25,7 +25,7 @@
             <th>Country</th>
             <th>Job</th>
             <th>Role</th>
-            @can('delete',App\StaffMember::class)
+            @canAny(['staff-update','staff-delete'])
             <th>Actions</th>
             @endcan
 
@@ -75,7 +75,7 @@
                 data: 'role_name'
             },
 
-            @can('delete', App\StaffMember::class) {
+            @canAny(['staff-update','staff-delete']){
                 data: 'action',
                 name: 'action',
                 orderable: false,

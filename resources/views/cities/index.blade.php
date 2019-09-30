@@ -17,7 +17,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Country</th>
-            @can('delete',App\City::class)
+            @canAny(['city-update','city-delete'])
             <th>Actions</th>
             @endcan
 
@@ -49,7 +49,7 @@
 
                 }
             },
-            @can('delete', App\ City::class) {
+            @canAny(['city-update','city-delete']){
                 data: 'action',
                 name: 'action',
                 orderable: false,

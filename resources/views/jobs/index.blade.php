@@ -19,7 +19,7 @@
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
-            @can('delete',App\Job::class)
+            @canAny(['job-update','job-delete'])
             <th>Actions</th>
             @endcan
 
@@ -47,7 +47,7 @@
             {
                 data: 'description'
             },
-            @can('delete', App\ Job::class) {
+            @canAny(['job-update','job-delete']){
                 data: 'action',
                 name: 'action',
                 orderable: false,

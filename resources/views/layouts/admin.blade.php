@@ -34,7 +34,7 @@
     <!-- Google Font -->
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-   
+
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
 </head>
@@ -76,11 +76,20 @@
                         </li>
 
                         <li class="nav-body" style="margin-top:20px;">
+
                             <ul>
+                                @can('viewAny',App\Role::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('roles.index') }}" style="color: #fff;font-size: 15px;">Roles</a></li>
+                                @endcan
+                                @can('viewAny',App\City::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('cities.index') }}" style="color: #fff;font-size: 15px;">Cities</a></li>
+                                @endcan
+                                @can('viewAny',App\Job::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('jobs.index') }}" style="color: #fff;font-size: 15px;">Jobs</a></li>
+                                @endcan
+                                @can('viewAny',App\StaffMember::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('staff.index') }}" style="color: #fff;font-size: 15px;">Staff Members</a></li>
+                                @endcan
                                 <li style="padding-bottom:5px"><a href="{{ route('visitors.index') }}" style="color: #fff;font-size: 15px;">Visitors</a></li>
                             </ul>
                         </li>
@@ -119,7 +128,7 @@
                 /***** Start Content ****/
                 /************************/
                 /************************/
-                 -->   
+                 -->
                 <div class="wrapper wrapper-content" style="min-height: 620px;">
                     <!-- content  -->
                     <main class="py-4">

@@ -65,14 +65,28 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'password' => Hash::make('12345678')
         ]);
 
-        $role2 = Role::create(['name' => 'Visitor', 'description' => 'any description']);
+        // $role2 = Role::create(['name' => 'Visitor', 'description' => 'any description']);
 
         // $permissions = Permission::pluck('id', 'id')->all();
 
         // $role->syncPermissions($permissions);
-        $role2->givePermissionTo('role-list');
-        $role2->givePermissionTo('city-list');
-        $role2->givePermissionTo('job-list');
-        $user->assignRole([$role2->id]);
+        // $role2->givePermissionTo('role-list');
+        // $role2->givePermissionTo('city-list');
+        // $role2->givePermissionTo('job-list');
+        // $user->assignRole([$role2->id]);
+
+       
+        $user = User::create([
+            'first_name' => 'kamel',
+            'last_name' => 'ali',
+            'email' => 'kamel@gmail.com',
+            'phone' => '01155959755',
+            'password' => Hash::make('12345678')
+        ]);
+
+        $user->givePermissionTo('role-list');
+        $user->givePermissionTo('city-list');
+        $user->givePermissionTo('job-list');
+        $user->givePermissionTo('staff-list');
     }
 }
