@@ -21,11 +21,12 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class StaffController extends Controller
 {
-    use SendsPasswordResetEmails {
-        sendResetLinkEmail as protected send_resetLink_email;
+    use SendsPasswordResetEmails ;
+
+    public function __construct()
+    {
+        $this->authorizeResource(StaffMember::class);
     }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +34,6 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', StaffMember::class);
         if ($request->ajax()) {
             return $this->get_staff_members();
         }
@@ -66,10 +66,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', StaffMember::class);
         $roles = Role::all();
         $jobs = Job::all();
-        $cities = City::all();
         $countries = Country::pluck("full_name", "id");
         return view('staff.create', compact('roles', 'jobs', 'cities', 'countries'));
     }
@@ -82,7 +80,6 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
-        $this->authorize('create', StaffMember::class);
         $image_url = $this->validate_image($request);
         $staff_user = User::create([
             'first_name' => $request->first_name,
@@ -105,7 +102,7 @@ class StaffController extends Controller
             'role_id' => $request->role_id,
         ]);
 
-        $this->send_resetLink_email($request);
+        $this->sendResetLinkEmail($request);
 
         return redirect()->route('staff.index')->with('status', 'Staff Member Created successfully !');
     }
@@ -119,10 +116,8 @@ class StaffController extends Controller
     public function edit(StaffMember $staff)
     {
         // dd($staff);
-        $this->authorize('update', $staff);
         $roles = Role::get();
         $jobs = Job::all();
-        $cities = City::all();
         $countries = Country::all();
         $user = User::find($staff->user_id);
         return view('staff.edit', compact('roles', 'jobs', 'cities', 'countries', 'user', 'staff'));
@@ -137,7 +132,6 @@ class StaffController extends Controller
      */
     public function update(UpdateStaffMemberRequest $request, StaffMember $staff)
     {
-        $this->authorize('update', $staff);
         $image_url = $this->validate_image($request);
         $staff->update([
             'job_id' => $request->job_id,
@@ -170,7 +164,6 @@ class StaffController extends Controller
      */
     public function destroy(StaffMember $staff)
     {
-        $this->authorize('delete', $staff);
         // $staff->delete();
         User::find($staff->user_id)->delete();
         return redirect()->route('staff.index')->with('status', 'Staff Member deleted successfully !');

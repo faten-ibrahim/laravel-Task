@@ -36,6 +36,11 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'staff-edit',
             'staff-delete',
             'staff-active',
+            'visitor-list',
+            'visitor-create',
+            'visitor-edit',
+            'visitor-delete',
+            'visitor-active',
          ];
 
 

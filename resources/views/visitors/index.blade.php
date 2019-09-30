@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<h1>Manage Staff Members</h1>
+<h1>Manage Visitors</h1>
 @if (session('status'))
 <div class="alert alert-success">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('status') }}
@@ -8,8 +8,8 @@
 @endif
 <br>
 
-@can('create',App\StaffMember::class)
-<a class="btn btn-info btn-sm" href="{{ route('staff.create') }}"><i class="fa fa-plus"></i><span>Add Staff Member</span></a><br><br>
+@can('create',App\Visitor::class)
+<a class="btn btn-info btn-sm" href="{{ route('visitors.create') }}"><i class="fa fa-plus"></i><span>Add Visitor</span></a><br><br>
 @endcan
 
 <table id="example" class="table table-striped">
@@ -23,12 +23,9 @@
             <th>gender</th>
             <th>City</th>
             <th>Country</th>
-            <th>Job</th>
-            <th>Role</th>
-            @canAny(['staff-update','staff-delete','staff-active'])
+            @canAny(['visitor-update','visitor-delete'])
             <th>Actions</th>
             @endcan
-
         </tr>
     </thead>
 </table>
@@ -40,7 +37,7 @@
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: "{{ route('staff.index') }}",
+            url: "{{ route('visitors.index') }}",
             dataType: 'json',
             type: 'get',
         },
@@ -68,14 +65,7 @@
             {
                 data: 'country_name'
             },
-            {
-                data: 'job_name'
-            },
-            {
-                data: 'role_name'
-            },
-
-            @canAny(['staff-update','staff-delete','staff-active']){
+            @canAny(['visitor-update', 'visitor-delete']) {
                 data: 'action',
                 name: 'action',
                 orderable: false,

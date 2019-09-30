@@ -89,5 +89,11 @@ Route::group(['middleware' => ['auth']], function () {
             'VisitorsController',
             array('except' => 'show')
         );
+        Route::get('get_visitors', 'VisitorsController@get_visitors');
+        Route::get('get-city-list', 'VisitorsController@getCityList');
+        Route::get('/visitors/{visitor}/ban', 'VisitorsController@ban')
+            ->name('staff.ban');
+        Route::get('/visitors/{visitor}/unban', 'VisitorsController@unban')
+            ->name('staff.unban');
     });
 });

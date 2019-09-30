@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class JobsController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Job::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +18,6 @@ class JobsController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('viewAny', Job::class);
         if ($request->ajax()) {
             return $this->get_jobs();
         }
@@ -43,7 +46,6 @@ class JobsController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Job::class);
         return view('jobs.create');
     }
 
@@ -55,7 +57,6 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create', Job::class);
         Job::create([
             'name' => $request->name,
             'description' => $request->description
@@ -72,7 +73,6 @@ class JobsController extends Controller
      */
     public function edit(Job $job)
     {
-        $this->authorize('update', $job);
         return view('jobs.edit', compact('job'));
     }
 
@@ -85,7 +85,6 @@ class JobsController extends Controller
      */
     public function update(Request $request, Job $job)
     {
-        $this->authorize('update', $job);
         if ($job->is_reserved()) {
             return redirect()->route('jobs.index')->with('status', 'Job can not be Updated !');
         }
@@ -105,7 +104,6 @@ class JobsController extends Controller
      */
     public function destroy(Job $job)
     {
-        $this->authorize('delete', $job);
         if ($job->is_reserved()) {
             return redirect()->route('jobs.index')->with('status', 'Job can not be Deleted !');
         }
