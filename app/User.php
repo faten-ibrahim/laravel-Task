@@ -8,9 +8,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 use Cog\Contracts\Ban\Bannable as BannableContract;
 use Cog\Laravel\Ban\Traits\Bannable;
-class User extends Authenticatable implements MustVerifyEmail,BannableContract
+
+class User extends Authenticatable implements MustVerifyEmail, BannableContract
 {
-    use Notifiable, HasRoles,Bannable;
+    use Notifiable, HasRoles, Bannable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail,BannableContract
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'phone', 'email', 'password','gender','country_id','city_id'
+        'first_name', 'last_name', 'phone', 'email', 'password', 'gender', 'country_id', 'city_id'
     ];
 
     /**
@@ -39,14 +40,18 @@ class User extends Authenticatable implements MustVerifyEmail,BannableContract
         'email_verified_at' => 'datetime',
     ];
 
-    // public function setPasswordAttribute($value)
-    // {
-    //     $this->attributes['password'] = Hash::make($value);
-    // }
-
     public function staff_member()
     {
         return $this->hasOne(StaffMember::class);
     }
 
+    public function city()
+    {
+        return $this->belongsTo(City::class)->select(array('id', 'name','country_id'));
+    }
+
+    public function image()
+    {
+        return $this->hasOne(Upload::class);
+    }
 }

@@ -6,21 +6,17 @@ use App\City;
 use App\Country;
 use App\Http\Requests\StoreVisitorRequest;
 use App\Http\Requests\UpdateVisitorRequest;
+use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
-use DB;
 use DataTables;
-use Spatie\Permission\Models\Role;
-use App\Upload;
 use App\User;
 use App\Visitor;
-use JD\Cloudder\Facades\Cloudder as Cloudder;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class VisitorsController extends Controller
 {
-    use SendsPasswordResetEmails;
+    use SendsPasswordResetEmails,ImageUploadTrait;
     public function __construct()
     {
         $this->authorizeResource(Visitor::class);
@@ -40,13 +36,10 @@ class VisitorsController extends Controller
 
     public function get_visitors()
     {
-        $visitors = Visitor::where('users.is_visitor', '=', 1)
-            ->Join('cities', 'users.city_id', '=', 'cities.id')
-            ->Join('countries', 'users.country_id', '=', 'countries.id')
-            ->select('countries.full_name as country_name', 'cities.name as city_name', 'users.*');
+        $visitors = Visitor::with(['city', 'city.country'])->where('is_visitor', '=', 1)
+            ->select('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'city_id');
         return Datatables::of($visitors)
             ->addColumn('action', function ($row) {
-                // $rowId = $row->id;
                 return view('visitors.actions', compact('row'));
             })
             ->rawColumns(['action'])
@@ -72,7 +65,7 @@ class VisitorsController extends Controller
      */
     public function store(StoreVisitorRequest $request)
     {
-        $image_url = $this->validate_image($request);
+        $image_url = $this->get_image_url($request);
         $visitor = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -120,7 +113,7 @@ class VisitorsController extends Controller
     public function update(UpdateVisitorRequest $request, Visitor $visitor)
     {
         dd('update');
-        $image_url = $this->validate_image($request);
+        $image_url = $this->get_image_url($request);
         $visitor->update($request->all());
         if ($image_url) {
             // Save images
@@ -141,57 +134,22 @@ class VisitorsController extends Controller
         $visitor->delete();
         return redirect()->route('visitors.index')->with('status', 'Visitor deleted successfully !');
     }
-    public function uploadImages($image, $name, $image_name)
-    {
-        Cloudder::upload($image_name);
-        list($width, $height) = getimagesize($image_name); // filesize($image_name);//$image_name->getSize();
-        $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
-        //save to uploads directory
-        $image->move(public_path("uploads"), $name);
-
-        return $image_url;
-    }
-
-    public function saveImages(Request $request, $image_url, $user_id)
-    {
-        $image = new Upload();
-        $image->user_id = $user_id;
-        $image->image_name = $request->file('image_name')->getClientOriginalName();
-        $image->image_url = $image_url;
-        $image->save();
-    }
-
-    public function validate_image($request)
-    {
-        // $this->validate($request, [
-        //     'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
-        // ]);
-        if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
-            $image = $request->file('image_name');
-            $name = $request->file('image_name')->getClientOriginalName();
-            $image_name = $request->file('image_name')->getRealPath();
-            $image_url = $this->uploadImages($image, $name, $image_name);
-
-            return $image_url;
-        }
-
-        return 0;
-    }
-
+    
     public function ban(Visitor $visitor)
     {
-        $this->authorize('active', $visitor);
-        $visitor->bans()->create();
-        $visitor->is_active = 0;
-        $visitor->save();
+        $visitor->ban();
+        $user = User::find($visitor->id);
+        $user->is_active = false;
+        $user->save();
         return redirect()->route('visitors.index')->with('success', 'Visitor de-activated Successfully..');
     }
     public function unban(Visitor $visitor)
     {
-        $this->authorize('active', $visitor);
+        // dd('un bannnn');
         $visitor->unban();
-        $visitor->is_active = 1;
-        $visitor->save();
+        $user = User::find($visitor->id);
+        $user->is_active = true;
+        $user->save();
         return redirect()->route('visitors.index')->with('success', 'Visitor activated Successfully..');
     }
     public function getCityList(Request $request)

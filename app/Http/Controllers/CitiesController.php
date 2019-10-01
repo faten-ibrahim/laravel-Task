@@ -26,14 +26,12 @@ class CitiesController extends Controller
     public function get_cities()
     {
         $cities = City::with('country');
-        $cities = $cities->take(10);
         return datatables()->of($cities)
             ->addIndexColumn()
 
             ->addColumn('action', function ($row) {
                 return  view('cities.actions', compact('row'));
             })
-            ->setTotalRecords($cities->count())
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -41,9 +39,7 @@ class CitiesController extends Controller
     public function create()
     {
         $countries = Country::all();
-        return view('cities.create', [
-            'countries' => $countries,
-        ]);
+        return view('cities.create', compact('countries'));
     }
 
     public function store(StoreCityRequest $request)
@@ -55,10 +51,7 @@ class CitiesController extends Controller
     public function edit(City $city)
     {
         $countries = Country::all();
-        return view('cities.edit', [
-            'city' => $city,
-            'countries' => $countries,
-        ]);
+        return view('cities.edit',compact('city','countries'));
     }
 
     public function update(City $city, StoreCityRequest $request)

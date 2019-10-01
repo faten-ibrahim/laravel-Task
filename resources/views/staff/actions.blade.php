@@ -4,11 +4,9 @@
 @can('delete',$row)
 <form method="POST" style="display: inline;" action="staff/{{$row->id}}">@csrf {{ method_field('
                    DELETE ')}}<button type="submit" onclick=" confirm('Are you sure you want to delete this staff member\?');" class="bttn btn btn-xs btn-danger">
-        <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i><span>Delete</span></button></form>
-@endcan
+                <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i><span>Delete</span></button></form>
 
-@can('active',$row)
-@if($row->is_active)
+@if(!$row->banned_at)
 <a href="staff/{{$row->id}}/ban" class="bttn btn btn-xs btn-warning " data-id="{{$row->id}}"><i class="fa fa-ban"></i><span>Deactive</span></a>
 @else
 <a href="staff/{{$row->id}}/unban" class="bttn btn btn-xs btn-info" data-id="{{$row->id}}"><i class="fa fa-check"></i><span>Active</span></a>

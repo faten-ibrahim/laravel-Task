@@ -8,5 +8,10 @@ class Visitor extends Model implements BannableContract
 {
     use Bannable;
     protected $table = "users";
+    
+    public function city()
+    {
+        return $this->belongsTo(City::class)->select(array('id', 'name','country_id'));
+    }
 
 }

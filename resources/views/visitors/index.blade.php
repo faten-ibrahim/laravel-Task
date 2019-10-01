@@ -60,10 +60,10 @@
                 data: 'gender'
             },
             {
-                data: 'city_name'
+                data: 'city.name'
             },
             {
-                data: 'country_name'
+                data: 'city.country.full_name'
             },
             @canAny(['visitor-update', 'visitor-delete']) {
                 data: 'action',

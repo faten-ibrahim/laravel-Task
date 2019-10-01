@@ -33,7 +33,6 @@ class RolesController extends Controller
                 $rowId = $row->id;
                 return view('roles.actions', compact('rowId'));
             })
-            ->setTotalRecords($roles->count())
             ->rawColumns(['action'])
             ->make(TRUE);
     }

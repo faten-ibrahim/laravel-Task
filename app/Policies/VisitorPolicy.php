@@ -69,9 +69,9 @@ class VisitorPolicy
     }
 
 
-    public function active(User $user, Visitor $visitor){
-        return $user->hasPermissionTo('visitor-active');
-    }
+    // public function active(User $user, Visitor $visitor){
+    //     return $user->hasPermissionTo('visitor-active');
+    // }
 
 
     /**

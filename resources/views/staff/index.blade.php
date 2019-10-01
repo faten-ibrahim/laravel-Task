@@ -48,31 +48,31 @@
                 data: 'id'
             },
             {
-                data: 'first_name'
+                data: 'user.first_name'
             },
             {
-                data: 'last_name'
+                data: 'user.last_name'
             },
             {
-                data: 'email'
+                data: 'user.email'
             },
             {
-                data: 'phone'
+                data: 'user.phone'
             },
             {
-                data: 'gender'
+                data: 'user.gender'
             },
             {
-                data: 'city_name'
+                data: 'user.city.name'
             },
             {
-                data: 'country_name'
+                data: 'user.city.country.full_name'
             },
             {
-                data: 'job_name'
+                data: 'job.name'
             },
             {
-                data: 'role_name'
+                data: 'role.name'
             },
 
             @canAny(['staff-update','staff-delete','staff-active']){

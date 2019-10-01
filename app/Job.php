@@ -24,4 +24,10 @@ class Job extends Model
         }
         return false;
     }
+
+
+    public function staff()
+    {
+        return $this->hasMany(StaffMember::class);
+    }
 }

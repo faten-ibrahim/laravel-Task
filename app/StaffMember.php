@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 class StaffMember extends Model
 {
@@ -18,6 +19,18 @@ class StaffMember extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select(array('id', 'first_name','last_name','email','gender','phone','city_id'));
     }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class)->select(array('id','name'));
+    }
+
+    public function job()
+    {
+        return $this->belongsTo(Job::class)->select(array('id','name'));
+    }
+
+
 }

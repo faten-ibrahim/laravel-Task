@@ -14,4 +14,9 @@ class Upload extends Model
     protected $fillable = [
         'user_id','image_name','image_url'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

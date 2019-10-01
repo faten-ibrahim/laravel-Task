@@ -27,14 +27,12 @@ class JobsController extends Controller
     public function get_jobs()
     {
         $jobs = Job::query();
-        $jobs = $jobs->take(10);
         return datatables()->of($jobs)
             ->addIndexColumn()
 
             ->addColumn('action', function ($row) {
                 return  view('jobs.actions', compact('row'));
             })
-            ->setTotalRecords($jobs->count())
             ->rawColumns(['action'])
             ->make(true);
     }
@@ -57,10 +55,7 @@ class JobsController extends Controller
      */
     public function store(Request $request)
     {
-        Job::create([
-            'name' => $request->name,
-            'description' => $request->description
-        ]);
+        Job::create($request->all());
         return redirect()->route('jobs.index')->with('status', 'Job Created successfully !');
     }
 
@@ -88,10 +83,7 @@ class JobsController extends Controller
         if ($job->is_reserved()) {
             return redirect()->route('jobs.index')->with('status', 'Job can not be Updated !');
         }
-        $job->update([
-            'name' => $request->name,
-            'description' => $request->description
-        ]);
+        $job->update($request->all());
 
     return redirect()->route('jobs.index')->with('status', 'Job Updated successfully !');
     }

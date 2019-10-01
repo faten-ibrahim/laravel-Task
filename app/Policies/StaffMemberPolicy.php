@@ -68,9 +68,9 @@ class StaffMemberPolicy
         return $user->hasAnyPermission(['staff-delete','staff-edit']);
     }
 
-    public function active(User $user, StaffMember $staff){
-        return $user->hasPermissionTo('staff-active');
-    }
+    // public function active(User $user, StaffMember $staff){
+    //     return $user->hasPermissionTo('staff-active');
+    // }
 
     /**
      * Determine whether the user can restore the staff member.

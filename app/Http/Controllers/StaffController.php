@@ -10,18 +10,15 @@ use App\Job;
 use App\StaffMember;
 use App\User;
 use Illuminate\Http\Request;
-use DB;
 use DataTables;
 use Spatie\Permission\Models\Role;
-use App\Upload;
-use JD\Cloudder\Facades\Cloudder as Cloudder;
 use Illuminate\Support\Facades\Hash;
-
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-
+use App\Traits\ImageUploadTrait;
 class StaffController extends Controller
 {
-    use SendsPasswordResetEmails ;
+    use SendsPasswordResetEmails,ImageUploadTrait;
+    
 
     public function __construct()
     {
@@ -35,24 +32,16 @@ class StaffController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return $this->get_staff_members();
+            return $this->getStaffMembers();
         }
         return view('staff.index');
     }
 
-    public function get_staff_members()
+    public function getStaffMembers()
     {
-
-        $staff_members = User::Join('cities', 'users.city_id', '=', 'cities.id')
-            ->Join('countries', 'users.country_id', '=', 'countries.id')
-            ->join('staff_members', 'staff_members.user_id', '=', 'users.id')
-            ->Join('roles', 'staff_members.role_id', '=', 'roles.id')
-            ->Join('jobs', 'staff_members.job_id', '=', 'jobs.id')
-            ->select('staff_members.id as id', 'roles.name as role_name', 'jobs.name as job_name', 'countries.full_name as country_name', 'cities.name as city_name', 'users.first_name', 'users.last_name', 'users.email', 'users.gender', 'users.phone', 'users.is_active');
-        // dd($staff_members);
-        return Datatables::of($staff_members)
+        $staffMembers = StaffMember::with(['user', 'job', 'role', 'user.city', 'user.city.country']);
+        return Datatables::of($staffMembers)
             ->addColumn('action', function ($row) {
-                // $rowId = $row->id;
                 return view('staff.actions', compact('row'));
             })
             ->rawColumns(['action'])
@@ -66,8 +55,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
-        $jobs = Job::all();
+        $roles = Role::select("name", "id")->get();
+        $jobs = Job::select("name", "id")->get();
         $countries = Country::pluck("full_name", "id");
         return view('staff.create', compact('roles', 'jobs', 'cities', 'countries'));
     }
@@ -80,7 +69,7 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
-        $image_url = $this->validate_image($request);
+        $image_url = $this->get_image_url($request);
         $staff_user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -96,7 +85,8 @@ class StaffController extends Controller
             // Save images
             $this->saveImages($request, $image_url, $staff_user->id);
         }
-        DB::table('staff_members')->insert([
+
+        StaffMember::create([
             'user_id' => $staff_user->id,
             'job_id' => $request->job_id,
             'role_id' => $request->role_id,
@@ -115,12 +105,12 @@ class StaffController extends Controller
      */
     public function edit(StaffMember $staff)
     {
-        // dd($staff);
-        $roles = Role::get();
-        $jobs = Job::all();
-        $countries = Country::all();
-        $user = User::find($staff->user_id);
-        return view('staff.edit', compact('roles', 'jobs', 'cities', 'countries', 'user', 'staff'));
+        $roles = Role::select("name", "id")->get();
+        $jobs = Job::select("name", "id")->get();
+        $countries = Country::pluck("full_name", "id");
+        $user = $staff->user;
+        // dd($user);
+        return view('staff.edit', compact('roles', 'jobs', 'countries', 'user', 'staff'));
     }
 
     /**
@@ -132,12 +122,12 @@ class StaffController extends Controller
      */
     public function update(UpdateStaffMemberRequest $request, StaffMember $staff)
     {
-        $image_url = $this->validate_image($request);
+        $image_url = $this->get_image_url($request);
         $staff->update([
             'job_id' => $request->job_id,
             'role_id' => $request->role_id,
         ]);
-        $user = User::find($staff->user_id);
+        $user = $staff->user;
         $user->update([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -164,48 +154,11 @@ class StaffController extends Controller
      */
     public function destroy(StaffMember $staff)
     {
-        // $staff->delete();
-        User::find($staff->user_id)->delete();
+        $staff->user->delete();
         return redirect()->route('staff.index')->with('status', 'Staff Member deleted successfully !');
     }
 
-    public function uploadImages($image, $name, $image_name)
-    {
-        Cloudder::upload($image_name);
-        list($width, $height) = getimagesize($image_name); // filesize($image_name);//$image_name->getSize();
-        $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
-        //save to uploads directory
-        $image->move(public_path("uploads"), $name);
-
-        return $image_url;
-    }
-
-    public function saveImages(Request $request, $image_url, $user_id)
-    {
-        $image = new Upload();
-        $image->user_id = $user_id;
-        $image->image_name = $request->file('image_name')->getClientOriginalName();
-        $image->image_url = $image_url;
-        $image->save();
-    }
-
-    public function validate_image($request)
-    {
-        // $this->validate($request, [
-        //     'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
-        // ]);
-        if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
-            $image = $request->file('image_name');
-            $name = $request->file('image_name')->getClientOriginalName();
-            $image_name = $request->file('image_name')->getRealPath();
-            $image_url = $this->uploadImages($image, $name, $image_name);
-
-            return $image_url;
-        }
-
-        return 0;
-    }
-
+    
     public function getCityList(Request $request)
     {
         $cities = City::where("country_id", $request->country_id)
@@ -215,28 +168,16 @@ class StaffController extends Controller
 
     public function ban(StaffMember $staff)
     {
-        $this->authorize('active', $staff);
-        $id = $staff->user_id;
-        if (!empty($id)) {
-            $user = User::find($id);
-            $user->bans()->create([
-                'expired_at' => '+1 month',
-            ]);
-            $user->is_active = 0;
-            $user->save();
-        }
+        // dd('nnnnnn');
+        $staff->user->ban();
+
         return redirect()->route('staff.index')->with('success', 'Staff Member de-activated Successfully..');
     }
     public function unban(StaffMember $staff)
     {
-        $this->authorize('active', $staff);
-        $id = $staff->user_id;
-        if (!empty($id)) {
-            $user = User::find($id);
-            $user->unban();
-            $user->is_active = 1;
-            $user->save();
-        }
-        return redirect()->route('staff.index')->with('success', 'Staff Member activated Successfully..');
+        dd('unnn');
+        $staff->user->unban();
+        $staff->user->banned_at=NULL;
+        return redirect()->route('home')->with('success', 'Staff Member activated Successfully..');
     }
 }
