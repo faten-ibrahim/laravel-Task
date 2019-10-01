@@ -171,6 +171,9 @@ return [
         'Webpatser\Countries\CountriesServiceProvider',
         'JD\Cloudder\CloudderServiceProvider',
         Cog\Laravel\Ban\Providers\BanServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+
 
         /*
          * Application Service Providers...
@@ -235,7 +238,10 @@ return [
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'Countries' => 'Webpatser\Countries\CountriesFacade',
-        'Cloudder' => 'JD\Cloudder\Facades\Cloudder'
+        'Cloudder' => 'JD\Cloudder\Facades\Cloudder',
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+
 
     ],
 

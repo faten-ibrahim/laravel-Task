@@ -15,27 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// DB::listen(function($sql) {
-
-// });
-
-// Route::get('get_roles','Roles\RolesController@get_roles');
-// Route::get('get_cities','Cities\CitiesController@get_cities');
-// Route::get('get_jobs','JobsController@get_jobs');
-
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::get('/ex', function () {
+    return view('view_visitors_export');
 });
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'is-active'], function () {
+        Route::get('get-city-list', 'CitiesController@getCityList');
         Route::get('/home', 'HomeController@index')->name('home');
-
-        // Route::get('roles', 'Roles\RolesController@index')->name('roles.index');
-
-        // Route::get('cities', 'Cities\CitiesController@index')->name('cities.index');
-
 
         /***********************
         Roles CRUD Operations
@@ -74,8 +66,6 @@ Route::group(['middleware' => ['auth']], function () {
         );
 
         Route::get('get_staff', 'StaffController@get_staff_members');
-        Route::get('get-city-list', 'StaffController@getCityList');
-
         Route::get('/staff/{staff}/ban', 'StaffController@ban')
             ->name('staff.ban');
         Route::get('/staff/{staff}/unban', 'StaffController@unban')
@@ -90,10 +80,12 @@ Route::group(['middleware' => ['auth']], function () {
             array('except' => 'show')
         );
         Route::get('get_visitors', 'VisitorsController@get_visitors');
-        Route::get('get-city-list', 'VisitorsController@getCityList');
+
         Route::get('/visitors/{visitor}/ban', 'VisitorsController@ban')
             ->name('visitors.ban');
         Route::get('/visitors/{visitor}/unban', 'VisitorsController@unban')
             ->name('visitors.unban');
+
+        Route::get('/visitors/export', 'VisitorsController@export')->name('visitors.export');
     });
 });

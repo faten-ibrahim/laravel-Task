@@ -51,7 +51,7 @@ class CitiesController extends Controller
     public function edit(City $city)
     {
         $countries = Country::all();
-        return view('cities.edit',compact('city','countries'));
+        return view('cities.edit', compact('city', 'countries'));
     }
 
     public function update(City $city, StoreCityRequest $request)
@@ -64,5 +64,12 @@ class CitiesController extends Controller
     {
         $city->delete();
         return redirect()->route('cities.index')->with('status', 'City Deleted successfully !');
+    }
+
+    public function getCityList(Request $request)
+    {
+        $cities = City::where("country_id", $request->country_id)
+            ->pluck("name", "id");
+        return response()->json($cities);
     }
 }

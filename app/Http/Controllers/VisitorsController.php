@@ -13,10 +13,11 @@ use App\User;
 use App\Visitor;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
-
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\VisitorsExport;
 class VisitorsController extends Controller
 {
-    use SendsPasswordResetEmails,ImageUploadTrait;
+    use SendsPasswordResetEmails, ImageUploadTrait;
     public function __construct()
     {
         $this->authorizeResource(Visitor::class);
@@ -134,7 +135,7 @@ class VisitorsController extends Controller
         $visitor->delete();
         return redirect()->route('visitors.index')->with('status', 'Visitor deleted successfully !');
     }
-    
+
     public function ban(Visitor $visitor)
     {
         $visitor->ban();
@@ -158,4 +159,10 @@ class VisitorsController extends Controller
             ->pluck("name", "id");
         return response()->json($cities);
     }
+
+    public function export()
+    {
+        return Excel::download(new VisitorsExport, 'visitors.xlsx');
+    }
+    
 }

@@ -158,14 +158,6 @@ class StaffController extends Controller
         return redirect()->route('staff.index')->with('status', 'Staff Member deleted successfully !');
     }
 
-    
-    public function getCityList(Request $request)
-    {
-        $cities = City::where("country_id", $request->country_id)
-            ->pluck("name", "id");
-        return response()->json($cities);
-    }
-
     public function ban(StaffMember $staff)
     {
         // dd('nnnnnn');

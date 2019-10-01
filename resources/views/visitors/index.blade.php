@@ -10,6 +10,7 @@
 
 @can('create',App\Visitor::class)
 <a class="btn btn-info btn-sm" href="{{ route('visitors.create') }}"><i class="fa fa-plus"></i><span>Add Visitor</span></a><br><br>
+<a class="btn btn-primary btn-sm" href="{{route('visitors.export')}}"><i class="fa fa-download"></i><span>Export Visitors</span></a><br><br>
 @endcan
 
 <table id="example" class="table table-striped">
