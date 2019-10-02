@@ -64,13 +64,8 @@ Route::group(['middleware' => ['auth']], function () {
             'StaffController',
             array('except' => 'show')
         );
-
-        Route::get('get_staff', 'StaffController@getStaffMembers');
-        Route::get('/staff/{staff}/ban', 'StaffController@ban')
-            ->name('staff.ban');
-        Route::get('/staff/{staff}/unban', 'StaffController@unban')
-            ->name('staff.unban');
-
+        Route::get('/staff/{staff}/toggle', 'StaffController@toggleBan')
+            ->name('visitors.toggleStatus');
         /*************************
         Visitors CRUD Operations
          ***************************/
@@ -79,14 +74,8 @@ Route::group(['middleware' => ['auth']], function () {
             'VisitorsController',
             array('except' => 'show')
         );
-        Route::get('get_visitors', 'VisitorsController@get_visitors');
-
-        Route::get('/visitors/{visitor}/ban', 'VisitorsController@ban')
-            ->name('visitors.ban');
-        Route::get('/visitors/{visitor}/unban', 'VisitorsController@unban')
-            ->name('visitors.unban');
-
         Route::get('/visitors/export', 'VisitorsController@export')->name('visitors.export');
-       
+        Route::get('/visitors/{visitor}/toggle', 'VisitorsController@toggleBan')
+            ->name('visitors.toggleStatus');
     });
 });

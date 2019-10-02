@@ -159,20 +159,14 @@ class StaffController extends Controller
         return redirect()->route('staff.index')->with('status', 'Staff Member deleted successfully !');
     }
 
-    public function ban(StaffMember $staff)
+    public function toggleBan(StaffMember $staff)
     {
-        $user=User::find($staff->user_id);
-        $user->is_active = 0;
-        $user->save();
-        // dd($user);
-        return redirect()->route('staff.index')->with('success', 'Staff Member de-activated Successfully..');
+        if ($staff->user->is_active) {
+            $staff->user->is_active = 0;
+        } else {
+            $staff->user->is_active = 1;
+        }
+        $staff->user->save();
+        return redirect()->route('staff.index');
     }
-    public function unban(StaffMember $staff)
-    {
-        $user=User::find($staff->user_id);
-        $user->is_active = 1;
-        $user->save();
-        return redirect()->route('staff.index')->with('success', 'Staff Member activated Successfully..');
-    }
-
 }

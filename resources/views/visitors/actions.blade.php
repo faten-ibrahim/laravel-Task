@@ -7,8 +7,8 @@
                 <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i><span>Delete</span></button></form>
 
 @if($row->is_active)
-<a href="visitors/{{$row->id}}/ban" class="bttn btn btn-xs btn-warning " data-id="{{$row->id}}"><i class="fa fa-ban"></i><span>Deactive</span></a>
+<a href="visitors/{{$row->id}}/toggle" class="bttn btn btn-xs btn-warning " data-id="{{$row->id}}"><i class="fa fa-ban"></i><span>Deactive</span></a>
 @else
-<a href="visitors/{{$row->id}}/unban" class="bttn btn btn-xs btn-info" data-id="{{$row->id}}"><i class="fa fa-check"></i><span>Active</span></a>
+<a href="visitors/{{$row->id}}/toggle" class="bttn btn btn-xs btn-info" data-id="{{$row->id}}"><i class="fa fa-check"></i><span>Active</span></a>
 @endif
 @endcan
