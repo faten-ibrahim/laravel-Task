@@ -75,7 +75,7 @@
                 data: 'role.name'
             },
 
-            @canAny(['staff-update','staff-delete','staff-active']){
+            @canAny(['staff-update', 'staff-delete', 'staff-active']) {
                 data: 'action',
                 name: 'action',
                 orderable: false,

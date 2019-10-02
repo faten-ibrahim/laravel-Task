@@ -38,7 +38,7 @@ class VisitorsController extends Controller
     public function get_visitors()
     {
         $visitors = Visitor::with(['city', 'city.country'])->where('is_visitor', '=', 1)
-            ->select('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'city_id');
+            ->select('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'city_id','is_active');
         return Datatables::of($visitors)
             ->addColumn('action', function ($row) {
                 return view('visitors.actions', compact('row'));
@@ -138,26 +138,20 @@ class VisitorsController extends Controller
 
     public function ban(Visitor $visitor)
     {
-        $visitor->ban();
         $user = User::find($visitor->id);
-        $user->is_active = false;
+        $user->is_active = 0;
         $user->save();
+        // dd($user);
         return redirect()->route('visitors.index')->with('success', 'Visitor de-activated Successfully..');
     }
     public function unban(Visitor $visitor)
     {
-        // dd('un bannnn');
-        $visitor->unban();
+       
         $user = User::find($visitor->id);
-        $user->is_active = true;
+        $user->is_active = 1;
         $user->save();
+        // dd($user);
         return redirect()->route('visitors.index')->with('success', 'Visitor activated Successfully..');
-    }
-    public function getCityList(Request $request)
-    {
-        $cities = City::where("country_id", $request->country_id)
-            ->pluck("name", "id");
-        return response()->json($cities);
     }
 
     public function export()

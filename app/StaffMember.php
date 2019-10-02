@@ -19,7 +19,7 @@ class StaffMember extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class)->select(array('id', 'first_name','last_name','email','gender','phone','city_id'));
+        return $this->belongsTo(User::class)->select(array('id', 'first_name','last_name','email','gender','phone','city_id','is_active'));
     }
 
     public function role()

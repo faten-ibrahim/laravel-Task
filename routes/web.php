@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
             array('except' => 'show')
         );
 
-        Route::get('get_staff', 'StaffController@get_staff_members');
+        Route::get('get_staff', 'StaffController@getStaffMembers');
         Route::get('/staff/{staff}/ban', 'StaffController@ban')
             ->name('staff.ban');
         Route::get('/staff/{staff}/unban', 'StaffController@unban')
@@ -87,5 +87,6 @@ Route::group(['middleware' => ['auth']], function () {
             ->name('visitors.unban');
 
         Route::get('/visitors/export', 'VisitorsController@export')->name('visitors.export');
+       
     });
 });

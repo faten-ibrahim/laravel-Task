@@ -15,10 +15,11 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Traits\ImageUploadTrait;
+
 class StaffController extends Controller
 {
-    use SendsPasswordResetEmails,ImageUploadTrait;
-    
+    use SendsPasswordResetEmails, ImageUploadTrait;
+
 
     public function __construct()
     {
@@ -160,16 +161,18 @@ class StaffController extends Controller
 
     public function ban(StaffMember $staff)
     {
-        // dd('nnnnnn');
-        $staff->user->ban();
-
+        $user=User::find($staff->user_id);
+        $user->is_active = 0;
+        $user->save();
+        // dd($user);
         return redirect()->route('staff.index')->with('success', 'Staff Member de-activated Successfully..');
     }
     public function unban(StaffMember $staff)
     {
-        dd('unnn');
-        $staff->user->unban();
-        $staff->user->banned_at=NULL;
-        return redirect()->route('home')->with('success', 'Staff Member activated Successfully..');
+        $user=User::find($staff->user_id);
+        $user->is_active = 1;
+        $user->save();
+        return redirect()->route('staff.index')->with('success', 'Staff Member activated Successfully..');
     }
+
 }
