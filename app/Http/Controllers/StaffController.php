@@ -120,7 +120,7 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateStaffMemberRequest $request, StaffMember $staff)
+    public function update(StoreStaffMemberRequest $request, StaffMember $staff)
     {
         $image_url = $this->get_image_url($request);
         $staff->update([

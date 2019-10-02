@@ -30,8 +30,8 @@ class StoreStaffMemberRequest extends FormRequest
             'city_id' => ['required'],
             'first_name' => ['required', 'string', 'max:255', 'min:3'],
             'last_name' => ['required', 'string', 'max:255', 'min:3'],
-            'phone' => 'required|regex:/(01)[0-9]{9}/|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
+            'phone' => 'required|regex:/(01)[0-9]{9}/|unique:users,id,'.$this->id,
+            'email' => 'required|string|email|max:255|unique:users,id,' . $this->id,
             'gender' => ['required'],
             'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
         ];

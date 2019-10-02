@@ -111,7 +111,7 @@ class VisitorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateVisitorRequest $request, Visitor $visitor)
+    public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
         dd('update');
         $image_url = $this->get_image_url($request);
