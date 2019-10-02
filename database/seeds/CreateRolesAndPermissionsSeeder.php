@@ -15,8 +15,8 @@ class CreateRolesAndPermissionsSeeder extends Seeder
      */
     public function run()
     {
-         // Reset cached roles and permissions
-         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
             'role-list',
@@ -37,27 +37,26 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'staff-delete',
             // 'staff-active',
             'visitor-list',
-            'visitor-create',
-            'visitor-edit',
             'visitor-delete',
-            // 'visitor-active',
-         ];
+            'visitor-edit',
+            'visitor-create'
+        ];
 
 
-         foreach ($permissions as $permission) {
-              Permission::create(['name' => $permission]);
-         }
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
 
-         $user = User::create([
+        $user = User::create([
             'first_name' => 'Hardik Savani',
             'last_name' => 'Hai sdugu',
             'email' => 'admin@gmail.com',
-            'phone' =>'01155959747',
+            'phone' => '01155959747',
             'password' => Hash::make('12345678')
         ]);
 
-        $role = Role::create(['name' => 'Admin','description'=>'any description']);
+        $role = Role::create(['name' => 'Admin', 'description' => 'any description']);
         $role->givePermissionTo(Permission::all());
         $user->assignRole([$role->id]);
 
@@ -80,7 +79,7 @@ class CreateRolesAndPermissionsSeeder extends Seeder
         // $role2->givePermissionTo('job-list');
         // $user->assignRole([$role2->id]);
 
-       
+
         $user = User::create([
             'first_name' => 'kamel',
             'last_name' => 'ali',
