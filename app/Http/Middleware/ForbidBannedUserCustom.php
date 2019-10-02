@@ -30,13 +30,13 @@ class ForbidBannedUserCustom
      */
     public function handle($request, Closure $next)
     {
-        // $user = $this->auth->user();
-        // if ($user && $user->isBanned()) {
-        //     \Session::flush();
-        //     return redirect('login')->withInput()->withErrors([
-        //         'email' => 'This account is blocked.',
-        //     ]);
-        // }
+        $user = $this->auth->user();
+        if ($user && !($user->is_active)) {
+            \Session::flush();
+            return redirect('login')->withInput()->withErrors([
+                'email' => 'This account is blocked.',
+            ]);
+        }
 
 
         return $next($request);
