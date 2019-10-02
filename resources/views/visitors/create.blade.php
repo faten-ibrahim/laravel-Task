@@ -71,7 +71,7 @@
                                     <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
                                         <option value="" selected disabled>Select</option>
                                         @foreach($countries as $key => $country)
-                                        <option value="{{$key}}"> {{$country}}</option>
+                                        <option {{ (old("country_id") == $key ? "selected":"") }} value="{{$key}}"> {{$country}}</option>
                                         @endforeach
                                     </select>
 
@@ -105,9 +105,9 @@
                                         <label for="gender" class="col-md-4 control-label">Gender</label>
 
                                         <div class="col-md-6">
-                                            <input id="female" type="radio" name="gender" value="Female" {{ (old('sex') == 'female') ? 'checked' : '' }}>Female
+                                            <input id="female" type="radio" name="gender" value="Female" {{ (old('gender') == 'Female') ? 'checked' : '' }}>Female
 
-                                            <input id="male" type="radio" name="gender" value="Male" {{ (old('sex') == 'male') ? 'checked' : '' }}>Male
+                                            <input id="male" type="radio" name="gender" value="Male" {{ (old('gender') == 'Male') ? 'checked' : '' }}>Male
 
                                             @error('gender')
                                             <span class="invalid-feedback" role="alert">
@@ -166,8 +166,22 @@
         } else {
             $("#city").empty();
         }
+
+
+        // var previous;
+
+        // $("city").on('focus', function() {
+        //     // Store the current value on focus and on change
+        //     previous = this.value;
+        // }).change(function() {
+            
+        //     $this->value=previous;
+        //     // Make sure the previous value is updated
+        //     previous = this.value;
+        // });
     });
 </script>
+
 
 
 @endsection

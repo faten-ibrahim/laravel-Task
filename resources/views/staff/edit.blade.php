@@ -67,7 +67,7 @@
                                     <label for="role_id">Role</label>
                                     <select class="form-control col-md-4" name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
                                         @foreach($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                        <option value="{{$role->id}}" {{ ($staff->role_id == $role->id ? "selected":"") }}>{{$role->name}}</option>
                                         @endforeach
                                     </select>
 
@@ -83,7 +83,7 @@
                                         <label for="job_id">Job</label>
                                         <select class="form-control col-md-4" name="job_id" class="form-control @error('job_id') is-invalid @enderror" required>
                                             @foreach($jobs as $job)
-                                            <option value="{{$job->id}}">{{$job->name}}</option>
+                                            <option value="{{$job->id}}" {{ ($staff->job_id == $job->id ? "selected":"") }}>{{$job->name}}</option>
                                             @endforeach
                                         </select>
 
@@ -100,7 +100,7 @@
                                             <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
                                                 <option value="" selected disabled>Select</option>
                                                 @foreach($countries as $key => $country)
-                                                <option value="{{$key}}"> {{$country}}</option>
+                                                <option value="{{$key}}" {{ ($user->country_id == $key ? "selected":"") }} > {{$country}}</option>
                                                 @endforeach
                                             </select>
 

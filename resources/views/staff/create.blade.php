@@ -68,10 +68,10 @@
 
                                 <div class="form-group">
                                     <label for="role_id">Role</label>
-                                    <select class="form-control col-md-4" name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
+                                    <select name="role_id" class="form-control col-md-4 @error('role_id') is-invalid @enderror" required>
                                         <option value="" selected disabled>Select</option>
                                         @foreach($roles as $role)
-                                        <option value="{{$role->id}}">{{$role->name}}</option>
+                                        <option {{ (old("role_id") == $role->id ? "selected":"") }} value="{{$role->id}}" >{{$role->name}}</option>
                                         @endforeach
                                     </select>
 
@@ -88,9 +88,9 @@
                                     <div class="form-group">
                                         <label for="job_id">Job</label>
                                         <select class="form-control col-md-4" name="job_id" class="form-control @error('job_id') is-invalid @enderror" required>
-                                            <option value="" selected disabled>Select</option>
+                                            <option  value="" selected disabled>Select</option>
                                             @foreach($jobs as $job)
-                                            <option value="{{$job->id}}">{{$job->name}}</option>
+                                            <option {{ (old("job_id") == $job->id ? "selected":"") }}  value="{{$job->id}}">{{$job->name}}</option>
                                             @endforeach
                                         </select>
 
@@ -107,7 +107,7 @@
                                             <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
                                                 <option value="" selected disabled>Select</option>
                                                 @foreach($countries as $key => $country)
-                                                <option value="{{$key}}"> {{$country}}</option>
+                                                <option  {{ (old("country_id") == $key ? "selected":"") }}  value="{{$key}}"> {{$country}}</option>
                                                 @endforeach
                                             </select>
 
@@ -141,9 +141,9 @@
                                                 <label for="gender" class="col-md-4 control-label">Gender</label>
 
                                                 <div class="col-md-6">
-                                                    <input id="female" type="radio" name="gender" value="Female" {{ (old('sex') == 'female') ? 'checked' : '' }}>Female
+                                                    <input id="female" type="radio" name="gender" value="Female"{{ (old('gender') == 'Female') ? 'checked' : '' }}>Female
 
-                                                    <input id="male" type="radio" name="gender" value="Male" {{ (old('sex') == 'male') ? 'checked' : '' }}>Male
+                                                    <input id="male" type="radio" name="gender" value="Male" {{ (old('gender') == 'Male') ? 'checked' : '' }}>Male
 
                                                     @error('gender')
                                                     <span class="invalid-feedback" role="alert">
