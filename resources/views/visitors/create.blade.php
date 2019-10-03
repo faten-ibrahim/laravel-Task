@@ -17,53 +17,22 @@
 
                                 <div class="form-group" style="float:left; max-width:45%; margin-right:10%">
                                     <label for="first_name">{{ __('First Name') }}</label>
-                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
-                                    <div class="col-md-12 error">
-                                        @error('first_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name"  required autocomplete="first_name" autofocus>
                                 </div>
 
                                 <div class="form-group" style="float:left; max-width:45%">
                                     <label for="last_name">{{ __('Last Name') }}</label>
-                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
-                                    <div class="col-md-12 error">
-                                        @error('last_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name"  required autocomplete="last_name" autofocus>
                                 </div>
 
                                 <div class="form-group" style="float:left; max-width:45%; margin-right:10%">
                                     <label for="email">{{ __('E-Mail Address') }}</label>
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-                                    <div class="col-md-12 error">
-
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"  required autocomplete="email">
                                 </div>
 
                                 <div class="form-group" style="float:left; max-width:45%;">
                                     <label for="phone">{{ __('Phone') }}</label>
-                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone">
-                                    <div class="col-md-12 error">
-
-
-                                        @error('phone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="phone">
                                 </div>
 
                                 <div class="form-group">
@@ -71,33 +40,17 @@
                                     <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
                                         <option value="" selected disabled>Select</option>
                                         @foreach($countries as $key => $country)
-                                        <option {{ (old("country_id") == $key ? "selected":"") }} value="{{$key}}"> {{$country}}</option>
+                                        <option value="{{$key}}"> {{$country}}</option>
                                         @endforeach
                                     </select>
 
-                                    <div class="col-md-12 error">
-                                        @error('country_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-
-
+                                </div>
 
 
                                     <div class="form-group">
                                         <label for="title">Select City:</label>
                                         <select name="city_id" id="city" class="form-control" style="width:350px">
                                         </select>
-
-                                        <div class="col-md-12 error">
-                                            @error('city_id')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
                                     </div>
 
                                     <!--radiobutton -->
@@ -105,23 +58,15 @@
                                         <label for="gender" class="col-md-4 control-label">Gender</label>
 
                                         <div class="col-md-6">
-                                            <input id="female" type="radio" name="gender" value="Female" {{ (old('gender') == 'Female') ? 'checked' : '' }}>Female
+                                            <input id="female" type="radio" name="gender" value="Female">Female
 
-                                            <input id="male" type="radio" name="gender" value="Male" {{ (old('gender') == 'Male') ? 'checked' : '' }}>Male
-
-                                            @error('gender')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @endif
+                                            <input id="male" type="radio" name="gender" value="Male">Male
                                         </div>
                                     </div>
 
                                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                         <input type="file" name="image_name" class="form-control" id="name" value="">
-                                        @if($errors->has('image_name'))
-                                        <span class="help-block">{{ $errors->first('image_name') }}</span>
-                                        @endif
+
                                     </div>
                                     <br>
                                     <br>
@@ -142,6 +87,8 @@
 </div>
 
 
+@endsection
+@section('script')
 <script type="text/javascript">
     $('#country').change(function() {
         var countryID = $(this).val();
@@ -166,22 +113,11 @@
         } else {
             $("#city").empty();
         }
-
-
-        // var previous;
-
-        // $("city").on('focus', function() {
-        //     // Store the current value on focus and on change
-        //     previous = this.value;
-        // }).change(function() {
-            
-        //     $this->value=previous;
-        //     // Make sure the previous value is updated
-        //     previous = this.value;
-        // });
     });
 </script>
 
+<!-- Laravel Javascript Validation -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
-
+{!! JsValidator::formRequest('App\Http\Requests\StoreVisitorRequest') !!}
 @endsection

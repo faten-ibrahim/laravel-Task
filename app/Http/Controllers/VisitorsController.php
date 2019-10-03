@@ -114,7 +114,7 @@ class VisitorsController extends Controller
      */
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
-        dd('update');
+        // dd('update');
         $image_url = $this->get_image_url($request);
         $visitor->update($request->all());
         if ($image_url) {

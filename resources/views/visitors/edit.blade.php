@@ -17,49 +17,23 @@
                                 <div class="form-group" style="float:left; max-width:45%; margin-right:10%">
                                     <label for="first_name">{{ __('First Name') }}</label>
                                     <input id="first_name" type="text" value="{{ $visitor->first_name }}" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
-                                    <div class="col-md-12 error">
-                                        @error('first_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
                                 </div>
 
                                 <div class="form-group" style="float:left; max-width:45%;">
                                     <label for="last_name">{{ __('Last Name') }}</label>
                                     <input id="last_name" type="text" value="{{ $visitor->last_name }}" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
-                                    <div class="col-md-12 error">
-                                        @error('last_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
                                 </div>
 
                                 <div class="form-group" style="float:left; max-width:45%; margin-right:10%">
                                     <label for="email">{{ __('Email') }}</label>
                                     <input id="email" type="email" value="{{ $visitor->email }}" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                                    <div class="col-md-12 error">
-                                        @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+
                                 </div>
 
                                 <div class="form-group" style="float:left; max-width:45%;">
                                     <label for="phone">{{ __('Phone') }}</label>
-                                    <input id="phone" type="text" value="{{ $visitor->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="first_name" autofocus>
-                                    <div class="col-md-12 error">
-                                        @error('phone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
+                                    <input id="phone" type="text" value="{{ $visitor->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone"  required autocomplete="phone" autofocus>
+
                                 </div>
 
 
@@ -72,13 +46,6 @@
                                         @endforeach
                                     </select>
 
-                                    <div class="col-md-12 error">
-                                        @error('country_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
 
 
 
@@ -88,13 +55,7 @@
                                         <select name="city_id" id="city" class="form-control" style="width:350px">
                                         </select>
 
-                                        <div class="col-md-12 error">
-                                            @error('city_id')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
+
                                     </div>
                                     <br><br>
                                     <!--radiobutton -->
@@ -107,9 +68,7 @@
                                     <br>
                                     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                         <input type="file" name="image_name" class="form-control" id="name" value="">
-                                        @if($errors->has('image_name'))
-                                        <span class="help-block">{{ $errors->first('image_name') }}</span>
-                                        @endif
+
                                     </div>
                                     <br>
                                     <br>
@@ -128,7 +87,8 @@
             </div>
         </div>
     </div>
-
+    @endsection
+    @section('script')
     <script type="text/javascript">
         $('#country').change(function() {
             var countryID = $(this).val();
@@ -156,4 +116,9 @@
         });
     </script>
 
+
+    <!-- Laravel Javascript Validation -->
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+
+    {!! JsValidator::formRequest('App\Http\Requests\StoreStaffMemberRequest') !!}
     @endsection
