@@ -15,6 +15,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Traits\ImageUploadTrait;
+use App\Upload;
 
 class StaffController extends Controller
 {
@@ -110,8 +111,10 @@ class StaffController extends Controller
         $jobs = Job::select("name", "id")->get();
         $countries = Country::pluck("full_name", "id");
         $user = $staff->user;
+        $image_name=Upload::where('user_id','=',$user->id)->select('image_name')->first();
+        // dd($image_name);
         // dd($user);
-        return view('staff.edit', compact('roles', 'jobs', 'countries', 'user', 'staff'));
+        return view('staff.edit', compact('roles', 'jobs', 'countries', 'user', 'staff','image_name'));
     }
 
     /**

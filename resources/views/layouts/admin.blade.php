@@ -91,7 +91,9 @@
                                 @can('viewAny',App\StaffMember::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('staff.index') }}" style="color: #fff;font-size: 15px;">Staff Members</a></li>
                                 @endcan
+                                @can('viewAny',App\Visitor::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('visitors.index') }}" style="color: #fff;font-size: 15px;">Visitors</a></li>
+                                @endcan
                             </ul>
                         </li>
                     </ul>
@@ -130,7 +132,7 @@
                 /************************/
                 /************************/
                  -->
-                <div class="wrapper wrapper-content" style="min-height: 620px;">
+                <div class="wrapper wrapper-content" >
                     <!-- content  -->
                     <main class="py-4">
                         @yield('content')
@@ -144,14 +146,14 @@
                 /************************/
                 /************************/
                  -->
-                <div class="footer">
+                <!-- <div class="footer">
                     <div class="pull-right">
                         10GB of <strong>250GB</strong> Free.
                     </div>
                     <div>
                         <strong>Copyright</strong> Example Company &copy; 2014-2017
                     </div>
-                </div>
+                </div> -->
             </div>
 
 
@@ -205,6 +207,7 @@
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    @yield('script')
 </body>
 
 </html>

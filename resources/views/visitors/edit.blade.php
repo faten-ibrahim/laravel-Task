@@ -11,7 +11,7 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-md-12">
-                            <form role="form" class="mystyle" enctype="multipart/form-data" method="POST" action="{{route('visitors.update',['visitors' => $visitor->id])}}" style=" width:90% ">
+                            <form role="form" class="mystyle" enctype="multipart/form-data" method="POST" action="{{route('visitors.update',['visitor' => $visitor->id])}}" style=" width:90% ">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group" style="float:left; max-width:45%; margin-right:10%">

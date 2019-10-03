@@ -8561,12 +8561,12 @@ body.md-skin {
   }
 }
 
-.error{
+/* .error{
   color: red !important;
   margin-top: 3px !important;
   margin-bottom: 13px !important;
   font-size: x-small;
-}
+} */
 
 .recapcha-response{
   position: absolute;
@@ -8580,9 +8580,9 @@ body.md-skin {
     margin-right: 3px;
 }
 
-.mystyle .form-group{
+/* .mystyle .form-group{
   margin-bottom: -20px;
-}
+} */
 
 .btn-xs{
   margin-bottom: 3px;

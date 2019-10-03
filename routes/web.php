@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/ex', function () {
-    return view('view_visitors_export');
-});
+// Route::get('/ex', function () {
+//     return view('view_visitors_export');
+// });
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
