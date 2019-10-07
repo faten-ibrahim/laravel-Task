@@ -32,5 +32,10 @@ class StaffMember extends Model
         return $this->belongsTo(Job::class)->select(array('id','name'));
     }
 
+    public function news()
+    {
+        return $this->hasMany(News::class);
+    }
+
 
 }

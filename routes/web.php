@@ -23,10 +23,13 @@ use Illuminate\Support\Facades\Route;
 //     return view('view_visitors_export');
 // });
 
+Route::get('ss','NewsController@getNews');
+
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'is-active'], function () {
         Route::get('get-city-list', 'CitiesController@getCityList');
+        Route::get('get-author-list', 'StaffController@returnStaff');
         Route::get('/home', 'HomeController@index')->name('home');
 
         /***********************
@@ -77,5 +80,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/visitors/export', 'VisitorsController@export')->name('visitors.export');
         Route::get('/visitors/{visitor}/toggle', 'VisitorsController@toggleBan')
             ->name('visitors.toggleStatus');
+
+        /*************************
+        News CRUD Operations
+         ***************************/
+        Route::resource(
+            'news',
+            'NewsController',
+            array('except' => 'show')
+        );
     });
 });

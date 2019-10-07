@@ -111,10 +111,10 @@ class StaffController extends Controller
         $jobs = Job::select("name", "id")->get();
         $countries = Country::pluck("full_name", "id");
         $user = $staff->user;
-        $image_name=Upload::where('user_id','=',$user->id)->select('image_name')->first();
+        $image_name = Upload::where('user_id', '=', $user->id)->select('image_name')->first();
         // dd($image_name);
         // dd($user);
-        return view('staff.edit', compact('roles', 'jobs', 'countries', 'user', 'staff','image_name'));
+        return view('staff.edit', compact('roles', 'jobs', 'countries', 'user', 'staff', 'image_name'));
     }
 
     /**
@@ -171,5 +171,25 @@ class StaffController extends Controller
         }
         $staff->user->save();
         return redirect()->route('staff.index');
+    }
+
+    public function returnStaff(Request $request)
+    {
+        if ($request->type == 'news') {
+            $staff = User::whereHas('staff_member', function ($q) {
+                $job_id = Job::where('name', 'reporter')->pluck('id')->first();
+                $q->where('job_id', '=', $job_id);
+            })->pluck("first_name", "id");
+
+            // dd($staff);
+        } else {
+            $staff = User::whereHas('staff_member', function ($q) {
+                $job_id = Job::where('name', 'writter')->pluck('id')->first();
+                $q->where('job_id', '=', $job_id);
+            })->pluck("first_name", "id");
+            // dd("staff");
+        }
+
+        return response()->json($staff);
     }
 }
