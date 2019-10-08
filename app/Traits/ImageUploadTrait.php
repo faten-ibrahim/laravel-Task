@@ -18,7 +18,7 @@ trait ImageUploadTrait
         //save to uploads directory
         $image->move(public_path("uploads"), $name);
 
-        return $image_url;
+        return $this;
     }
 
     public function saveImages(Request $request, $image_url, $user_id)
@@ -32,7 +32,7 @@ trait ImageUploadTrait
 
     public function get_image_url($request)
     {
-        if ($request->hasFile('image_name') && $request->file('image_name')->isValid()) {
+        if ($request->hasFile('image_name')) {
             $image = $request->file('image_name');
             $name = $request->file('image_name')->getClientOriginalName();
             $image_name = $request->file('image_name')->getRealPath();
@@ -41,6 +41,6 @@ trait ImageUploadTrait
             return $image_url;
         }
 
-        return 0;
+        return '';
     }
 }

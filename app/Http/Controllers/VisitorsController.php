@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\VisitorsExport;
+use DB;
 
 class VisitorsController extends Controller
 {
@@ -67,21 +68,11 @@ class VisitorsController extends Controller
      */
     public function store(StoreVisitorRequest $request)
     {
+        $visitor = Visitor::create(array_merge(
+            $request->all(),
+            ['password' => Hash::make('123456')]
+        ));
         $image_url = $this->get_image_url($request);
-        $visitor = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'gender' => $request->gender,
-            'city_id' => $request->city_id,
-            'country_id' => $request->country_id,
-            'password' => Hash::make('123456'),
-
-        ]);
-        // $visitor->password=Hash::make('123456');
-        $visitor->is_visitor = 1;
-        $visitor->save();
         if ($image_url) {
             // Save images
             $this->saveImages($request, $image_url, $visitor->id);
@@ -101,9 +92,9 @@ class VisitorsController extends Controller
     public function edit(Visitor $visitor)
     {
         $countries = Country::pluck("full_name", "id");
-        $cities=City::pluck("name","id");
+        $cities = City::pluck("name", "id");
         // dd($visitor);
-        return view('visitors.edit', compact('countries','cities','visitor'));
+        return view('visitors.edit', compact('countries', 'cities', 'visitor'));
     }
 
     /**
@@ -115,10 +106,8 @@ class VisitorsController extends Controller
      */
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
-        // dd($request->all());
+        $visitor->update($request->all());
         $image_url = $this->get_image_url($request);
-        User::find($visitor->id)->update($request->all());
-        // $visitor->update($request->all());
         if ($image_url) {
             // Save images
             $this->saveImages($request, $image_url, $visitor->id);
@@ -141,12 +130,17 @@ class VisitorsController extends Controller
 
     public function toggleBan(Visitor $visitor)
     {
-        if ($visitor->is_active) {
-            $visitor->is_active = 0;
-        } else {
-            $visitor->is_active = 1;
-        }
-        $visitor->save();
+        DB::beginTransaction();
+        try {
+            // DB::table('users')->lockForUpdate()->first();
+            $visitor->lockForUpdate()->first();
+            $visitor->is_active= !$visitor->is_active;
+            $visitor->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+          }
         return redirect()->route('visitors.index');
     }
 

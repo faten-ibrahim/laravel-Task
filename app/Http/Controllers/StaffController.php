@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\StoreStaffMemberRequest;
-use App\Http\Requests\UpdateStaffMemberRequest;
 use App\Job;
 use App\StaffMember;
 use App\User;
@@ -16,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Traits\ImageUploadTrait;
 use App\Upload;
+use DB;
 
 class StaffController extends Controller
 {
@@ -71,29 +71,15 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
+        
+        $staff_user = User::create(array_merge($request->all(),['password' => Hash::make('123456')]));
         $image_url = $this->get_image_url($request);
-        $staff_user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'gender' => $request->gender,
-            'city_id' => $request->city_id,
-            'country_id' => $request->country_id,
-            'password' => Hash::make('123456'),
-
-        ]);
         if ($image_url) {
             // Save images
             $this->saveImages($request, $image_url, $staff_user->id);
         }
-
-        StaffMember::create([
-            'user_id' => $staff_user->id,
-            'job_id' => $request->job_id,
-            'role_id' => $request->role_id,
-        ]);
-
+       
+        StaffMember::create(array_merge($request->all(),['user_id' => $staff_user->id]));
         $this->sendResetLinkEmail($request);
 
         return redirect()->route('staff.index')->with('status', 'Staff Member Created successfully !');
@@ -127,22 +113,10 @@ class StaffController extends Controller
      */
     public function update(StoreStaffMemberRequest $request, StaffMember $staff)
     {
-        $image_url = $this->get_image_url($request);
-        $staff->update([
-            'job_id' => $request->job_id,
-            'role_id' => $request->role_id,
-        ]);
+        $staff->update($request->all());
         $user = $staff->user;
-        $user->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'gender' => $request->gender,
-            'city_id' => $request->city_id,
-            'country_id' => $request->country_id,
-
-        ]);
+        $user->update($request->all());
+        $image_url = $this->get_image_url($request);
         if ($image_url) {
             // Save images
             $this->saveImages($request, $image_url, $user->id);
@@ -165,12 +139,17 @@ class StaffController extends Controller
 
     public function toggleBan(StaffMember $staff)
     {
-        if ($staff->user->is_active) {
-            $staff->user->is_active = 0;
-        } else {
-            $staff->user->is_active = 1;
-        }
-        $staff->user->save();
+        DB::beginTransaction();
+        try {
+            // DB::table('users')->lockForUpdate()->first();
+            $staff->user->lockForUpdate()->first();
+            $staff->user->is_active= !$staff->user->is_active;
+            $staff->user->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+          } 
         return redirect()->route('staff.index');
     }
 

@@ -31,7 +31,7 @@ class StoreVisitorRequest extends FormRequest
             'phone' => 'required|regex:/(01)[0-9]{9}/|unique:users,id,'.$this->id,
             'email' => 'required|string|email|max:255|unique:users,id,' . $this->id,
             'gender' => ['required'],
-            'image_name' => 'image|mimes:jpeg,bmp,jpg,png|max:2048',
+            'image_name' => 'nullable|image|mimes:jpeg,bmp,jpg,png|max:2048',
         ];
     }
 }

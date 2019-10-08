@@ -30,9 +30,9 @@ class StoreNewsRequest extends FormRequest
             'author' => 'required',
             'content'=>'required',
             // 'images' => 'required',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             // 'files' => 'required',
-            'files.*' => 'mimes:pdf,xls,doc,docx,pptx,pps|max:1024',
+            'files.*' => 'nullable|mimes:pdf,xls,doc,docx,pptx,pps|max:1024',
         ];
     }
 }
