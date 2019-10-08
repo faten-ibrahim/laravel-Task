@@ -110,11 +110,12 @@ class StaffController extends Controller
         $roles = Role::select("name", "id")->get();
         $jobs = Job::select("name", "id")->get();
         $countries = Country::pluck("full_name", "id");
+        $cities=City::pluck("name","id");
         $user = $staff->user;
         $image_name = Upload::where('user_id', '=', $user->id)->select('image_name')->first();
         // dd($image_name);
         // dd($user);
-        return view('staff.edit', compact('roles', 'jobs', 'countries', 'user', 'staff', 'image_name'));
+        return view('staff.edit', compact('roles', 'jobs', 'countries','cities', 'user', 'staff', 'image_name'));
     }
 
     /**

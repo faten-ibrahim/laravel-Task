@@ -57,7 +57,6 @@
                                 <div class="form-group">
                                     <label for="country_id">Country</label>
                                     <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
-                                        <option value="" selected disabled>Select</option>
                                         @foreach($countries as $key => $country)
                                         <option value="{{$key}}" {{ ($staff->country_id == $key ? "selected":"") }}> {{$country}}</option>
                                         @endforeach
@@ -68,6 +67,9 @@
                                 <div class="form-group">
                                     <label for="title">Select City:</label>
                                     <select name="city_id" id="city" class="form-control" style="width:350px">
+                                        @foreach($cities as $key => $city)
+                                        <option value="{{$key}}" {{ ($staff->city_id == $key ? "selected":"") }}> {{$city}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 

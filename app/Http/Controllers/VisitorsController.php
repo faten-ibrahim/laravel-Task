@@ -101,8 +101,9 @@ class VisitorsController extends Controller
     public function edit(Visitor $visitor)
     {
         $countries = Country::pluck("full_name", "id");
+        $cities=City::pluck("name","id");
         // dd($visitor);
-        return view('visitors.edit', compact('countries', 'visitor'));
+        return view('visitors.edit', compact('countries','cities','visitor'));
     }
 
     /**

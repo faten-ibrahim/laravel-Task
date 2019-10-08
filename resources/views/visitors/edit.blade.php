@@ -53,6 +53,9 @@
                                     <div class="form-group">
                                         <label for="title">Select City:</label>
                                         <select name="city_id" id="city" class="form-control" style="width:350px">
+                                        @foreach($cities as $key => $city)
+                                        <option value="{{$key}}" {{ ($visitor->city_id == $key ? "selected":"") }}> {{$city}}</option>
+                                        @endforeach
                                         </select>
 
 
