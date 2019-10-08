@@ -11,8 +11,8 @@ trait ImageUploadTrait
     public function uploadImages($image, $name, $imageName)
     {
         Cloudder::upload($imageName);
-        list($width, $height) = getimagesize($imageName); // filesize($image_name);//$image_name->getSize();
-        Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
+        // list($width, $height) = getimagesize($imageName); // filesize($image_name);//$image_name->getSize();
+        // Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
         //save to uploads directory
         $image->move(public_path("uploads"), $name);
 

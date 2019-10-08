@@ -11,25 +11,25 @@ class CreateImagesTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('url');
-            $table->string('name');
-            $table->bigInteger('imageable_id');
-            $table->string('imageable_type',100);
-            $table->timestamps();
-        });
-    }
+    // public function up()
+    // {
+    //     Schema::create('images', function (Blueprint $table) {
+    //         $table->bigIncrements('id');
+    //         $table->string('url');
+    //         $table->string('name');
+    //         $table->bigInteger('imageable_id');
+    //         $table->string('imageable_type',100);
+    //         $table->timestamps();
+    //     });
+    // }
 
     /**
      * Reverse the migrations.
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::dropIfExists('images');
-    }
+    // public function down()
+    // {
+    //     Schema::dropIfExists('images');
+    // }
 }

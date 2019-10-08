@@ -12,23 +12,23 @@ class News extends Model
      * @var array
      */
     protected $fillable = [
-        'main_title', 'secondary_title', 'type', 'author', 'content'
+        'main_title', 'secondary_title', 'type', 'staff_member_id', 'content'
     ];
 
     /**
      * Get the post's image.
      */
-    public function images()
-    {
-        return $this->morphMany('App\Image', 'imageable');
-    }
+    // public function images()
+    // {
+    //     return $this->morphMany('App\Image', 'imageable');
+    // }
 
       /**
      * Get the post's image.
      */
     public function files()
     {
-        return $this->morphOne('App\File', 'fileable');
+        return $this->morphMany('App\File', 'fileable');
     }
 
     public function staffMember()

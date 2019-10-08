@@ -156,18 +156,22 @@ class StaffController extends Controller
     public function returnStaff(Request $request)
     {
         if ($request->type == 'news') {
-            $staff = User::whereHas('staff_member', function ($q) {
-                $job_id = Job::where('name', 'reporter')->pluck('id')->first();
-                $q->where('job_id', '=', $job_id);
-            })->pluck("first_name", "id");
-
-            // dd($staff);
+            // $staff = User::whereHas('staff_member', function ($q) {
+            //     $job_id = Job::where('name', 'reporter')->pluck('id')->first();
+            //     $q->where('job_id', '=', $job_id);
+            // })->pluck("first_name", "id");
+            $job_id = Job::where('name', 'reporter')->pluck('id')->first();
+            $staff=StaffMember::with(['user'=> function ($q) {
+                $q->select('id', 'first_name');
+            }])->where('job_id', '=', $job_id)->get();
+            $staff=$staff->pluck("user.first_name","id");
         } else {
-            $staff = User::whereHas('staff_member', function ($q) {
-                $job_id = Job::where('name', 'writter')->pluck('id')->first();
-                $q->where('job_id', '=', $job_id);
-            })->pluck("first_name", "id");
-            // dd("staff");
+            $job_id = Job::where('name', 'writter')->pluck('id')->first();
+            $staff=StaffMember::with(['user'=> function ($q) {
+                $q->select('id', 'first_name');
+            }])->where('job_id', '=', $job_id)->get();
+            $staff=$staff->pluck("user.first_name","id");
+           
         }
 
         return response()->json($staff);

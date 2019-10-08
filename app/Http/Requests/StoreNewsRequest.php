@@ -25,14 +25,12 @@ class StoreNewsRequest extends FormRequest
     {
         return [
             'main_title' => 'required|max:150|min:3',
-            'secondary_title' => 'max:150|min:3',
+            'secondary_title' => 'nullable|max:150|min:3',
             'type' => 'required',
             'author' => 'required',
             'content'=>'required',
-            // 'images' => 'required',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            // 'files' => 'required',
-            'files.*' => 'nullable|mimes:pdf,xls,doc,docx,pptx,pps|max:1024',
+            // 'files' => 'nullable',
+            'files.*' => 'image|mimes:jpg,png,xls,pdf|max:1024',
         ];
     }
 }

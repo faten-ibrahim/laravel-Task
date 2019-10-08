@@ -10,6 +10,7 @@
                         <div class="ibox-title">
                             <h5>Create News</h5>
                         </div>
+                      
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
@@ -29,7 +30,7 @@
                                         <div class="form-group">
                                             <label for="type">Type</label>
                                             <select id="type" type="text" class="form-control" name="type">
-                                                <option>-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option value="news">News</option>
                                                 <option value="article">Article</option>
                                             </select>
@@ -37,11 +38,13 @@
 
                                         <div class="form-group">
                                             <label for="author">Author</label>
-                                            <select id="author" name="author"></select>
+                                            <select id="author" name="staff_member_id">
+                                                <option value="">--Select--</option>
+                                            </select>
                                         </div>
                                         <div class="form-group">
-                                            <label for="editor-content">Content</label>
-                                            <textarea id="editor-content" name="editor-content">&lt;p&gt;Initial editor content.&lt;/p&gt;</textarea>
+                                            <label for="content">Content</label>
+                                            <textarea id="content" name="content"></textarea>
                                         </div>
                                         <!-- <div class="form-group">
                                             <input type="file" class="form-control" name="images[]" placeholder="image" multiple>
@@ -78,7 +81,7 @@
                         success: function(res) {
                             if (res) {
                                 $("#author").empty();
-                                $("#author").append('<option>Select</option>');
+                                $("#author").append('<option>--Select--</option>');
                                 $.each(res, function(key, value) {
                                     $("#author").append('<option value="' + key + '">' + value + '</option>');
                                 });
@@ -95,10 +98,10 @@
         </script>
         <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
         <script>
-            CKEDITOR.replace('editor-content');
+            CKEDITOR.replace('content');
         </script>
         <!-- Laravel Javascript Validation -->
         <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
-        {!! JsValidator::formRequest('App\Http\Requests\StoreVisitorRequest') !!}
+        {!! JsValidator::formRequest('App\Http\Requests\StoreNewsRequest') !!}
         @endsection

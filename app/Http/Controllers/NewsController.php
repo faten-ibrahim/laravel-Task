@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\File;
 use App\Http\Requests\StoreNewsRequest;
 use App\News;
 use App\StaffMember;
@@ -65,8 +66,25 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreNewsRequest $request)
-    { }
+    public function store(Request $request)
+    {
+        $con = trim($request->content, "<p>");
+        $con = trim($con, "</p>");
+        $news = News::create(array_merge($request->all(), ['content' => $con]));
+
+        if ($request->hasfile('files')) {
+            foreach ($request->file('files') as $file) {
+                $name = $file->getClientOriginalName();
+                $file->move(public_path('/uploads/news/'), $name);
+                $news->files()->create([
+                    'name' => $name,
+                    'mime_type' => $file->getClientOriginalExtension(),
+                ]);
+            }   
+        }
+
+        return redirect()->route('news.index')->with('status', 'News added successfully !');
+    }
 
     /**
      * Display the specified resource.
