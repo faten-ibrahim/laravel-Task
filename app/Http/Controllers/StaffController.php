@@ -73,10 +73,10 @@ class StaffController extends Controller
     {
         
         $staff_user = User::create(array_merge($request->all(),['password' => Hash::make('123456')]));
-        $image_url = $this->get_image_url($request);
-        if ($image_url) {
+        $imageUrl = $this->getImageUrl($request);
+        if ($imageUrl) {
             // Save images
-            $this->saveImages($request, $image_url, $staff_user->id);
+            $this->saveImages($request, $imageUrl, $staff_user->id);
         }
        
         StaffMember::create(array_merge($request->all(),['user_id' => $staff_user->id]));
@@ -116,10 +116,10 @@ class StaffController extends Controller
         $staff->update($request->all());
         $user = $staff->user;
         $user->update($request->all());
-        $image_url = $this->get_image_url($request);
-        if ($image_url) {
+        $imageUrl = $this->getImageUrl($request);
+        if ($imageUrl) {
             // Save images
-            $this->saveImages($request, $image_url, $user->id);
+            $this->saveImages($request, $imageUrl, $user->id);
         }
 
         return redirect()->route('staff.index')->with('status', 'Staff Member Updated successfully !');

@@ -4,41 +4,39 @@ namespace App\Traits;
 
 use App\Upload;
 use JD\Cloudder\Facades\Cloudder as Cloudder;
-use App\Http\Requests\StoreStaffMemberRequest;
-use App\Http\Requests\UpdateStaffMemberRequest;
 use Illuminate\Http\Request;
 trait ImageUploadTrait
 {
 
-    public function uploadImages($image, $name, $image_name)
+    public function uploadImages($image, $name, $imageName)
     {
-        Cloudder::upload($image_name);
-        list($width, $height) = getimagesize($image_name); // filesize($image_name);//$image_name->getSize();
-        $image_url = Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
+        Cloudder::upload($imageName);
+        list($width, $height) = getimagesize($imageName); // filesize($image_name);//$image_name->getSize();
+        Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
         //save to uploads directory
         $image->move(public_path("uploads"), $name);
 
         return $this;
     }
 
-    public function saveImages(Request $request, $image_url, $user_id)
+    public function saveImages(Request $request, $imageUrl, $userId)
     {
         $image = new Upload();
-        $image->user_id = $user_id;
+        $image->user_id = $userId;
         $image->image_name = $request->file('image_name')->getClientOriginalName();
-        $image->image_url = $image_url;
+        $image->image_url = $imageUrl;
         $image->save();
     }
 
-    public function get_image_url($request)
+    public function getImageUrl($request)
     {
         if ($request->hasFile('image_name')) {
             $image = $request->file('image_name');
             $name = $request->file('image_name')->getClientOriginalName();
-            $image_name = $request->file('image_name')->getRealPath();
-            $image_url = $this->uploadImages($image, $name, $image_name);
+            $imageName = $request->file('image_name')->getRealPath();
+            $imageUrl = $this->uploadImages($image, $name, $imageName);
 
-            return $image_url;
+            return $imageUrl;
         }
 
         return '';

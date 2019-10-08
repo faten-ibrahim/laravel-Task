@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Country;
 use App\Http\Requests\StoreVisitorRequest;
-use App\Http\Requests\UpdateVisitorRequest;
 use App\Traits\ImageUploadTrait;
 use Illuminate\Http\Request;
 use DataTables;
-use App\User;
 use App\Visitor;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
@@ -32,12 +30,12 @@ class VisitorsController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            return $this->get_visitors();
+            return $this->getVisitors();
         }
         return view('visitors.index');
     }
 
-    public function get_visitors()
+    public function getVisitors()
     {
         $visitors = Visitor::with(['city', 'city.country'])->where('is_visitor', '=', 1)
             ->select('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'city_id', 'is_active');
@@ -72,10 +70,10 @@ class VisitorsController extends Controller
             $request->all(),
             ['password' => Hash::make('123456')]
         ));
-        $image_url = $this->get_image_url($request);
-        if ($image_url) {
+        $imageUrl = $this->getImageUrl($request);
+        if ($imageUrl) {
             // Save images
-            $this->saveImages($request, $image_url, $visitor->id);
+            $this->saveImages($request, $imageUrl, $visitor->id);
         }
 
         $this->sendResetLinkEmail($request);
@@ -107,10 +105,10 @@ class VisitorsController extends Controller
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
         $visitor->update($request->all());
-        $image_url = $this->get_image_url($request);
-        if ($image_url) {
+        $imageUrl = $this->getImageUrl($request);
+        if ($imageUrl) {
             // Save images
-            $this->saveImages($request, $image_url, $visitor->id);
+            $this->saveImages($request, $imageUrl, $visitor->id);
         }
 
         return redirect()->route('visitors.index')->with('status', 'Visitor Updated successfully !');
