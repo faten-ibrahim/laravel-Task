@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('content')
-<h1>Manage Jobs</h1>
+<h1>Manage News</h1>
 @if (session('status'))
 <div class="alert alert-success">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> {{ session('status') }}

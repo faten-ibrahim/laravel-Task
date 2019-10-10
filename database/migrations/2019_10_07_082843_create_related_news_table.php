@@ -18,6 +18,9 @@ class CreateRelatedNewsTable extends Migration
             $table->unsignedBigInteger('news_id');
             $table->foreign('news_id')
                 ->references('id')->on('news')->onDelete('cascade');
+            $table->unsignedBigInteger('related_news_id');
+            $table->foreign('related_news_id')
+                ->references('id')->on('news')->onDelete('cascade');
             $table->timestamps();
         });
     }

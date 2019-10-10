@@ -37,5 +37,11 @@ class StaffMember extends Model
         return $this->hasMany(News::class);
     }
 
+    public function file()
+    {
+        return $this->morphOne('App\File', 'fileable');
+    }
+
+
 
 }

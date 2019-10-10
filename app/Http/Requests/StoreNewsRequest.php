@@ -27,10 +27,11 @@ class StoreNewsRequest extends FormRequest
             'main_title' => 'required|max:150|min:3',
             'secondary_title' => 'nullable|max:150|min:3',
             'type' => 'required',
-            'author' => 'required',
+            'staff_member_id' => 'required',
             'content'=>'required',
-            // 'files' => 'nullable',
+            'files' => 'nullable',
             'files.*' => 'image|mimes:jpg,png,xls,pdf|max:1024',
+            'related'=>'nullable'
         ];
     }
 }

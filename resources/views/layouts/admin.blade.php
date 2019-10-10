@@ -12,9 +12,16 @@
 
     <link href="{{ asset('/theme/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('/theme/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('/theme/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
+    <!-- Drop Zone -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
 
     <link href="{{ asset('/theme/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('/theme/css/style.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('/theme/css/plugins/dropzone/basic.css') }}" rel="stylesheet">
+    <link href="{{ asset('/theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet"> -->
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 
     <!-- Scripts
     <script src="{{ asset('js/app.js') }}" defer></script> -->
@@ -37,7 +44,7 @@
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
-   
+
 </head>
 
 <body>
@@ -135,7 +142,7 @@
                 /************************/
                 /************************/
                  -->
-                <div class="wrapper wrapper-content" >
+                <div class="wrapper wrapper-content">
                     <!-- content  -->
                     <main>
                         @yield('content')
@@ -167,23 +174,27 @@
 
 
     <!-- Mainly scripts -->
-    <script src="{{ asset('/theme/js/jquery-3.1.1.min.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/jquery-3.1.1.min.js') }}"></script> -->
+
     <script src="{{ asset('/theme/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script> -->
     <script src="{{ asset('/theme/js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
 
+
+
+
     <!-- Flot -->
-    <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.js') }}"></script>
     <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
     <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.spline.js') }}"></script>
     <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.resize.js') }}"></script>
     <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.symbol.js') }}"></script>
-    <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.time.js') }}"></script>
+    <script src="{{ asset('/theme/js/plugins/flot/jquery.flot.time.js') }}"></script> -->
 
     <!-- Peity -->
-    <script src="{{ asset('/theme/js/plugins/peity/jquery.peity.min.js') }}"></script>
-    <script src="{{ asset('/theme/js/demo/peity-demo.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/plugins/peity/jquery.peity.min.js') }}"></script>
+    <script src="{{ asset('/theme/js/demo/peity-demo.js') }}"></script> -->
 
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('/theme/js/inspinia.js') }}"></script>
@@ -197,20 +208,29 @@
     <script src="{{ asset('/theme/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
 
     <!-- EayPIE -->
-    <script src="{{ asset('/theme/js/plugins/easypiechart/jquery.easypiechart.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/plugins/easypiechart/jquery.easypiechart.js') }}"></script> -->
 
     <!-- Sparkline -->
-    <script src="{{ asset('/theme/js/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/plugins/sparkline/jquery.sparkline.min.js') }}"></script> -->
 
     <!-- Sparkline demo data  -->
-    <script src="{{ asset('/theme/js/demo/sparkline-demo.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/demo/sparkline-demo.js') }}"></script> -->
 
     <!-- dataTables linkes -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Chosen -->
+    <script src="{{ asset('/theme/js/plugins/chosen/chosen.jquery.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('/theme/js/plugins/select2/select2.full.min.js') }}"></script>
+    <!-- DROPZONE -->
+    <!-- <script src="{{ asset('/theme/js/plugins/dropzone/dropzone.js') }}"></script> -->
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Drop Zone -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
     @yield('script')
+    @yield('fileZoneScript')
 </body>
 
 </html>

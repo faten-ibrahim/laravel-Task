@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('view_visitors_export');
 // });
 
-Route::get('ss','NewsController@getNews');
+Route::get('ss', 'NewsController@getNews');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
@@ -31,6 +31,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('get-city-list', 'CitiesController@getCityList');
         Route::get('get-author-list', 'StaffController@returnStaff');
         Route::get('/home', 'HomeController@index')->name('home');
+        Route::post('upload/files', 'NewsController@storeFiles')
+            ->name('news.storeFiles');
 
         /***********************
         Roles CRUD Operations

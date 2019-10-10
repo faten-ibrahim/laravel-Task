@@ -3,14 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-body">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5>Create News</h5>
                         </div>
-                      
+
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
@@ -38,7 +38,7 @@
 
                                         <div class="form-group">
                                             <label for="author">Author</label>
-                                            <select id="author" name="staff_member_id">
+                                            <select class="form-control" id="author" name="staff_member_id">
                                                 <option value="">--Select--</option>
                                             </select>
                                         </div>
@@ -46,12 +46,34 @@
                                             <label for="content">Content</label>
                                             <textarea id="content" name="content"></textarea>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <input type="file" class="form-control" name="images[]" placeholder="image" multiple>
-                                        </div> -->
+
                                         <div class="form-group">
-                                            <input type="file" class="form-control" name="files[]" placeholder="file" multiple>
+                                            <!-- <label for="content">Content</label> -->
+                                            <select name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
+                                                @foreach($news as $key => $new)
+                                                <option class="option" value="{{$key}}"> {{$new}}</option>
+                                                @endforeach
+                                            </select>
+
+                                            <span id="hint" style="color:red;"></span>
                                         </div>
+
+
+
+
+
+                                        <!-- <div class="form-group">
+                                            <input type="file" class="form-control" name="files[]" placeholder="image" multiple>
+                                        </div> -->
+
+
+                                        <div class="form-group">
+                                            <label for="document">Upload</label>
+                                            <div class="needsclick dropzone" id="document-dropzone">
+                                            </div>
+                                        </div>
+
+                                        <br>
                                         <div class="form-group mb-0">
 
                                             <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px;">
@@ -99,7 +121,56 @@
         <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
         <script>
             CKEDITOR.replace('content');
+            $('.chosen-select').chosen();
+
+            var limit = 9;
+            $("#hint").hide();
+            $('.chosen-select').on('change', function(evt) {
+                // alert("Change");
+                var numItems = $('.result-selected').length;
+                if (numItems >= limit) {
+                    $("#hint").show().text("maximum selections will be stored are 10");
+
+                    // does not work
+                    $("option[class='active-result']").attr("disabled", "disabled");
+
+                } else {
+                    $("#hint").hide();
+                }
+            });
         </script>
+
+        @section('fileZoneScript')
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+        <script>
+            var uploadedDocumentMap = {}
+            Dropzone.autoDiscover = false;
+            let dropzone = new Dropzone('#document-dropzone', {
+                url: '{{ route('news.storeFiles') }}',
+                maxFilesize: 1, // MB
+                addRemoveLinks: true,
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                success: function(file, response) {
+                    $('form').append('<input type="hidden" name="document[]" value="' + response.name+'$'+response.mimeType + '">')
+                    uploadedDocumentMap[file.name] = response.name
+                },
+                removedfile: function(file) {
+                    file.previewElement.remove()
+                    var name = ''
+                    if (typeof file.file_name !== 'undefined') {
+                        name = file.file_name
+                    } else {
+                        name = uploadedDocumentMap[file.name]
+                    }
+                    $('form').find('input[name="document[]"][value="' + name + '"]').remove()
+                },
+            })
+            // Dropzone.options.documentDropzone = 
+        </script>
+        @stop
+
         <!-- Laravel Javascript Validation -->
         <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 

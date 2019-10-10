@@ -36,4 +36,9 @@ class News extends Model
         return $this->belongsTo(StaffMember::class);
     }
 
+    public function relatedNews()
+    {
+        return $this->hasMany(RelatedNews::class);
+    }
+
 }

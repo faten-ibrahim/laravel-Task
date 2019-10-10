@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use App\File;
 use App\Http\Requests\StoreNewsRequest;
 use App\News;
+use App\RelatedNews;
 use App\StaffMember;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
+use App\Traits\ImageUploadTrait;
 
 class NewsController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -57,7 +60,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('news.create');
+        $news = $this->getRelatedNews();
+        return view('news.create', compact('news'));
     }
 
     /**
@@ -66,23 +70,13 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreNewsRequest $request)
     {
         $con = trim($request->content, "<p>");
         $con = trim($con, "</p>");
         $news = News::create(array_merge($request->all(), ['content' => $con]));
-
-        if ($request->hasfile('files')) {
-            foreach ($request->file('files') as $file) {
-                $name = $file->getClientOriginalName();
-                $file->move(public_path('/uploads/news/'), $name);
-                $news->files()->create([
-                    'name' => $name,
-                    'mime_type' => $file->getClientOriginalExtension(),
-                ]);
-            }   
-        }
-
+        $this->storeFilesIntoDatabase($request, $news);
+        $this->storeRelatedNews($request->get('related'), $news);
         return redirect()->route('news.index')->with('status', 'News added successfully !');
     }
 
@@ -105,7 +99,14 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        //
+        $News = $this->getRelatedNews();
+        $related = $news->relatedNews()->select("related_news_id")->get()->toArray();
+        $related = array_column($related, 'related_news_id');
+        $staff = StaffMember::with(['user' => function ($q) {
+            $q->select('id', 'first_name');
+        }])->get();
+        $staff = $staff->pluck("user.first_name", "id");
+        return view('news.edit', compact('news', 'News', 'staff', 'related'));
     }
 
     /**
@@ -117,7 +118,13 @@ class NewsController extends Controller
      */
     public function update(StoreNewsRequest $request, News $news)
     {
-        //
+        // dd("hererree");
+        $con = trim($request->content, "<p>");
+        $con = trim($con, "</p>");
+        $news->update(array_merge($request->all(), ['content' => $con]));
+        $this->storeFilesIntoDatabase($request, $news);
+        $this->storeRelatedNews($request->get('related'), $news);
+        return redirect()->route('news.index')->with('status', 'News updated successfully !');
     }
 
     /**
@@ -128,6 +135,33 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        //
+        $news->delete();
+        return redirect()->route('news.index')->with('status', 'News deleted successfully !');
+    }
+
+    public function getRelatedNews()
+    {
+        $news = News::pluck("main_title", "id");
+        return $news;
+    }
+
+    public function storeFiles(Request $request)
+    {
+        return $this->storeFilesIntoStorage($request);
+    }
+
+    public function storeRelatedNews($userSelections,$news)
+    {
+        if ($userSelections) {
+            $news->relatedNews()->delete();
+            if (count($userSelections) > 10) {
+                $userSelections = array_slice($userSelections, 0, 10);
+            }
+            foreach ($userSelections as $relatedNewsId) {
+                $news->relatedNews()->create([
+                    'related_news_id' => $relatedNewsId,
+                ]);
+            }
+        }
     }
 }

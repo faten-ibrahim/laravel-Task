@@ -18,4 +18,10 @@ class Visitor extends Model
         return $this->belongsTo(City::class)->select(array('id', 'name','country_id'));
     }
 
+    public function file()
+    {
+        return $this->morphOne('App\File', 'fileable');
+    }
+
+
 }
