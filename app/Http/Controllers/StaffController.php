@@ -70,7 +70,7 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
-        $staff_user = User::create(array_merge($request->all(), ['password' => Hash::make('123456')]));
+        $staff_user = User::create(array_merge($request->all(),['password' => Hash::make('123456')],['type'=>'staff']));
         $staff = StaffMember::create(array_merge($request->all(), ['user_id' => $staff_user->id]));
         $this->storeImageIntoDatabase($request, $staff, "staff");
         $this->sendResetLinkEmail($request);

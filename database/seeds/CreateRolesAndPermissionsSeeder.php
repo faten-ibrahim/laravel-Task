@@ -57,7 +57,10 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'last_name' => 'Hai sdugu',
             'email' => 'admin@gmail.com',
             'phone' => '01155959747',
-            'password' => Hash::make('12345678')
+            'password' => Hash::make('12345678'),
+            'city_id' =>1,
+            'country_id' => 1,
+            'type'=>'admin'
         ]);
 
         $role = Role::create(['name' => 'Admin', 'description' => 'any description']);
@@ -70,7 +73,9 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'last_name' => 'ali',
             'email' => 'visitor@gmail.com',
             'phone' => '01155959788',
-            'password' => Hash::make('12345678')
+            'password' => Hash::make('12345678'),
+            'city_id' =>1,
+            'country_id' => 1,
         ]);
 
         // $role2 = Role::create(['name' => 'Visitor', 'description' => 'any description']);
@@ -89,7 +94,9 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'last_name' => 'ali',
             'email' => 'kamel@gmail.com',
             'phone' => '01155959755',
-            'password' => Hash::make('12345678')
+            'password' => Hash::make('12345678'),
+            'city_id' =>1,
+            'country_id' => 1,
         ]);
 
         $user->givePermissionTo('role-list');

@@ -10,9 +10,6 @@ class Visitor extends Model
         'first_name', 'last_name', 'phone', 'email', 'password', 'gender', 'country_id', 'city_id'
     ];
 
-    protected $attributes = [
-        'is_visitor' => true,
-    ];
     public function city()
     {
         return $this->belongsTo(City::class)->select(array('id', 'name','country_id'));

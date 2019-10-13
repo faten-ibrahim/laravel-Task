@@ -32,7 +32,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
     protected $maxAttempts = 3;
     protected $decayMinutes = 0.3; // Default is 1
     /**
@@ -52,7 +52,7 @@ class LoginController extends Controller
             $this->username() => 'required|string',
             'password' => 'required|string',
             // 'g-recaptcha-response' => 'sometimes|recaptcha',
-            'g-recaptcha-response' => [ new R_ecapcha]
+            'g-recaptcha-response' => [new R_ecapcha]
         ]);
     }
 
@@ -79,5 +79,14 @@ class LoginController extends Controller
             $this->username() => [trans('auth.failed')],
 
         ]);
+    }
+
+    protected function authenticated()
+    {
+        if (auth()->user()->type === 'admin') {
+            return redirect('/home');
+        }
+
+        return redirect('/');
     }
 }

@@ -14,13 +14,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 10)->create();
+        
         factory(Role::class, 200)->create();
         //Seed the countries
         $this->call(CountriesSeeder::class);
         $this->command->info('Seeded the countries!');
 
         factory(City::class, 20)->create();
+        factory(User::class, 4)->create();
         $this->call(CreateRolesAndPermissionsSeeder::class);
         $this->call(JobsTableSeeder::class);
     }

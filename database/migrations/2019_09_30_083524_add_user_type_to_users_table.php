@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIsVisitorToUsersTable extends Migration
+class AddUserTypeToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddIsVisitorToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_visitor')->default(false);
+            $table->string('type')->default('visitor');
         });
     }
 
@@ -26,7 +26,9 @@ class AddIsVisitorToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_visitor');
+            $table->dropColumn('type');
         });
     }
 }
+
+//2019_09_30_083524_add_is_visitor_to_users_table.php

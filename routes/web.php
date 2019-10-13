@@ -15,15 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 // Route::get('/ex', function () {
 //     return view('view_visitors_export');
 // });
 
-Route::get('ss', 'NewsController@getNews');
+// Route::get('ss', 'NewsController@getNews');
+
+Route::get('get_staff','StaffController@getStaffMembers');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {

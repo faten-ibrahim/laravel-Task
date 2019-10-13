@@ -37,7 +37,7 @@ class VisitorsController extends Controller
 
     public function getVisitors()
     {
-        $visitors = Visitor::with(['city', 'city.country'])->where('is_visitor', '=', 1)
+        $visitors = Visitor::with(['city', 'city.country'])->where('type','visitor')
             ->select('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'city_id', 'is_active');
         return Datatables::of($visitors)
             ->addColumn('action', function ($row) {
