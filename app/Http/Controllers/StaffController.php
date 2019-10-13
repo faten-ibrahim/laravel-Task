@@ -14,7 +14,6 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use App\Traits\ImageUploadTrait;
-use App\Upload;
 use DB;
 
 class StaffController extends Controller
@@ -71,12 +70,9 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
-        // dd($request->all());
-        $type="staff";
         $staff_user = User::create(array_merge($request->all(),['password' => Hash::make('123456')]));
-        // $this->storeImageIntoStorage($request->file('image_name'),$type);
         $staff=StaffMember::create(array_merge($request->all(),['user_id' => $staff_user->id]));
-        $this->storeImageIntoDatabase($request,$staff,$type);
+        $this->storeImageIntoDatabase($request,$staff,"staff");
         $this->sendResetLinkEmail($request);
         return redirect()->route('staff.index')->with('status', 'Staff Member Created successfully !');
     }
@@ -94,9 +90,7 @@ class StaffController extends Controller
         $countries = Country::pluck("full_name", "id");
         $cities=City::pluck("name","id");
         $user = $staff->user;
-        $image_name = Upload::where('user_id', '=', $user->id)->select('image_name')->first();
-        // dd($image_name);
-        // dd($user);
+        $image_name= $staff->file()->pluck("name")[0];
         return view('staff.edit', compact('roles', 'jobs', 'countries','cities', 'user', 'staff', 'image_name'));
     }
 
@@ -112,11 +106,7 @@ class StaffController extends Controller
         $staff->update($request->all());
         $user = $staff->user;
         $user->update($request->all());
-        $imageUrl = $this->getImageUrl($request);
-        if ($imageUrl) {
-            // Save images
-            $this->saveImages($request, $imageUrl, $user->id);
-        }
+        $this->storeImageIntoDatabase($request,$staff,"staff");
 
         return redirect()->route('staff.index')->with('status', 'Staff Member Updated successfully !');
     }
@@ -147,6 +137,11 @@ class StaffController extends Controller
             throw $e;
           } 
         return redirect()->route('staff.index');
+    }
+
+    public function storeFiles(Request $request)
+    {
+        return $this->storeFileIntoStorage($request,"staff");
     }
 
     public function returnStaff(Request $request)

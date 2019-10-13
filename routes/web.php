@@ -33,6 +33,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::post('upload/files', 'NewsController@storeFiles')
             ->name('news.storeFiles');
+        // Route::post('upload/files', 'StaffController@storeFiles')
+        //     ->name('staff.storeImage');
+        // Route::post('upload/files', 'VisitorsController@storeFiles')
+        //     ->name('visitors.storeImage');
 
         /***********************
         Roles CRUD Operations
@@ -88,8 +92,9 @@ Route::group(['middleware' => ['auth']], function () {
          ***************************/
         Route::resource(
             'news',
-            'NewsController',
-            array('except' => 'show')
+            'NewsController'
         );
+        Route::get('/news/{news}/toggle', 'NewsController@togglePublish')
+            ->name('news.toggleStatus');
     });
 });

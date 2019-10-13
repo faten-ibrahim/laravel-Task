@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="col-md-5">
-    <div class="card" style="margin-top: -20px; min-height:600px;">
+<div class="col-md-7">
+    <div class="card" style="margin-top: -20px;">
         <div class="card-body">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -36,7 +36,7 @@
                                 </div>
 
 
-                                <div class="form-group">
+                                <div class="form-group" style="clear:both">
                                     <label for="role_id">Role</label>
                                     <select class="form-control col-md-4" name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
                                         @foreach($roles as $role)
@@ -78,14 +78,12 @@
                                     <input type="radio" name="gender" value="Male" {{ $user->gender == 'Male' ? 'checked' : ''}}> Male<br>
                                     <input type="radio" name="gender" value="Female" {{ $user->gender == 'Female' ? 'checked' : ''}}> Female<br>
                                 </div>
-                                <br>
-                                <br>
-                                {{$image_name}}
-                                <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                    <input type="file" name="image_name" class="form-control" id="name" value="{{$image_name}}">
+                                <div class="form-group">
+                                    @if ("{{ $image_name }}")
+                                    <img src="<?php echo asset("/uploads/staff/$image_name")?>" width="100px" height="100px"/>
+                                    @endif
+                                    <input type="file" placeholder="{{ $image_name }}" name="image_name" class="form-control" id="name" />
                                 </div>
-
-                                <br>
                                 <div class="form-group mb-0">
 
                                     <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px;">

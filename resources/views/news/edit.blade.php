@@ -54,7 +54,7 @@
                                             <!-- <label for="content">Content</label> -->
                                             <select name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
                                                 @foreach($News as $key => $new)
-                                                <option class="option" value="{{$key}}" {{ (in_array($key, $related) ? "selected":"") }}> {{$new}}</option>    
+                                                <option class="option" value="{{$key}}" {{ (in_array($key, $related) ? "selected":"") }}> {{$new}}</option>
                                                 @endforeach
                                             </select>
                                             <span id="hint" style="color:red;"></span>
@@ -63,9 +63,14 @@
                                         <div class="form-group">
                                             <label for="document">Upload</label>
                                             <div class="needsclick dropzone" id="document-dropzone">
+                                                @if ("{{ $files }}")
+                                                @foreach($files as $key => $file)
+                                                <input type="hidden" name="document[]" value="{{$file}} .$. {{$key}}" />
+                                                @endforeach
+                                                @endif
                                             </div>
                                         </div>
-                                        
+
                                         <div class="form-group mb-0">
 
                                             <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px;">
@@ -125,14 +130,14 @@
                     // does not work
                     $("option[class='active-result']").attr("disabled", "disabled");
 
-                   
-                }else{
+
+                } else {
                     $("#hint").hide();
                 }
             });
         </script>
 
-@section('fileZoneScript')
+        @section('fileZoneScript')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
         <script>
             var uploadedDocumentMap = {}
@@ -145,7 +150,7 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 success: function(file, response) {
-                    $('form').append('<input type="hidden" name="document[]" value="' + response.name+'$'+response.mimeType + '">')
+                    $('form').append('<input type="hidden" name="document[]" value="' + response.name + '$' + response.mimeType + '">')
                     uploadedDocumentMap[file.name] = response.name
                 },
                 removedfile: function(file) {

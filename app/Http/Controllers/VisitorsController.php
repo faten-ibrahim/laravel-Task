@@ -66,18 +66,9 @@ class VisitorsController extends Controller
      */
     public function store(StoreVisitorRequest $request)
     {
-        $visitor = Visitor::create(array_merge(
-            $request->all(),
-            ['password' => Hash::make('123456')]
-        ));
-        $imageUrl = $this->getImageUrl($request);
-        if ($imageUrl) {
-            // Save images
-            $this->saveImages($request, $imageUrl, $visitor->id);
-        }
-
+        $visitor = Visitor::create(array_merge($request->all(),['password' => Hash::make('123456')]));
+        $this->storeImageIntoDatabase($request,$visitor,"visitor");
         $this->sendResetLinkEmail($request);
-
         return redirect()->route('visitors.index')->with('status', 'Visitor Created successfully !');
     }
 
@@ -91,8 +82,8 @@ class VisitorsController extends Controller
     {
         $countries = Country::pluck("full_name", "id");
         $cities = City::pluck("name", "id");
-        // dd($visitor);
-        return view('visitors.edit', compact('countries', 'cities', 'visitor'));
+        $image_name= $visitor->file()->pluck("name")[0];
+        return view('visitors.edit', compact('countries', 'cities', 'visitor','image_name'));
     }
 
     /**
@@ -105,12 +96,7 @@ class VisitorsController extends Controller
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
         $visitor->update($request->all());
-        $imageUrl = $this->getImageUrl($request);
-        if ($imageUrl) {
-            // Save images
-            $this->saveImages($request, $imageUrl, $visitor->id);
-        }
-
+        $this->storeImageIntoDatabase($request,$visitor,"visitor");
         return redirect()->route('visitors.index')->with('status', 'Visitor Updated successfully !');
     }
 

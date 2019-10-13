@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-md-5">
+<div class="col-md-7">
     <div class="card" style="margin-top: -20px;">
         <div class="card-body">
             <div class="ibox float-e-margins">
@@ -36,7 +36,7 @@
                                     <label for="phone">{{ __('Phone') }}</label>
                                     <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="phone">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" style="clear:both">
                                     <label for="role_id">Role</label>
                                     <select name="role_id" class="form-control col-md-4 @error('role_id') is-invalid @enderror" required>
                                         <option value="" selected disabled>Select</option>
@@ -86,6 +86,12 @@
                                 <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                                     <input type="file" name="image_name" class="form-control" id="name" value="">
                                 </div>
+
+                                <!-- <div class="form-group">
+                                    <label for="document">Upload</label>
+                                    <div class="needsclick dropzone" id="document-dropzone">
+                                    </div>
+                                </div> -->
                                 <br>
                                 <div class="form-group mb-0">
 
@@ -134,8 +140,11 @@
         }
     });
 </script>
+
+@endsection
+
+
 <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
 {!! JsValidator::formRequest('App\Http\Requests\StoreStaffMemberRequest') !!}
-@endsection

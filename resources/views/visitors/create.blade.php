@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-md-5">
+<div class="col-md-7">
     <div class="card" style="margin-top: -20px;">
         <div class="card-body">
             <div class="ibox float-e-margins">
@@ -35,7 +35,7 @@
                                     <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="phone">
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group" style="clear:both">
                                     <label for="country_id">Country</label>
                                     <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
                                         <option value="" selected disabled>Select</option>
@@ -54,7 +54,7 @@
                                     </div>
 
                                     <!--radiobutton -->
-                                    <div id="gender-group" class="form-group" style="width:60%;">
+                                    <div id="gender-group" class="form-group">
                                         <label for="gender" class="col-md-4 control-label">Gender</label>
 
                                         <div class="col-md-6">
@@ -64,11 +64,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                    <div class="form-group">
                                         <input type="file" name="image_name" class="form-control" id="name" value="">
 
                                     </div>
-                                    <br>
                                     <br>
                                     <div class="form-group mb-0">
 

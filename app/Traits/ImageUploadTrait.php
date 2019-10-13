@@ -9,19 +9,6 @@ use Illuminate\Http\Request;
 
 trait ImageUploadTrait
 {
-
-    // public function uploadImagesToClouder($image, $name, $imageName)
-    // {
-    //     Cloudder::upload($imageName);
-    //     list($width, $height) = getimagesize($imageName); // filesize($image_name);//$image_name->getSize();
-    //     Cloudder::show(Cloudder::getPublicId(), ["width" => $width, "height" => $height]);
-    //     //save to uploads directory
-    //     $image->move(public_path("uploads"), $name);
-
-    //     return $this;
-    // }
-
-
     // Upload News files
     public function uploadFile($file, $path, $name)
     {
@@ -37,24 +24,23 @@ trait ImageUploadTrait
         }
         $name = uniqid() . '_' . trim($file->getClientOriginalName());
         $this->uploadFile($file, $path, $name);
-
-        return response()->json([
+        return array([
             'name' => $name,
             'mimeType' => $file->getClientOriginalExtension(),
         ]);
     }
 
     // To store staff or visitor image
-    public function storeImageIntoDatabase(Request $request, $staff, $type)
+    public function storeImageIntoDatabase(Request $request, $model, $type)
     {
-        $data = $this->storeImageIntoStorage($request->file('image_name'), $type);
-
-        $fileData = explode("$", $data);
-        // dd($fileData);
-        $staff->files()->create([
-            'name' => $fileData[0],
-            'mime_type' => $fileData[1],
-        ]);
+        if ($request->hasFile('image_name')) {
+            $model->file()->delete();
+            $fileData = $this->storeImageIntoStorage($request->file('image_name'), $type);
+            $model->file()->create([
+                'name' => $fileData[0]['name'],
+                'mime_type' => $fileData[0]['mimeType'],
+            ]);
+        }
     }
 
 
@@ -65,7 +51,7 @@ trait ImageUploadTrait
         $file = $request->file('file');
         $name = uniqid() . '_' . trim($file->getClientOriginalName());
         $this->uploadFile($file, $path, $name);
-
+       
         return response()->json([
             'name' => $name,
             'mimeType' => $file->getClientOriginalExtension(),
@@ -74,12 +60,11 @@ trait ImageUploadTrait
 
     public function storeFilesIntoDatabase(Request $request, $news)
     {
-        //    dd($request->all());
+        dd($request->document);
         if ($request->document) {
             $news->files()->delete();
             foreach ($request->document as $file) {
                 $fileData = explode("$", $file);
-                // dd($fileData);
                 $news->files()->create([
                     'name' => $fileData[0],
                     'mime_type' => $fileData[1],
@@ -88,26 +73,22 @@ trait ImageUploadTrait
         }
     }
 
-    // public function saveImages(Request $request, $imageUrl, $userId)
+    // public function storeFileIntoStorage(Request $request, $type)
     // {
-    //     $image = new Upload();
-    //     $image->user_id = $userId;
-    //     $image->image_name = $request->file('image_name')->getClientOriginalName();
-    //     $image->image_url = $imageUrl;
-    //     $image->save();
-    // }
-
-    // public function getImageUrl($request)
-    // {
-    //     if ($request->hasFile('image_name')) {
-    //         $image = $request->file('image_name');
-    //         $name = $request->file('image_name')->getClientOriginalName();
-    //         $imageName = $request->file('image_name')->getRealPath();
-    //         $imageUrl = $this->uploadImagesToClouder($image, $name, $imageName);
-
-    //         return $imageUrl;
+    //     $path = '/uploads/news/';
+    //     if ($type && $type == "staff") {
+    //         $path = '/uploads/staff/';
+    //     } elseif ($type && $type == "visitor") {
+    //         $path = '/uploads/visitors/';
     //     }
+    //     $file = $request->file('file');
+    //     $name = uniqid() . '_' . trim($file->getClientOriginalName());
+    //     $this->uploadFile($file, $path, $name);
 
-    //     return '';
+    //     return response()->json([
+    //         'name' => $name,
+    //         'mimeType' => $file->getClientOriginalExtension(),
+    //     ]);
     // }
+    
 }

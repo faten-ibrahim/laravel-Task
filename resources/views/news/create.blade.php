@@ -140,6 +140,8 @@
             });
         </script>
 
+        @endsection
+
         @section('fileZoneScript')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
         <script>
@@ -148,12 +150,13 @@
             let dropzone = new Dropzone('#document-dropzone', {
                 url: '{{ route('news.storeFiles') }}',
                 maxFilesize: 1, // MB
+                acceptedFiles: ".jpg,.png,.pdf,.xls",
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 success: function(file, response) {
-                    $('form').append('<input type="hidden" name="document[]" value="' + response.name+'$'+response.mimeType + '">')
+                    $('form').append('<input type="hidden" name="document[]" value="' + response.name + '$' + response.mimeType + '">')
                     uploadedDocumentMap[file.name] = response.name
                 },
                 removedfile: function(file) {
@@ -171,8 +174,8 @@
         </script>
         @stop
 
+
         <!-- Laravel Javascript Validation -->
         <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
         {!! JsValidator::formRequest('App\Http\Requests\StoreNewsRequest') !!}
-        @endsection

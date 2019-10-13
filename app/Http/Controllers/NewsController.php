@@ -10,16 +10,16 @@ use App\StaffMember;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
+use DB;
 use App\Traits\ImageUploadTrait;
 
 class NewsController extends Controller
 {
     use ImageUploadTrait;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->authorizeResource(News::class);
+    }
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -60,7 +60,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $news = $this->getRelatedNews();
+        $news = $this->getRelatedNews("");
         return view('news.create', compact('news'));
     }
 
@@ -86,9 +86,11 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
-        //
+        $files=$news->files()->pluck('name','mime_type');
+        dd($files);
+        return view('news.show', compact('news'));
     }
 
     /**
@@ -99,14 +101,16 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $News = $this->getRelatedNews();
+        $News = $this->getRelatedNews($news->id);
         $related = $news->relatedNews()->select("related_news_id")->get()->toArray();
         $related = array_column($related, 'related_news_id');
         $staff = StaffMember::with(['user' => function ($q) {
             $q->select('id', 'first_name');
         }])->get();
         $staff = $staff->pluck("user.first_name", "id");
-        return view('news.edit', compact('news', 'News', 'staff', 'related'));
+        $files = $news->files()->pluck("name", "mime_type");
+        // dd($files);
+        return view('news.edit', compact('news', 'News', 'staff', 'related', 'files'));
     }
 
     /**
@@ -139,9 +143,9 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with('status', 'News deleted successfully !');
     }
 
-    public function getRelatedNews()
+    public function getRelatedNews($id)
     {
-        $news = News::pluck("main_title", "id");
+        $news = News::where('id', '!=', $id)->where('is_published',true)->pluck("main_title", "id");
         return $news;
     }
 
@@ -150,7 +154,7 @@ class NewsController extends Controller
         return $this->storeFilesIntoStorage($request);
     }
 
-    public function storeRelatedNews($userSelections,$news)
+    public function storeRelatedNews($userSelections, $news)
     {
         if ($userSelections) {
             $news->relatedNews()->delete();
@@ -163,5 +167,21 @@ class NewsController extends Controller
                 ]);
             }
         }
+    }
+
+    public function togglePublish(News $news)
+    {
+        DB::beginTransaction();
+        try {
+            // DB::table('news')->lockForUpdate()->first();
+            $news->lockForUpdate()->first();
+            $news->is_published= !$news->is_published;
+            $news->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+          }
+        return redirect()->route('news.index');
     }
 }

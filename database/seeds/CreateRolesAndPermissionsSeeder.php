@@ -39,7 +39,11 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'visitor-list',
             'visitor-delete',
             'visitor-edit',
-            'visitor-create'
+            'visitor-create',
+            'news-list',
+            'news-delete',
+            'news-edit',
+            'news-create'
         ];
 
 

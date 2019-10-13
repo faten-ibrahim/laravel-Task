@@ -9,7 +9,7 @@
 <br>
 
 
-@can('create',App\Job::class)
+@can('create',App\News::class)
 <a class="btn btn-info btn-sm" href="{{route('news.create')}}"><i class="fa fa-plus"></i><span>Add New News</span></a><br><br>
 @endcan
 
@@ -22,7 +22,7 @@
             <th>type</th>
             <th>Author</th>
             <th>created at</th>
-            @canAny(['job-update','job-delete'])
+            @canAny(['news-update','news-delete'])
             <th>Actions</th>
             @endcan
 
@@ -61,7 +61,7 @@
                 data:'created_at'
             },
 
-            @canAny(['job-update', 'job-delete']) {
+            @canAny(['news-update', 'news-delete']) {
                 data: 'action',
                 name: 'action',
                 orderable: false,

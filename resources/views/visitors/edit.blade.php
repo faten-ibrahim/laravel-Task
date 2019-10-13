@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="col-md-5">
-    <div class="card" style="margin-top: -20px; min-height:600px;">
+<div class="col-md-7">
+    <div class="card" style="margin-top: -20px;">
         <div class="card-body">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
@@ -32,12 +32,12 @@
 
                                 <div class="form-group" style="float:left; max-width:45%;">
                                     <label for="phone">{{ __('Phone') }}</label>
-                                    <input id="phone" type="text" value="{{ $visitor->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone"  required autocomplete="phone" autofocus>
+                                    <input id="phone" type="text" value="{{ $visitor->phone }}" class="form-control @error('phone') is-invalid @enderror" name="phone" required autocomplete="phone" autofocus>
 
                                 </div>
 
 
-                                <div class="form-group">
+                                <div class="form-group" style="clear:both">
                                     <label for="country_id">Country</label>
                                     <select class="form-control col-md-4" id="country" name="country_id" class="form-control @error('country_id') is-invalid @enderror" required>
                                         <option value="" selected disabled>Select</option>
@@ -46,35 +46,32 @@
                                         @endforeach
                                     </select>
 
-
-
-
-
                                     <div class="form-group">
                                         <label for="title">Select City:</label>
                                         <select name="city_id" id="city" class="form-control" style="width:350px">
-                                        @foreach($cities as $key => $city)
-                                        <option value="{{$key}}" {{ ($visitor->city_id == $key ? "selected":"") }}> {{$city}}</option>
-                                        @endforeach
+                                            @foreach($cities as $key => $city)
+                                            <option value="{{$key}}" {{ ($visitor->city_id == $key ? "selected":"") }}> {{$city}}</option>
+                                            @endforeach
                                         </select>
 
 
                                     </div>
-                                    <br><br>
+                                  
                                     <!--radiobutton -->
                                     <div class="form-group">
                                         <strong>Gendre:</strong>
                                         <input type="radio" name="gender" value="Male" {{ $visitor->gender == 'Male' ? 'checked' : ''}}> Male<br>
                                         <input type="radio" name="gender" value="Female" {{ $visitor->gender == 'Female' ? 'checked' : ''}}> Female<br>
                                     </div>
-                                    <br>
-                                    <br>
-                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+
+                                    <div class="form-group">
+                                        @if ("{{ $image_name }}")
+                                        <img src="<?php echo asset("/uploads/visitors/$image_name") ?>" width="100px" height="100px" />
+                                        @endif
                                         <input type="file" name="image_name" class="form-control" id="name" value="">
 
                                     </div>
-                                    <br>
-                                    <br>
+
                                     <div class="form-group mb-0">
 
                                         <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px;">
