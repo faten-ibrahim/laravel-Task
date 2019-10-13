@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreJobRequest;
 use App\Job;
 use Illuminate\Http\Request;
 
@@ -53,7 +54,7 @@ class JobsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreJobRequest $request)
     {
         Job::create($request->all());
         return redirect()->route('jobs.index')->with('status', 'Job Created successfully !');
@@ -78,7 +79,7 @@ class JobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Job $job)
+    public function update(StoreJobRequest $request, Job $job)
     {
         if ($job->is_reserved()) {
             return redirect()->route('jobs.index')->with('status', 'Job can not be Updated !');

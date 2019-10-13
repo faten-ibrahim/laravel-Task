@@ -51,8 +51,8 @@
     @if ($files)
     @foreach($files as $file)
     <div class="mb-3 pics animation 2">
-        <h2>test</h2>
-        <embed  src="<?php echo asset("/uploads/news/$file") ?>"  style="width:400px; height:800px;" frameborder="0">
+        <h2>Files</h2>
+        <embed  src="<?php echo asset("/uploads/news/$file") ?>" type="application/pdf" style="width:400px; height:800px;" frameborder="0">
     </div>
     @endforeach
     @endif

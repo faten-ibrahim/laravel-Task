@@ -143,8 +143,6 @@
 
 @endsection
 
-
-<!-- Laravel Javascript Validation -->
-<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-
+@section('validation')
 {!! JsValidator::formRequest('App\Http\Requests\StoreStaffMemberRequest') !!}
+@endsection

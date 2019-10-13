@@ -61,3 +61,7 @@
             </div>
         </div>
         @endsection
+
+        @section('validation')
+        {!! JsValidator::formRequest('App\Http\Requests\StoreCityRequest') !!}
+        @endsection

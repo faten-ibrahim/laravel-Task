@@ -70,9 +70,9 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
-        $staff_user = User::create(array_merge($request->all(),['password' => Hash::make('123456')]));
-        $staff=StaffMember::create(array_merge($request->all(),['user_id' => $staff_user->id]));
-        $this->storeImageIntoDatabase($request,$staff,"staff");
+        $staff_user = User::create(array_merge($request->all(), ['password' => Hash::make('123456')]));
+        $staff = StaffMember::create(array_merge($request->all(), ['user_id' => $staff_user->id]));
+        $this->storeImageIntoDatabase($request, $staff, "staff");
         $this->sendResetLinkEmail($request);
         return redirect()->route('staff.index')->with('status', 'Staff Member Created successfully !');
     }
@@ -88,10 +88,10 @@ class StaffController extends Controller
         $roles = Role::select("name", "id")->get();
         $jobs = Job::select("name", "id")->get();
         $countries = Country::pluck("full_name", "id");
-        $cities=City::pluck("name","id");
+        $cities = City::pluck("name", "id");
         $user = $staff->user;
-        $image_name= $staff->file()->pluck("name")[0];
-        return view('staff.edit', compact('roles', 'jobs', 'countries','cities', 'user', 'staff', 'image_name'));
+        $image_name = $staff->file ? $staff->file()->pluck("name")[0] : "";
+        return view('staff.edit', compact('roles', 'jobs', 'countries', 'cities', 'user', 'staff', 'image_name'));
     }
 
     /**
@@ -106,7 +106,7 @@ class StaffController extends Controller
         $staff->update($request->all());
         $user = $staff->user;
         $user->update($request->all());
-        $this->storeImageIntoDatabase($request,$staff,"staff");
+        $this->storeImageIntoDatabase($request, $staff, "staff");
 
         return redirect()->route('staff.index')->with('status', 'Staff Member Updated successfully !');
     }
@@ -129,19 +129,19 @@ class StaffController extends Controller
         try {
             // DB::table('users')->lockForUpdate()->first();
             $staff->user->lockForUpdate()->first();
-            $staff->user->is_active= !$staff->user->is_active;
+            $staff->user->is_active = !$staff->user->is_active;
             $staff->user->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
-          } 
+        }
         return redirect()->route('staff.index');
     }
 
     public function storeFiles(Request $request)
     {
-        return $this->storeFileIntoStorage($request,"staff");
+        return $this->storeFileIntoStorage($request, "staff");
     }
 
     public function returnStaff(Request $request)
@@ -152,17 +152,16 @@ class StaffController extends Controller
             //     $q->where('job_id', '=', $job_id);
             // })->pluck("first_name", "id");
             $job_id = Job::where('name', 'reporter')->pluck('id')->first();
-            $staff=StaffMember::with(['user'=> function ($q) {
+            $staff = StaffMember::with(['user' => function ($q) {
                 $q->select('id', 'first_name');
             }])->where('job_id', '=', $job_id)->get();
-            $staff=$staff->pluck("user.first_name","id");
+            $staff = $staff->pluck("user.first_name", "id");
         } else {
             $job_id = Job::where('name', 'writter')->pluck('id')->first();
-            $staff=StaffMember::with(['user'=> function ($q) {
+            $staff = StaffMember::with(['user' => function ($q) {
                 $q->select('id', 'first_name');
             }])->where('job_id', '=', $job_id)->get();
-            $staff=$staff->pluck("user.first_name","id");
-           
+            $staff = $staff->pluck("user.first_name", "id");
         }
 
         return response()->json($staff);

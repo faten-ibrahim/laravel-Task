@@ -56,7 +56,7 @@
 
 
                                     </div>
-                                  
+
                                     <!--radiobutton -->
                                     <div class="form-group">
                                         <strong>Gendre:</strong>
@@ -65,7 +65,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @if ("{{ $image_name }}")
+                                        @if($image_name)
                                         <img src="<?php echo asset("/uploads/visitors/$image_name") ?>" width="100px" height="100px" />
                                         @endif
                                         <input type="file" name="image_name" class="form-control" id="name" value="">
@@ -115,10 +115,8 @@
             }
         });
     </script>
+    @endsection
 
-
-    <!-- Laravel Javascript Validation -->
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-
-    {!! JsValidator::formRequest('App\Http\Requests\StoreStaffMemberRequest') !!}
+    @section('validation')
+    {!! JsValidator::formRequest('App\Http\Requests\StoreVisitorRequest') !!}
     @endsection

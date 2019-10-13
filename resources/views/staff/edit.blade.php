@@ -79,7 +79,7 @@
                                     <input type="radio" name="gender" value="Female" {{ $user->gender == 'Female' ? 'checked' : ''}}> Female<br>
                                 </div>
                                 <div class="form-group">
-                                    @if ("{{ $image_name }}")
+                                    @if($image_name)
                                     <img src="<?php echo asset("/uploads/staff/$image_name")?>" width="100px" height="100px"/>
                                     @endif
                                     <input type="file" placeholder="{{ $image_name }}" name="image_name" class="form-control" id="name" />
@@ -130,8 +130,7 @@
         });
     </script>
 
-    <!-- Laravel Javascript Validation -->
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-
-    {!! JsValidator::formRequest('App\Http\Requests\StoreVisitorRequest') !!}
-    @endsection
+    
+@section('validation')
+{!! JsValidator::formRequest('App\Http\Requests\StoreStaffMemberRequest') !!}
+@endsection

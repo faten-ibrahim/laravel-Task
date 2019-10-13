@@ -1,3 +1,4 @@
+ 
 @extends('layouts.admin')
 
 @section('content')
@@ -104,7 +105,6 @@
                                 $.each(res, function(key, value) {
                                     $("#author").append('<option value="' + key + '">' + value + '</option>');
                                 });
-
                             } else {
                                 $("#author").empty();
                             }
@@ -119,23 +119,20 @@
         <script>
             CKEDITOR.replace('content');
             $('.chosen-select').chosen();
-
             var limit = 9;
             $("#hint").hide();
             $('.chosen-select').on('change', function(evt) {
                 var numItems = $('.result-selected').length;
                 if (numItems >= limit) {
                     $("#hint").show().text("maximum selections will be stored are 10");
-
                     // does not work
                     $("option[class='active-result']").attr("disabled", "disabled");
-
-
                 } else {
                     $("#hint").hide();
                 }
             });
         </script>
+         @endsection
 
         @section('fileZoneScript')
         <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
@@ -168,8 +165,9 @@
             // Dropzone.options.documentDropzone = 
         </script>
         @stop
-        <!-- Laravel Javascript Validation -->
-        <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
+        @section('validation')
         {!! JsValidator::formRequest('App\Http\Requests\StoreNewsRequest') !!}
         @endsection
+        
+       

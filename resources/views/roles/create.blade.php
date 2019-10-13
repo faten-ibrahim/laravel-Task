@@ -70,3 +70,7 @@
             </div>
         </div>
         @endsection
+
+        @section('validation')
+        {!! JsValidator::formRequest('App\Http\Requests\StoreRoleRequest') !!}
+        @endsection

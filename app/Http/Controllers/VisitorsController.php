@@ -66,8 +66,8 @@ class VisitorsController extends Controller
      */
     public function store(StoreVisitorRequest $request)
     {
-        $visitor = Visitor::create(array_merge($request->all(),['password' => Hash::make('123456')]));
-        $this->storeImageIntoDatabase($request,$visitor,"visitor");
+        $visitor = Visitor::create(array_merge($request->all(), ['password' => Hash::make('123456')]));
+        $this->storeImageIntoDatabase($request, $visitor, "visitor");
         $this->sendResetLinkEmail($request);
         return redirect()->route('visitors.index')->with('status', 'Visitor Created successfully !');
     }
@@ -82,8 +82,8 @@ class VisitorsController extends Controller
     {
         $countries = Country::pluck("full_name", "id");
         $cities = City::pluck("name", "id");
-        $image_name= $visitor->file()->pluck("name")[0];
-        return view('visitors.edit', compact('countries', 'cities', 'visitor','image_name'));
+        $image_name = $visitor->file ? $visitor->file()->pluck("name")[0] : "";
+        return view('visitors.edit', compact('countries', 'cities', 'visitor', 'image_name'));
     }
 
     /**
@@ -96,7 +96,7 @@ class VisitorsController extends Controller
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
         $visitor->update($request->all());
-        $this->storeImageIntoDatabase($request,$visitor,"visitor");
+        $this->storeImageIntoDatabase($request, $visitor, "visitor");
         return redirect()->route('visitors.index')->with('status', 'Visitor Updated successfully !');
     }
 
@@ -118,13 +118,13 @@ class VisitorsController extends Controller
         try {
             // DB::table('users')->lockForUpdate()->first();
             $visitor->lockForUpdate()->first();
-            $visitor->is_active= !$visitor->is_active;
+            $visitor->is_active = !$visitor->is_active;
             $visitor->save();
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
-          }
+        }
         return redirect()->route('visitors.index');
     }
 
