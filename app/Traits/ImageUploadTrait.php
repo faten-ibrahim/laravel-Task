@@ -2,9 +2,6 @@
 
 namespace App\Traits;
 
-use App\File;
-use App\Upload;
-use JD\Cloudder\Facades\Cloudder as Cloudder;
 use Illuminate\Http\Request;
 
 trait ImageUploadTrait
@@ -60,7 +57,7 @@ trait ImageUploadTrait
 
     public function storeFilesIntoDatabase(Request $request, $news)
     {
-        dd($request->document);
+        // dd($request->document);
         if ($request->document) {
             $news->files()->delete();
             foreach ($request->document as $file) {

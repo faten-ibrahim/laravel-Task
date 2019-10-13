@@ -22,6 +22,7 @@
             <th>type</th>
             <th>Author</th>
             <th>created at</th>
+            <th>Published</th>
             @canAny(['news-update','news-delete'])
             <th>Actions</th>
             @endcan
@@ -59,6 +60,15 @@
             },
             {
                 data:'created_at'
+            },
+            {
+                mRender: function(data, type, row) {
+                    if(row.is_published){
+                        return '<i class="fa fa-check" style="margin-left:40%"></i>'
+                    }else{
+                        return '<i class="fa fa-close" style="margin-left:40%"></i>'
+                    }
+                }
             },
 
             @canAny(['news-update', 'news-delete']) {

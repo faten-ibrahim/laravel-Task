@@ -88,9 +88,9 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        $files=$news->files()->pluck('name','mime_type');
-        dd($files);
-        return view('news.show', compact('news'));
+        $images=$news->files()->whereNotIn('mime_type',['pdf','xlsx'])->pluck('name','mime_type')->toArray();
+        $files=$news->files()->whereIn('mime_type',['pdf','xlsx'])->pluck('name','mime_type')->toArray();
+        return view('news.show', compact('news','images','files'));
     }
 
     /**

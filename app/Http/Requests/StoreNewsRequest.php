@@ -30,7 +30,7 @@ class StoreNewsRequest extends FormRequest
             'staff_member_id' => 'required',
             'content'=>'required',
             'files' => 'nullable',
-            'files.*' => 'mimes:jpg,png,xls,pdf|max:1024',
+            'files.*' => 'mimes:jpg,png,xlsx,pdf|max:1024',
             'related'=>'nullable'
         ];
     }

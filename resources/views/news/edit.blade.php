@@ -145,6 +145,7 @@
             let dropzone = new Dropzone('#document-dropzone', {
                 url: '{{ route('news.storeFiles') }}',
                 maxFilesize: 1, // MB
+                acceptedFiles: ".jpg,.png,.pdf,.xlsx",
                 addRemoveLinks: true,
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
