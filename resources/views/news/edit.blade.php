@@ -148,8 +148,9 @@
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
                 success: function(file, response) {
-                    $('form').append('<input type="hidden" name="document[]" value="' + response.name + '$' + response.mimeType + '">')
-                    uploadedDocumentMap[file.name] = response.name
+                    console.log(response.fileId);
+                    $('form').append('<input type="hidden" name="document[]" value="' + response.fileId + '">')
+                    uploadedDocumentMap[file.name] = response.fileId
                 },
                 removedfile: function(file) {
                     file.previewElement.remove()

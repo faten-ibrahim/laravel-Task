@@ -18,14 +18,6 @@ class News extends Model
     /**
      * Get the post's image.
      */
-    // public function images()
-    // {
-    //     return $this->morphMany('App\Image', 'imageable');
-    // }
-
-      /**
-     * Get the post's image.
-     */
     public function files()
     {
         return $this->morphMany('App\File', 'fileable');
@@ -40,5 +32,4 @@ class News extends Model
     {
         return $this->hasMany(RelatedNews::class);
     }
-
 }

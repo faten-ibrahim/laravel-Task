@@ -37,7 +37,7 @@ class VisitorsController extends Controller
 
     public function getVisitors()
     {
-        $visitors = Visitor::with(['city', 'city.country'])->where('type','visitor')
+        $visitors = Visitor::with(['city', 'city.country'])->where('type', 'visitor')
             ->select('id', 'first_name', 'last_name', 'phone', 'email', 'gender', 'city_id', 'is_active');
         return Datatables::of($visitors)
             ->addColumn('action', function ($row) {
@@ -67,7 +67,7 @@ class VisitorsController extends Controller
     public function store(StoreVisitorRequest $request)
     {
         $visitor = Visitor::create(array_merge($request->all(), ['password' => Hash::make('123456')]));
-        $this->storeImageIntoDatabase($request, $visitor, "visitor");
+        $this->storeImage($request, $visitor);
         $this->sendResetLinkEmail($request);
         return redirect()->route('visitors.index')->with('status', 'Visitor Created successfully !');
     }
@@ -96,7 +96,7 @@ class VisitorsController extends Controller
     public function update(StoreVisitorRequest $request, Visitor $visitor)
     {
         $visitor->update($request->all());
-        $this->storeImageIntoDatabase($request, $visitor, "visitor");
+        $this->updateImage($request, $visitor);
         return redirect()->route('visitors.index')->with('status', 'Visitor Updated successfully !');
     }
 
@@ -114,17 +114,10 @@ class VisitorsController extends Controller
 
     public function toggleBan(Visitor $visitor)
     {
-        DB::beginTransaction();
-        try {
-            // DB::table('users')->lockForUpdate()->first();
-            $visitor->lockForUpdate()->first();
-            $visitor->is_active = !$visitor->is_active;
-            $visitor->save();
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+        $visitor->lockForUpdate()->first();
+        $visitor->is_active = !$visitor->is_active;
+        $visitor->save();
+        DB::commit();
         return redirect()->route('visitors.index');
     }
 

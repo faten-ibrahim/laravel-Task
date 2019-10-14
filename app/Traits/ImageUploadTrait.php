@@ -2,41 +2,43 @@
 
 namespace App\Traits;
 
+use App\File;
 use Illuminate\Http\Request;
 
 trait ImageUploadTrait
 {
-    // Upload News files
-    public function uploadFile($file, $path, $name)
-    {
-        $file->move(public_path($path), $name);
-    }
-
     // To store staff or visitor image
-    public function storeImageIntoStorage($file, $type)
-    {
-        $path = '/uploads/visitors/';
-        if ($type == "staff") {
-            $path = '/uploads/staff/';
-        }
-        $name = uniqid() . '_' . trim($file->getClientOriginalName());
-        $this->uploadFile($file, $path, $name);
-        return array([
-            'name' => $name,
-            'mimeType' => $file->getClientOriginalExtension(),
-        ]);
-    }
-
-    // To store staff or visitor image
-    public function storeImageIntoDatabase(Request $request, $model, $type)
+    public function storeImage(Request $request, $model, $type = "visitors")
     {
         if ($request->hasFile('image_name')) {
-            $model->file()->delete();
-            $fileData = $this->storeImageIntoStorage($request->file('image_name'), $type);
+            $file = $request->file('image_name');
+            $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/' . $type), $name);
             $model->file()->create([
-                'name' => $fileData[0]['name'],
-                'mime_type' => $fileData[0]['mimeType'],
+                'name' =>  $name,
+                'mime_type' => $file->getClientOriginalExtension(),
             ]);
+        }
+    }
+
+    // To update staff or visitor image
+    public function updateImage(Request $request, $model, $type = "visitor")
+    {
+        if ($request->hasFile('image_name')) {
+            $file = $request->file('image_name');
+            $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/' . $type), $name);
+            if ($model->file) {
+                $model->file()->update([
+                    'name' =>  $name,
+                    'mime_type' => $file->getClientOriginalExtension(),
+                ]);
+            } else {
+                $model->file()->create([
+                    'name' =>  $name,
+                    'mime_type' => $file->getClientOriginalExtension(),
+                ]);
+            }
         }
     }
 
@@ -44,48 +46,32 @@ trait ImageUploadTrait
     // To store news images and files
     public function storeFilesIntoStorage(Request $request)
     {
-        $path = '/uploads/news/';
         $file = $request->file('file');
-        $name = uniqid() . '_' . trim($file->getClientOriginalName());
-        $this->uploadFile($file, $path, $name);
-       
-        return response()->json([
+        $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
+        $file->move(public_path('/uploads/news/'), $name);
+        $file = File::create([
             'name' => $name,
-            'mimeType' => $file->getClientOriginalExtension(),
+            'mime_type' =>  $file->getClientOriginalExtension(),
+        ]);
+        return response()->json([
+            'fileId' => $file->id,
         ]);
     }
 
     public function storeFilesIntoDatabase(Request $request, $news)
     {
-        // dd($request->document);
         if ($request->document) {
-            $news->files()->delete();
-            foreach ($request->document as $file) {
-                $fileData = explode("$", $file);
-                $news->files()->create([
-                    'name' => $fileData[0],
-                    'mime_type' => $fileData[1],
-                ]);
-            }
+            $files = File::whereIn('id', $request->document)->get();
+            $news->files()->saveMany($files);
         }
     }
 
-    // public function storeFileIntoStorage(Request $request, $type)
-    // {
-    //     $path = '/uploads/news/';
-    //     if ($type && $type == "staff") {
-    //         $path = '/uploads/staff/';
-    //     } elseif ($type && $type == "visitor") {
-    //         $path = '/uploads/visitors/';
-    //     }
-    //     $file = $request->file('file');
-    //     $name = uniqid() . '_' . trim($file->getClientOriginalName());
-    //     $this->uploadFile($file, $path, $name);
-
-    //     return response()->json([
-    //         'name' => $name,
-    //         'mimeType' => $file->getClientOriginalExtension(),
-    //     ]);
-    // }
-    
+    public function updateFilesInDatabase(Request $request, $news)
+    {
+        if ($request->document) {
+            $files = File::whereIn('id', $request->document)->get();
+            $news->files()->delete();
+            $news->files()->saveMany($files);
+        }
+    }
 }

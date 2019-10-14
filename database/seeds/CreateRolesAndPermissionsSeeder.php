@@ -103,5 +103,6 @@ class CreateRolesAndPermissionsSeeder extends Seeder
         $user->givePermissionTo('city-list');
         $user->givePermissionTo('job-list');
         $user->givePermissionTo('staff-list');
+        $user->givePermissionTo('news-list');
     }
 }

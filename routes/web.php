@@ -23,9 +23,9 @@ Route::get('/', function () {
 //     return view('view_visitors_export');
 // });
 
-// Route::get('ss', 'NewsController@getNews');
+Route::get('ss', 'NewsController@getRelatedNews');
 
-Route::get('get_staff','StaffController@getStaffMembers');
+// Route::get('get_staff','StaffController@getStaffMembers');
 
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {

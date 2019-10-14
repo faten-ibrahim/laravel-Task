@@ -30,10 +30,6 @@ class NewsController extends Controller
 
     public function getNews()
     {
-        // $news = StaffMember::with(['news','user'=> function ($q) {
-        //     $q->select('id','first_name');
-        // }])->select('id','user_id');
-
         $news = News::with(['staffMember' => function ($q) {
             $q->select('id', 'user_id');
         }, 'staffMember.user' => function ($q) {
@@ -44,10 +40,7 @@ class NewsController extends Controller
                 return view('news.actions', compact('row'));
             })
             ->editColumn('created_at', function ($news) {
-                return $news->created_at ? with(new Carbon($news->created_at))->format('m/d/Y') : '';
-            })
-            ->filterColumn('created_at', function ($query, $keyword) {
-                $query->whereRaw("DATE_FORMAT(created_at,'%m/%d/%Y') like ?", ["%$keyword%"]);
+                return $news->created_at ? with($news->created_at)->format('m/d/Y') : '';
             })
             ->rawColumns(['action'])
             ->make(TRUE);
@@ -72,9 +65,7 @@ class NewsController extends Controller
      */
     public function store(StoreNewsRequest $request)
     {
-        $con = trim($request->content, "<p>");
-        $con = trim($con, "</p>");
-        $news = News::create(array_merge($request->all(), ['content' => $con]));
+        $news = News::create($request->all());
         $this->storeFilesIntoDatabase($request, $news);
         $this->storeRelatedNews($request->get('related'), $news);
         return redirect()->route('news.index')->with('status', 'News added successfully !');
@@ -88,9 +79,18 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        $images=$news->files()->whereNotIn('mime_type',['pdf','xlsx'])->pluck('name','mime_type')->toArray();
-        $files=$news->files()->whereIn('mime_type',['pdf','xlsx'])->pluck('name','mime_type')->toArray();
-        return view('news.show', compact('news','images','files'));
+        $totalFiles = $news->files->pluck('name', 'mime_type');
+        $imageExtentions = ['jpg', 'png'];
+        $images = [];
+        $files = [];
+        foreach ($totalFiles as $key => $file) {
+            if (!in_array($key, $imageExtentions)) {
+                array_push($files, $file);
+            } else {
+                array_push($images, $file);
+            }
+        }
+        return view('news.show', compact('news', 'images', 'files'));
     }
 
     /**
@@ -122,11 +122,8 @@ class NewsController extends Controller
      */
     public function update(StoreNewsRequest $request, News $news)
     {
-        // dd("hererree");
-        $con = trim($request->content, "<p>");
-        $con = trim($con, "</p>");
-        $news->update(array_merge($request->all(), ['content' => $con]));
-        $this->storeFilesIntoDatabase($request, $news);
+        $news->update($request->all());
+        $this->updateFilesInDatabase($request, $news);
         $this->storeRelatedNews($request->get('related'), $news);
         return redirect()->route('news.index')->with('status', 'News updated successfully !');
     }
@@ -145,7 +142,7 @@ class NewsController extends Controller
 
     public function getRelatedNews($id)
     {
-        $news = News::where('id', '!=', $id)->where('is_published',true)->pluck("main_title", "id");
+        $news = News::where('id', '!=', $id)->where('is_published', true)->pluck("main_title", "id");
         return $news;
     }
 
@@ -171,17 +168,10 @@ class NewsController extends Controller
 
     public function togglePublish(News $news)
     {
-        DB::beginTransaction();
-        try {
-            // DB::table('news')->lockForUpdate()->first();
-            $news->lockForUpdate()->first();
-            $news->is_published= !$news->is_published;
-            $news->save();
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-          }
+        $news->lockForUpdate()->first();
+        $news->is_published = !$news->is_published;
+        $news->save();
+        DB::commit();
         return redirect()->route('news.index');
     }
 }

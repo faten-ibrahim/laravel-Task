@@ -70,9 +70,9 @@ class StaffController extends Controller
      */
     public function store(StoreStaffMemberRequest $request)
     {
-        $staff_user = User::create(array_merge($request->all(),['password' => Hash::make('123456')],['type'=>'staff']));
+        $staff_user = User::create(array_merge($request->all(), ['password' => Hash::make('123456')], ['type' => 'staff']));
         $staff = StaffMember::create(array_merge($request->all(), ['user_id' => $staff_user->id]));
-        $this->storeImageIntoDatabase($request, $staff, "staff");
+        $this->storeImage($request, $staff, "staff");
         $this->sendResetLinkEmail($request);
         return redirect()->route('staff.index')->with('status', 'Staff Member Created successfully !');
     }
@@ -106,7 +106,7 @@ class StaffController extends Controller
         $staff->update($request->all());
         $user = $staff->user;
         $user->update($request->all());
-        $this->storeImageIntoDatabase($request, $staff, "staff");
+        $this->updateImage($request, $staff, "staff");
 
         return redirect()->route('staff.index')->with('status', 'Staff Member Updated successfully !');
     }
@@ -125,17 +125,10 @@ class StaffController extends Controller
 
     public function toggleBan(StaffMember $staff)
     {
-        DB::beginTransaction();
-        try {
-            // DB::table('users')->lockForUpdate()->first();
-            $staff->user->lockForUpdate()->first();
-            $staff->user->is_active = !$staff->user->is_active;
-            $staff->user->save();
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+        $staff->user->lockForUpdate()->first();
+        $staff->user->is_active = !$staff->user->is_active;
+        $staff->user->save();
+        DB::commit();
         return redirect()->route('staff.index');
     }
 
