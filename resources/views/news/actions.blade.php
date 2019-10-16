@@ -9,7 +9,7 @@
 
 
 @if($row->is_published)
-<a href="news/{{$row->id}}" class="bttn btn btn-xs btn-warning " data-id="{{$row->id}}"><i class="fa fa-ban"></i><span>Unpublish</span></a>
+<a href="news/{{$row->id}}/toggle" class="bttn btn btn-xs btn-warning " data-id="{{$row->id}}"><i class="fa fa-ban"></i><span>Unpublish</span></a>
 @else
 <a href="news/{{$row->id}}/toggle" class="bttn btn btn-xs btn-info" data-id="{{$row->id}}"><i class="fa fa-check"></i><span>Publish</span></a>
 @endif

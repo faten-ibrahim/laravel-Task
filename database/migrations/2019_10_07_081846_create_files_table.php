@@ -20,6 +20,7 @@ class CreateFilesTable extends Migration
             $table->string('fileable_type',100)->nullable();
             $table->string('mime_type',50);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

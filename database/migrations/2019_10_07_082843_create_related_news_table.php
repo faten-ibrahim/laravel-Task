@@ -22,6 +22,7 @@ class CreateRelatedNewsTable extends Migration
             $table->foreign('related_news_id')
                 ->references('id')->on('news')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

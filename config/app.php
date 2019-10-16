@@ -171,6 +171,7 @@ return [
         'Webpatser\Countries\CountriesServiceProvider',
         'JD\Cloudder\CloudderServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        'BenSampo\Enum\EnumServiceProvider',
 
 
 

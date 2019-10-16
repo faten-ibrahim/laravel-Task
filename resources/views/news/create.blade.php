@@ -49,10 +49,8 @@
 
                                         <div class="form-group">
                                             <!-- <label for="content">Content</label> -->
-                                            <select name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
-                                                @foreach($news as $key => $new)
-                                                <option class="option" value="{{$key}}"> {{$new}}</option>
-                                                @endforeach
+                                            <select id="mySelect2" name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
+                                            
                                             </select>
 
                                             <span id="hint" style="color:red;"></span>
@@ -92,6 +90,7 @@
         @endsection
 
         @section('script')
+        <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
         <script type="text/javascript">
             $('#type').change(function() {
                 var selectedType = $(this).val();
@@ -117,27 +116,44 @@
                     $("#author").empty();
                 }
             });
-        </script>
-        <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
-        <script>
             CKEDITOR.replace('content');
-            $('.chosen-select').chosen();
+        </script>
 
-            var limit = 9;
-            $("#hint").hide();
-            $('.chosen-select').on('change', function(evt) {
-                // alert("Change");
-                var numItems = $('.result-selected').length;
-                if (numItems >= limit) {
-                    $("#hint").show().text("maximum selections will be stored are 10");
-
-                    // does not work
-                    $("option[class='active-result']").attr("disabled", "disabled");
-
-                } else {
-                    $("#hint").hide();
+        <script>
+            $('#mySelect2').select2({
+                minimumInputLength: 1,
+                ajax: {
+                    url: '{{url('get-news-list')}}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
                 }
             });
+
+
+            // var limit = 9;
+            // $("#hint").hide();
+            // $('.chosen-select').on('change', function(evt) {
+            //     // alert("Change");
+            //     var numItems = $('.result-selected').length;
+            //     if (numItems >= limit) {
+            //         $("#hint").show().text("maximum selections will be stored are 10");
+
+            //         // does not work
+            //         $("option[class='active-result']").attr("disabled", "disabled");
+
+            //     } else {
+            //         $("#hint").hide();
+            //     }
+            // });
         </script>
 
         @endsection

@@ -15,18 +15,15 @@
     <link href="{{ asset('/theme/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
     <!-- Drop Zone -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
-
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="styleshee"/> -->
     <link href="{{ asset('/theme/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('/theme/css/style.css') }}" rel="stylesheet">
-    <!-- <link href="{{ asset('/theme/css/plugins/dropzone/basic.css') }}" rel="stylesheet">
-    <link href="{{ asset('/theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet"> -->
+    <link href="{{ asset('/theme/css/plugins/select2/select2.min.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('/theme/css/plugins/dropzone/dropzone.css') }}" rel="stylesheet"> -->
     <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
     <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 
-    <!-- Scripts
-    <script src="{{ asset('js/app.js') }}" defer></script> -->
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
@@ -39,13 +36,11 @@
   <![endif]-->
 
     <!-- Google Font -->
-
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 </head>
 
 <body>
@@ -185,7 +180,7 @@
     <!-- dataTables linkes -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <!-- Chosen -->
-    <script src="{{ asset('/theme/js/plugins/chosen/chosen.jquery.js') }}"></script>
+    <!-- <script src="{{ asset('/theme/js/plugins/chosen/chosen.jquery.js') }}"></script> -->
     <!-- Select2 -->
     <script src="{{ asset('/theme/js/plugins/select2/select2.full.min.js') }}"></script>
    

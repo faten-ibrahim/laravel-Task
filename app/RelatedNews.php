@@ -3,10 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class RelatedNews extends Model
 {
-    protected $table = "related_news";
+    use SoftDeletes;
+    protected $table = "news";
 
     protected $fillable = [
         'news_id', 'related_news_id',
@@ -14,6 +15,6 @@ class RelatedNews extends Model
 
     public function news()
     {
-        return $this->belongsTo(News::class);
+        return $this->belongsToMany(News::class,'related_news', 'related_news_id', 'news_id');
     }
 }

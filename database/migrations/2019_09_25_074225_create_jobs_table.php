@@ -18,6 +18,7 @@ class CreateJobsTable extends Migration
             $table->string('name', 150);
             $table->string('description', 250);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

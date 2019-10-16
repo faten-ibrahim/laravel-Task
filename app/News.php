@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class News extends Model
 {
+    use SoftDeletes;
     /**
      * The attributes that are mass assignable.
      *
@@ -30,6 +32,16 @@ class News extends Model
 
     public function relatedNews()
     {
-        return $this->hasMany(RelatedNews::class);
+        return $this->belongsToMany(RelatedNews::class,'related_news', 'news_id', 'related_news_id');
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('is_published', 1);
+    }
+
+    public function scopeOfId($query, $id)
+    {
+        return $query->where('id','!=', $id);
     }
 }

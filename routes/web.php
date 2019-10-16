@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::post('upload/files', 'NewsController@storeFiles')
             ->name('news.storeFiles');
+        Route::get('get-news-list','NewsController@getRelatedNews')->name('get-news-list');
         // Route::post('upload/files', 'StaffController@storeFiles')
         //     ->name('staff.storeImage');
         // Route::post('upload/files', 'VisitorsController@storeFiles')

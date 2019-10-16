@@ -52,11 +52,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <!-- <label for="content">Content</label> -->
-                                            <select name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
-                                                @foreach($News as $key => $new)
-                                                <option class="option" value="{{$key}}" {{ (in_array($key, $related) ? "selected":"") }}> {{$new}}</option>
-                                                @endforeach
+                                            <select id="mySelect2" name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
+                                            
                                             </select>
                                             <span id="hint" style="color:red;"></span>
                                         </div>
@@ -118,7 +115,23 @@
         <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
         <script>
             CKEDITOR.replace('content');
-            $('.chosen-select').chosen();
+            $('#mySelect2').select2({
+                minimumInputLength: 1,
+                ajax: {  
+                    url: '{{url('get-news-list')}}',
+                    dataType: 'json',
+                    data: function(params) {
+                        return {
+                            q: $.trim(params.term)
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
             var limit = 9;
             $("#hint").hide();
             $('.chosen-select').on('change', function(evt) {

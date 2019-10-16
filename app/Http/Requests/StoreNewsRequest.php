@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\NewsType;
+use BenSampo\Enum\Rules\EnumKey;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreNewsRequest extends FormRequest
@@ -26,12 +28,13 @@ class StoreNewsRequest extends FormRequest
         return [
             'main_title' => 'required|max:150|min:3',
             'secondary_title' => 'nullable|max:150|min:3',
-            'type' => 'required',
+            // 'type' => 'required|in:news,article',
+            'type' => ['required', new EnumKey(NewsType::class)],
             'staff_member_id' => 'required',
             'content'=>'required',
             'files' => 'nullable',
-            'files.*' => 'mimes:jpg,png,xlsx,pdf|max:1024',
             'related'=>'nullable'
+            // 'related'=>'nullable|numeric|exists:news'
         ];
     }
 }

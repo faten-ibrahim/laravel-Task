@@ -53,7 +53,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $news = $this->getRelatedNews("");
+        // $news = $this->getRelatedNews();
         return view('news.create', compact('news'));
     }
 
@@ -101,7 +101,7 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        $News = $this->getRelatedNews($news->id);
+        // $News = $this->getRelatedNews($news->id);
         $related = $news->relatedNews()->select("related_news_id")->get()->toArray();
         $related = array_column($related, 'related_news_id');
         $staff = StaffMember::with(['user' => function ($q) {
@@ -140,10 +140,20 @@ class NewsController extends Controller
         return redirect()->route('news.index')->with('status', 'News deleted successfully !');
     }
 
-    public function getRelatedNews($id)
+    public function getRelatedNews(Request $request)
     {
-        $news = News::where('id', '!=', $id)->where('is_published', true)->pluck("main_title", "id");
-        return $news;
+        $term = trim($request->q);
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+        $resultNews = News::where('main_title', 'like', "%$term%")->published()->get();
+        $formatted_news = [];
+        foreach ($resultNews as $news) {
+            $formatted_news[] = ['id' => $news->id, 'text' => $news->main_title];
+        }
+
+        return \Response::json($formatted_news);
+
     }
 
     public function storeFiles(Request $request)
@@ -154,15 +164,10 @@ class NewsController extends Controller
     public function storeRelatedNews($userSelections, $news)
     {
         if ($userSelections) {
-            $news->relatedNews()->delete();
             if (count($userSelections) > 10) {
                 $userSelections = array_slice($userSelections, 0, 10);
             }
-            foreach ($userSelections as $relatedNewsId) {
-                $news->relatedNews()->create([
-                    'related_news_id' => $relatedNewsId,
-                ]);
-            }
+            $news->relatedNews()->sync($userSelections);
         }
     }
 

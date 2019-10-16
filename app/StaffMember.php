@@ -4,9 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Models\Role;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 class StaffMember extends Model
 {
+    use SoftDeletes;
     protected $table = "staff_members";
     /**
      * The attributes that are mass assignable.
