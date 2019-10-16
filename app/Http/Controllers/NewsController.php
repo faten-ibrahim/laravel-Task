@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\File;
 use App\Http\Requests\StoreNewsRequest;
 use App\News;
-use App\RelatedNews;
 use App\StaffMember;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DataTables;
 use DB;
@@ -101,15 +98,12 @@ class NewsController extends Controller
      */
     public function edit(News $news)
     {
-        // $News = $this->getRelatedNews($news->id);
-        $related = $news->relatedNews()->select("related_news_id")->get()->toArray();
-        $related = array_column($related, 'related_news_id');
+        $related=$news->relatedNews()->pluck('main_title','news.id');
         $staff = StaffMember::with(['user' => function ($q) {
             $q->select('id', 'first_name');
         }])->get();
         $staff = $staff->pluck("user.first_name", "id");
         $files = $news->files()->pluck("name", "mime_type");
-        // dd($files);
         return view('news.edit', compact('news', 'News', 'staff', 'related', 'files'));
     }
 
@@ -153,12 +147,6 @@ class NewsController extends Controller
         }
 
         return \Response::json($formatted_news);
-
-    }
-
-    public function storeFiles(Request $request)
-    {
-        return $this->storeFilesIntoStorage($request);
     }
 
     public function storeRelatedNews($userSelections, $news)

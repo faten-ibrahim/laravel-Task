@@ -53,7 +53,9 @@
 
                                         <div class="form-group">
                                             <select id="mySelect2" name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
-                                            
+                                                @foreach($related as $key => $new)
+                                                    <option class="option" value="{{$key}}" selected> {{$new}}</option>
+                                                @endforeach
                                             </select>
                                             <span id="hint" style="color:red;"></span>
                                         </div>
@@ -134,12 +136,10 @@
             });
             var limit = 9;
             $("#hint").hide();
-            $('.chosen-select').on('change', function(evt) {
-                var numItems = $('.result-selected').length;
+            $('#mySelect2').on('change', function(evt) {
+                var numItems = $('#mySelect2').length;
                 if (numItems >= limit) {
                     $("#hint").show().text("maximum selections will be stored are 10");
-                    // does not work
-                    $("option[class='active-result']").attr("disabled", "disabled");
                 } else {
                     $("#hint").hide();
                 }
@@ -160,6 +160,37 @@
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"
                 },
+                init: function() {
+                    var newsId = {!! $news->id !!};
+                    // console.log(newsId);
+                    var thisDropzone = this;
+                    $.ajax({
+                        type: "GET",
+                        url: '{{ route('news.getFiles') }}?id=' + newsId,
+                        success: function(res) {
+                            console.log(res);
+                            if (res) {
+                                var mockFile;
+                                $.each(res, function(key,value) {
+                                    console.log(key , value);
+                                    mockFile = { name: value , size: 12345 };
+                                    console.log(mockFile);
+                                    // thisDropzone.options.addedfile.call(thisDropzone, mockFile);
+                                    // myDropzone.options.thumbnail.call(myDropzone, mockFile,"var/www/html/task2/public/uploads/news/a1.png")
+                                    // $('form').append('<input type="hidden" name="document[]" value="' + key + '">')
+                                    // uploadedImages[mockFile.name]=item.key
+
+                                    thisDropzone.emit("addedfile", mockFile);
+
+                                    // And optionally show the thumbnail of the file:
+                                    thisDropzone.emit("thumbnail", mockFile, "/uploads/news/"+mockFile.name);
+                                });
+                              
+                            } 
+                        }
+                    });
+                    
+                },
                 success: function(file, response) {
                     console.log(response.fileId);
                     $('form').append('<input type="hidden" name="document[]" value="' + response.fileId + '">')
@@ -167,6 +198,18 @@
                 },
                 removedfile: function(file) {
                     file.previewElement.remove()
+                    $.post({
+                        url: '{{ route('news.removeFile') }}',
+                        data: 
+                        {
+                            name: file.name,
+                            _token: $('[name="_token"]').val()
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log("deleted successfully")
+                        }
+                    });
                     var name = ''
                     if (typeof file.file_name !== 'undefined') {
                         name = file.file_name

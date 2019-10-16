@@ -47,14 +47,18 @@ trait ImageUploadTrait
     public function storeFilesIntoStorage(Request $request)
     {
         $file = $request->file('file');
-        $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
-        $file->move(public_path('/uploads/news/'), $name);
+        // $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
+        $name = $file->getClientOriginalName();
+        // $filePath=$file->store($name, 'public');
+        $file->move(public_path('uploads/news'), $name);
+
         $file = File::create([
             'name' => $name,
             'mime_type' =>  $file->getClientOriginalExtension(),
         ]);
         return response()->json([
             'fileId' => $file->id,
+            // 'filePath'=>$filePath
         ]);
     }
 

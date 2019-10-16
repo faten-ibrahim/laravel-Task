@@ -50,7 +50,7 @@
                                         <div class="form-group">
                                             <!-- <label for="content">Content</label> -->
                                             <select id="mySelect2" name="related[]" class="chosen-select" multiple data-placeholder="Choose a News...">
-                                            
+
                                             </select>
 
                                             <span id="hint" style="color:red;"></span>
@@ -138,22 +138,16 @@
                 }
             });
 
-
-            // var limit = 9;
-            // $("#hint").hide();
-            // $('.chosen-select').on('change', function(evt) {
-            //     // alert("Change");
-            //     var numItems = $('.result-selected').length;
-            //     if (numItems >= limit) {
-            //         $("#hint").show().text("maximum selections will be stored are 10");
-
-            //         // does not work
-            //         $("option[class='active-result']").attr("disabled", "disabled");
-
-            //     } else {
-            //         $("#hint").hide();
-            //     }
-            // });
+            var limit = 9;
+            $("#hint").hide();
+            $('#mySelect2').on('change', function(evt) {
+                var numItems = $('#mySelect2').length;
+                if (numItems >= limit) {
+                    $("#hint").show().text("maximum selections will be stored are 10");
+                } else {
+                    $("#hint").hide();
+                }
+            });
         </script>
 
         @endsection
@@ -177,6 +171,18 @@
                 },
                 removedfile: function(file) {
                     file.previewElement.remove()
+                    $.post({
+                        url: '{{ route('news.removeFile') }}',
+                        data: 
+                        {
+                            name: file.name,
+                            _token: $('[name="_token"]').val()
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            console.log("deleted successfully")
+                        }
+                    });
                     var name = ''
                     if (typeof file.file_name !== 'undefined') {
                         name = file.file_name
@@ -185,8 +191,8 @@
                     }
                     $('form').find('input[name="document[]"][value="' + name + '"]').remove()
                 },
+
             })
-            // Dropzone.options.documentDropzone = 
         </script>
         @stop
 
