@@ -170,21 +170,15 @@
                         success: function(res) {
                             console.log(res);
                             if (res) {
-                                var mockFile;
                                 $.each(res, function(key,value) {
-                                    console.log(key , value);
-                                    mockFile = { name: value , size: 12345 };
-                                    console.log(mockFile);
-                                    // thisDropzone.options.addedfile.call(thisDropzone, mockFile);
-                                    // myDropzone.options.thumbnail.call(myDropzone, mockFile,"var/www/html/task2/public/uploads/news/a1.png")
-                                    // $('form').append('<input type="hidden" name="document[]" value="' + key + '">')
-                                    // uploadedImages[mockFile.name]=item.key
-
+                                    // var mockFile = { name: value , size: value.size};
+                                    var mockFile = { name: value , size:12345};
                                     thisDropzone.emit("addedfile", mockFile);
-
-                                    // And optionally show the thumbnail of the file:
                                     thisDropzone.emit("thumbnail", mockFile, "/uploads/news/"+mockFile.name);
+                                    thisDropzone.emit("complete",mockFile);
                                 });
+
+                                
                               
                             } 
                         }
