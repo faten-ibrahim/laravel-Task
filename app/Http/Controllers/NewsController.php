@@ -27,9 +27,7 @@ class NewsController extends Controller
 
     public function getNews()
     {
-        $news = News::with(['staffMember' => function ($q) {
-            $q->select('id', 'user_id');
-        }, 'staffMember.user' => function ($q) {
+        $news = News::with(['staffMember', 'staffMember.user' => function ($q) {
             $q->select('id', 'first_name');
         }]);
         return Datatables::of($news)
@@ -50,8 +48,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        // $news = $this->getRelatedNews();
-        return view('news.create', compact('news'));
+        return view('news.create');
     }
 
     /**
@@ -103,8 +100,7 @@ class NewsController extends Controller
             $q->select('id', 'first_name');
         }])->get();
         $staff = $staff->pluck("user.first_name", "id");
-        $files = $news->files()->pluck("name", "mime_type");
-        return view('news.edit', compact('news', 'News', 'staff', 'related', 'files'));
+        return view('news.edit', compact('news', 'staff', 'related'));
     }
 
     /**

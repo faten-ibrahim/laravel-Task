@@ -90,7 +90,7 @@
         @endsection
 
         @section('script')
-        <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+       
         <script type="text/javascript">
             $('#type').change(function() {
                 var selectedType = $(this).val();
@@ -116,9 +116,16 @@
                     $("#author").empty();
                 }
             });
-            CKEDITOR.replace('content');
+           
         </script>
-
+        <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+        <script>   
+            ClassicEditor
+                    .create( document.querySelector('#content') )    
+                    .catch( error => {
+                        console.error( error );
+                    } );
+        </script>
         <script>
             $('#mySelect2').select2({
                 minimumInputLength: 1,

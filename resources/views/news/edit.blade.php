@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="content">Content</label>
-                                            <textarea name="content" id="content">{{$news->content}}</textarea>
+                                            <textarea name="content" id="content">{{ trim($news->content,'<p></p>') }}</textarea>
                                         </div>
 
                                         <div class="form-group">
@@ -63,11 +63,7 @@
                                         <div class="form-group">
                                             <label for="document">Upload</label>
                                             <div class="needsclick dropzone" id="document-dropzone">
-                                                @if ("{{ $files }}")
-                                                @foreach($files as $key => $file)
-                                                <input type="hidden" name="document[]" value="{{$file}} .$. {{$key}}" />
-                                                @endforeach
-                                                @endif
+                                              
                                             </div>
                                         </div>
 
@@ -114,9 +110,17 @@
                 }
             });
         </script>
-        <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+        <!-- <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+        <script> CKEDITOR.replace('content');</script> -->
+        <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+        <script>   
+            ClassicEditor
+                    .create( document.querySelector('#content') )    
+                    .catch( error => {
+                        console.error( error );
+                    } );
+        </script>
         <script>
-            CKEDITOR.replace('content');
             var newsId = {!! $news->id !!};
             $('#mySelect2').select2({
                 minimumInputLength: 1,

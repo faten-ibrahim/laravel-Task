@@ -7,7 +7,6 @@ use App\File;
 use App\News;
 use Illuminate\Support\Facades\Response;
 use  App\Traits\ImageUploadTrait;
-use Illuminate\Support\Facades\Storage;
 class FilesController extends Controller
 {
     use ImageUploadTrait;
