@@ -44,19 +44,19 @@
                                             <strong>Permission:</strong>
                                             <br />
                                             @foreach($permission as $value)
+                                            <div style="width:50%;float:left">
                                             <label> 
                                                 <input type="checkbox" name="permission[]" value="{{ $value->id }}"> 
                                                 {{ $value->name }}
                                             </label>
-                                            <br>
+                                            </div>
+                                            
                                             @endforeach
                                         </div>
 
-
-
                                         <div class="form-group mb-0">
 
-                                            <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px;">
+                                            <button type="submit" class="btn btn-sm btn-primary pull-right m-t-n-xs" style="width: 100px ;margin-top:20px;">
                                                 Submit
                                             </button>
 

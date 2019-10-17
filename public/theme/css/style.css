@@ -8621,3 +8621,7 @@ body.md-skin {
   padding-right: 1.1rem;
   }
   }
+
+  .table-condensed{
+    cursor: pointer;
+  }

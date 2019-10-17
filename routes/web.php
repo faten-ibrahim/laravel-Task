@@ -35,9 +35,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::post('upload/files', 'FilesController@storeFiles')
             ->name('news.storeFiles');
-        Route::get('get-news-list','NewsController@getRelatedNews')->name('get-news-list');
-        Route::post('remove/file','FilesController@removeFiles')->name('news.removeFile');
-        Route::get('getFiles','FilesController@getFiles')->name('news.getFiles');
+        Route::get('get-news-list', 'NewsController@getRelatedNews')->name('get-news-list');
+        Route::post('remove/file', 'FilesController@removeFiles')->name('news.removeFile');
+        Route::get('getFiles', 'FilesController@getFiles')->name('news.getFiles');
         // Route::post('upload/files', 'StaffController@storeFiles')
         //     ->name('staff.storeImage');
         // Route::post('upload/files', 'VisitorsController@storeFiles')
@@ -101,5 +101,12 @@ Route::group(['middleware' => ['auth']], function () {
         );
         Route::get('/news/{news}/toggle', 'NewsController@togglePublish')
             ->name('news.toggleStatus');
+
+        Route::resource(
+            'events',
+            'EventsController'
+        );
+
+        Route::get('get_events','EventsController@getEvents');
     });
 });

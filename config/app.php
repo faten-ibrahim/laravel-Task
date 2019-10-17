@@ -241,8 +241,6 @@ return [
         'Cloudder' => 'JD\Cloudder\Facades\Cloudder',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
-
-
     ],
 
 ];

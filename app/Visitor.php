@@ -22,4 +22,10 @@ class Visitor extends Model
     }
 
 
+    public function event()
+    {
+        return $this->belongsToMany(Event::class);
+    }
+
+
 }

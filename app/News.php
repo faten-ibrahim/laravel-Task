@@ -17,8 +17,14 @@ class News extends Model
         'main_title', 'secondary_title', 'type', 'staff_member_id', 'content'
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
+
     /**
-     * Get the post's image.
+     * Get the news's files.
      */
     public function files()
     {
@@ -32,7 +38,7 @@ class News extends Model
 
     public function relatedNews()
     {
-        return $this->belongsToMany(RelatedNews::class,'related_news', 'news_id', 'related_news_id');
+        return $this->belongsToMany(RelatedNews::class, 'related_news', 'news_id', 'related_news_id');
     }
 
     public function scopePublished($query)
@@ -42,6 +48,6 @@ class News extends Model
 
     public function scopeOfId($query, $id)
     {
-        return $query->where('id','!=', $id);
+        return $query->where('id', '!=', $id);
     }
 }
