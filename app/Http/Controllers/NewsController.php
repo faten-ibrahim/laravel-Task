@@ -117,7 +117,7 @@ class NewsController extends Controller
     public function update(StoreNewsRequest $request, News $news)
     {
         $news->update($request->all());
-        $this->updateFilesInDatabase($request, $news);
+        $this->storeFilesIntoDatabase($request, $news);
         $this->storeRelatedNews($request->get('related'), $news);
         return redirect()->route('news.index')->with('status', 'News updated successfully !');
     }
@@ -140,7 +140,7 @@ class NewsController extends Controller
         if (empty($term)) {
             return \Response::json([]);
         }
-        $resultNews = News::where('main_title', 'like', "%$term%")->published()->get();
+        $resultNews = News::where('main_title', 'like', "%$term%")->published()->ofId($request->id)->get();
         $formatted_news = [];
         foreach ($resultNews as $news) {
             $formatted_news[] = ['id' => $news->id, 'text' => $news->main_title];

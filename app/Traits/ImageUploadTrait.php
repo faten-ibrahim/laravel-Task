@@ -70,12 +70,4 @@ trait ImageUploadTrait
         }
     }
 
-    public function updateFilesInDatabase(Request $request, $news)
-    {
-        if ($request->document) {
-            $files = File::whereIn('id', $request->document)->get();
-            $news->files()->delete();
-            $news->files()->saveMany($files);
-        }
-    }
 }

@@ -117,10 +117,11 @@
         <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
         <script>
             CKEDITOR.replace('content');
+            var newsId = {!! $news->id !!};
             $('#mySelect2').select2({
                 minimumInputLength: 1,
                 ajax: {  
-                    url: '{{url('get-news-list')}}',
+                    url: '{{url('get-news-list')}}?id=' + newsId,
                     dataType: 'json',
                     data: function(params) {
                         return {
@@ -176,9 +177,6 @@
                                     thisDropzone.emit("thumbnail", mockFile, "/uploads/news/"+mockFile.name);
                                     thisDropzone.emit("complete",mockFile);
                                 });
-
-                                
-                              
                             } 
                         }
                     });
