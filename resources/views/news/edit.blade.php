@@ -162,7 +162,6 @@
                 },
                 init: function() {
                     var newsId = {!! $news->id !!};
-                    // console.log(newsId);
                     var thisDropzone = this;
                     $.ajax({
                         type: "GET",

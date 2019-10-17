@@ -27,17 +27,11 @@ class FilesController extends Controller
     {
         $filename = $request->name;
         // $filename=preg_replace('/^[^-]*-/', '', $filename);
-        $uploaded_image = File::where('name', $filename)->first();
-        if (empty($uploaded_image)) {
-            return Response::json(['message' => 'Sorry file does not exist'], 400);
-        }
-
-        $file_path = $this->photos_path . '/' . $uploaded_image->name;
+        File::where('name', $filename)->delete();
+        $file_path = $this->photos_path . '/' . $filename;
         if (file_exists($file_path)) {
             unlink($file_path);
         }
-
-        $uploaded_image->delete();
         return Response::json(['message' => 'File successfully delete'], 200);
     }
 
