@@ -12,4 +12,5 @@ class EventVisitor extends Model
     ];
 
     
+    
 }

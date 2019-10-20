@@ -22,8 +22,8 @@ class CreateEventsTable extends Migration
             $table->bigIncrements('id');
             $table->string('main_title',150);
             $table->string('secondary_title',150)->nullable();
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->string('location')->nullable();
             $table->double('location_lat')->nullable();
             $table->double('location_lang')->nullable();

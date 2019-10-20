@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\EventVisitor;
+use App\Http\Requests\StoreEventRequest;
 use Illuminate\Http\Request;
 use DataTables;
+use App\Traits\ImageUploadTrait;
+use Carbon\Carbon;
 
 class EventsController extends Controller
 {
+    use ImageUploadTrait;
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +28,7 @@ class EventsController extends Controller
 
     public function getEvents()
     {
-        $events = Event::select('id','main_title', 'secondary_title', 'start_date', 'end_date', 'location','is_published');
+        $events = Event::select('id', 'main_title', 'secondary_title', 'start_date', 'end_date', 'location', 'is_published');
         return Datatables::of($events)
             ->addColumn('action', function ($row) {
                 return view('events.actions', compact('row'));
@@ -54,9 +59,12 @@ class EventsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreEventRequest $request)
     {
-        //
+        $event = Event::create($request->all());
+        $this->storeFilesIntoDatabase($request, $event);
+        $event->visitors()->attach($request->get('visitors'));
+        return redirect()->route('events.index')->with('status', 'Events added successfully !');
     }
 
     /**
@@ -76,9 +84,10 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        //
+        $visitors = $event->visitors()->select('first_name', 'last_name', 'visitor_id')->get();
+        return view('events.edit', compact('event','visitors'));
     }
 
     /**
@@ -88,9 +97,13 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreEventRequest $request, Event $event)
     {
-        //
+        // dd($request->all());
+        $event->update($request->all());
+        $this->storeFilesIntoDatabase($request, $event);
+        $event->visitors()->sync($request->get('visitors'));
+        return redirect()->route('events.index')->with('status', 'Events updated successfully !');
     }
 
     /**
@@ -99,8 +112,9 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->route('events.index')->with('status', 'Events deleted successfully !');
     }
 }

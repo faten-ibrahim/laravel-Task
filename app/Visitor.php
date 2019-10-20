@@ -24,7 +24,7 @@ class Visitor extends Model
 
     public function event()
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class,'event_visitor','visitor_id','event_id');
     }
 
 

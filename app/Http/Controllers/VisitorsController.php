@@ -125,4 +125,19 @@ class VisitorsController extends Controller
     {
         return Excel::download(new VisitorsExport, 'visitors.xlsx');
     }
+
+    public function getVisitorsList(Request $request)
+    {
+        $term = trim($request->q);
+        if (empty($term)) {
+            return \Response::json([]);
+        }
+        $resultVisitors = Visitor::where('first_name', 'like', "%$term%")->orWhere('last_name', 'like', "%$term%")->select('id','first_name','last_name')->get();
+        $formattedVisitors = [];
+        foreach ($resultVisitors as $visitor) {
+            $formattedVisitors[] = ['id' => $visitor->id, 'text' => $visitor->first_name." ".$visitor->last_name];
+        }
+
+        return \Response::json($formattedVisitors);
+    }
 }

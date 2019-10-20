@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Event extends Model
 {
@@ -20,6 +21,24 @@ class Event extends Model
         'start_date',
         'end_date'
     ];
+    public function setStartDateAttribute($value)
+    {
+        $this->attributes['start_date'] =  Carbon::parse($value);
+    }
+    public function setEndDateAttribute($value)
+    {
+        $this->attributes['end_date'] =  Carbon::parse($value);
+    }
+
+    // public function getStartDateAttribute($value)
+    // {
+    //     return $this->attributes['start_date'] = Carbon::createFromFormat('Y-m-d', $value)->format('m-d-Y');
+    // }
+    // public function getEndDateAttribute($value)
+    // {
+    //     return $this->attributes['end_date'] = Carbon::createFromFormat('Y-m-d', $value)->format('m-d-Y');
+    // }
+
     /**
      * Get the event's images.
      */
@@ -30,6 +49,6 @@ class Event extends Model
 
     public function visitors()
     {
-        return $this->hasMany(Visitor::class);
+        return $this->belongsToMany(Visitor::class, 'event_visitor', 'event_id', 'visitor_id');
     }
 }

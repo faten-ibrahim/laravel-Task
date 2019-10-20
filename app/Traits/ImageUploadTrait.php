@@ -44,14 +44,19 @@ trait ImageUploadTrait
 
 
     // To store news images and files
-    public function storeFilesIntoStorage(Request $request)
+    public function storeFilesIntoStorage(Request $request ,$path='')
     {
         $file = $request->file('file');
         // $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
         $name = $file->getClientOriginalName();
         // $filePath=$file->store($name, 'public');
-        $file->move(public_path('uploads/news'), $name);
-
+        if($path)
+        {
+            $file->move(public_path($path), $name);
+        }else{
+            $file->move(public_path('uploads/news'), $name);
+        }
+       
         $file = File::create([
             'name' => $name,
             'mime_type' =>  $file->getClientOriginalExtension(),
@@ -62,11 +67,11 @@ trait ImageUploadTrait
         ]);
     }
 
-    public function storeFilesIntoDatabase(Request $request, $news)
+    public function storeFilesIntoDatabase(Request $request, $model)
     {
         if ($request->document) {
             $files = File::whereIn('id', $request->document)->get();
-            $news->files()->saveMany($files);
+            $model->files()->saveMany($files);
         }
     }
 

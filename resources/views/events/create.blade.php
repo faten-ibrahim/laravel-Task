@@ -14,7 +14,7 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form role="form" method="POST" action="{{ route('news.store') }}" enctype="multipart/form-data" style=" width:90% ">
+                                    <form role="form" method="POST" action="{{ route('events.store') }}" enctype="multipart/form-data" style=" width:90% ">
                                         @csrf
                                         <div class="form-group">
                                             <label for="main_title">Main Title</label>
@@ -28,15 +28,15 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="location">Location</label>
-                                            <input type="text" id="location" name="location" class="form-control map-input">
-                                            <input type="hidden" name="location_lat" id="location_lat" value="0" />
-                                            <input type="hidden" name="location_lang" id="location_lang" value="0" />
+                                            <label for="address_address">Location</label>
+                                            <input type="text" id="address-input" name="location" class="form-control map-input">
+                                            <input type="hidden" name="location_lat" id="address-latitude" value="0" />
+                                            <input type="hidden" name="location_lang" id="address-longitude" value="0" />
                                         </div>
                                         <div id="address-map-container" style="width:100%;height:400px; ">
                                             <div style="width: 100%; height: 100%" id="address-map"></div>
                                         </div>
-
+                                        <br>
                                         <div class="form-group">
                                             <label for="start_date">Start date</label>
                                             <div class='input-group date' id='datetimepicker1'>
@@ -55,6 +55,18 @@
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                             </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="document">Upload</label>
+                                            <div class="needsclick dropzone" id="document-dropzone">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <!-- <label for="content">Content</label> -->
+                                            <select id="mySelect2" name="visitors[]" class="chosen-select" multiple data-placeholder="Choose visitors...">
+
+                                            </select>
                                         </div>
                                         <br>
                                         <div class="form-group mb-0"></div>
@@ -77,12 +89,12 @@
 @section('script')
 @parent
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
-<script src="/js/mapInput.js"></script>
+<script src="{{ asset('/theme/js/api/googleMap.js') }}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 <script type="text/javascript">
     $('.date').datepicker({
-        format: 'mm-dd-yyyy',
+        // format: 'mm-dd-yyyy',
         startDate: new Date()
     });
 </script>
@@ -92,40 +104,15 @@
 <script>
     var uploadedDocumentMap = {}
     Dropzone.autoDiscover = false;
+    var path='/uploads/events/';
     let dropzone = new Dropzone('#document-dropzone', {
-        url: '{{ route('
-        news.storeFiles ') }}',
+      
+        url: '{{ route('files.storeFiles') }}?path=' +path ,
         maxFilesize: 1, // MB
         acceptedFiles: ".jpg,.png,.pdf,.xlsx",
         addRemoveLinks: true,
         headers: {
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        init: function() {
-            var newsId = {
-                !!$news->id!!
-            };
-            var thisDropzone = this;
-            $.ajax({
-                type: "GET",
-                url: '{{ route('news.getFiles') }}?id=' + newsId,
-                success: function(res) {
-                    console.log(res);
-                    if (res) {
-                        $.each(res, function(key, value) {
-                            // var mockFile = { name: value , size: value.size};
-                            var mockFile = {
-                                name: value,
-                                size: 12345
-                            };
-                            thisDropzone.emit("addedfile", mockFile);
-                            thisDropzone.emit("thumbnail", mockFile, "/uploads/news/" + mockFile.name);
-                            thisDropzone.emit("complete", mockFile);
-                        });
-                    }
-                }
-            });
-
         },
         success: function(file, response) {
             console.log(response.fileId);
@@ -135,14 +122,14 @@
         removedfile: function(file) {
             file.previewElement.remove()
             $.post({
-                url: '{{ route('news.removeFile ') }}',
+                url: '{{ route('files.removeFile') }}?path=' +path,
                 data: {
                     name: file.name,
                     _token: $('[name="_token"]').val()
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log("deleted successfully")
+                    console.log("deleted successfully from",path)
                 }
             });
             var name = ''
@@ -155,8 +142,26 @@
         },
     })
     // Dropzone.options.documentDropzone = 
+
+    $('#mySelect2').select2({
+        minimumInputLength: 1,
+        ajax: {
+            url: '{{url('get-visitors-list')}}',
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    q: $.trim(params.term)
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data
+                };
+            }
+        }
+    });
 </script>
 @stop
 @section('validation')
-{!! JsValidator::formRequest('App\Http\Requests\StoreNewsRequest') !!}
+        {!! JsValidator::formRequest('App\Http\Requests\StoreEventRequest') !!}
 @endsection

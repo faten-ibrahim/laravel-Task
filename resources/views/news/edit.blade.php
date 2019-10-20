@@ -158,7 +158,7 @@
             var uploadedDocumentMap = {}
             Dropzone.autoDiscover = false;
             let dropzone = new Dropzone('#document-dropzone', {
-                url: '{{ route('news.storeFiles') }}',
+                url: '{{ route('files.storeFiles') }}',
                 maxFilesize: 1, // MB
                 acceptedFiles: ".jpg,.png,.pdf,.xlsx",
                 addRemoveLinks: true,
@@ -170,7 +170,7 @@
                     var thisDropzone = this;
                     $.ajax({
                         type: "GET",
-                        url: '{{ route('news.getFiles') }}?id=' + newsId,
+                        url: '{{ route('files.getFiles') }}?id=' + newsId +'&model=news',
                         success: function(res) {
                             console.log(res);
                             if (res) {
@@ -194,7 +194,7 @@
                 removedfile: function(file) {
                     file.previewElement.remove()
                     $.post({
-                        url: '{{ route('news.removeFile') }}',
+                        url: '{{ route('files.removeFile') }}',
                         data: 
                         {
                             name: file.name,

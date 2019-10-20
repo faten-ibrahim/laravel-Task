@@ -34,10 +34,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('get-author-list', 'StaffController@returnStaff');
         Route::get('/home', 'HomeController@index')->name('home');
         Route::post('upload/files', 'FilesController@storeFiles')
-            ->name('news.storeFiles');
+            ->name('files.storeFiles');
         Route::get('get-news-list', 'NewsController@getRelatedNews')->name('get-news-list');
-        Route::post('remove/file', 'FilesController@removeFiles')->name('news.removeFile');
-        Route::get('getFiles', 'FilesController@getFiles')->name('news.getFiles');
+        Route::post('remove/file', 'FilesController@removeFiles')->name('files.removeFile');
+        Route::get('getFiles', 'FilesController@getFiles')->name('files.getFiles');
         // Route::post('upload/files', 'StaffController@storeFiles')
         //     ->name('staff.storeImage');
         // Route::post('upload/files', 'VisitorsController@storeFiles')
@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/visitors/export', 'VisitorsController@export')->name('visitors.export');
         Route::get('/visitors/{visitor}/toggle', 'VisitorsController@toggleBan')
             ->name('visitors.toggleStatus');
+
+        Route::get('get-visitors-list','VisitorsController@getVisitorsList')->name('get-visitors-list');
 
         /*************************
         News CRUD Operations
