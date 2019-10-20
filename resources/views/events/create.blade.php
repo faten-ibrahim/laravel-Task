@@ -28,6 +28,11 @@
                                         </div>
 
                                         <div class="form-group">
+                                            <label for="content">Content</label>
+                                            <textarea id="content" name="content"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
                                             <label for="address_address">Location</label>
                                             <input type="text" id="address-input" name="location" class="form-control map-input">
                                             <input type="hidden" name="location_lat" id="address-latitude" value="0" />
@@ -98,6 +103,14 @@
         startDate: new Date()
     });
 </script>
+ <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+        <script>   
+            ClassicEditor
+                    .create( document.querySelector('#content') )    
+                    .catch( error => {
+                        console.error( error );
+                    } );
+        </script>
 @endsection
 @section('fileZoneScript')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
@@ -163,5 +176,5 @@
 </script>
 @stop
 @section('validation')
-        {!! JsValidator::formRequest('App\Http\Requests\StoreEventRequest') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\StoreEventRequest') !!}
 @endsection

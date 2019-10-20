@@ -27,6 +27,11 @@
                                          </div>
 
                                          <div class="form-group">
+                                            <label for="content">Content</label>
+                                            <textarea name="content" id="content">{{ trim($event->content,'<p></p>') }}</textarea>
+                                        </div>
+
+                                         <div class="form-group">
                                             <label for="address_address">Location</label>
                                             <input type="text" value="{{$event->location}}" id="address-input" name="location" class="form-control map-input">
                                             <input type="hidden" value="{{$event->location_lat}}" name="location_lat" id="address-latitude" value="0" />
@@ -90,16 +95,24 @@
          @endsection
          @section('script')
          @parent
-         <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
-         <script src="{{ asset('/theme/js/api/googleMap.js') }}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
+        <script src="{{ asset('/theme/js/api/googleMap.js') }}"></script>
 
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-         <script type="text/javascript">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+        <script type="text/javascript">
              $('.date').datepicker({
                 //  format: 'mm-dd-yyyy',
                  startDate: new Date()
              });
-         </script>
+        </script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+        <script>   
+            ClassicEditor
+                    .create( document.querySelector('#content') )    
+                    .catch( error => {
+                        console.error( error );
+                    } );
+        </script>
          @endsection
          @section('fileZoneScript')
          <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
