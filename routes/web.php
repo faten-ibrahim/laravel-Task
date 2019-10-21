@@ -26,7 +26,7 @@ Route::get('/', function () {
 Route::get('ss', 'NewsController@getRelatedNews');
 
 // Route::get('get_staff','StaffController@getStaffMembers');
-
+Route::get('vs/{event}','EventsController@gett');
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'is-active'], function () {

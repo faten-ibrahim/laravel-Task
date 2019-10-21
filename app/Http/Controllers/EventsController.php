@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\EventVisitor;
 use App\Http\Requests\StoreEventRequest;
+use App\Jobs\SendEventInvitationJob;
+use App\Services\EventService;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Traits\ImageUploadTrait;
@@ -64,6 +66,8 @@ class EventsController extends Controller
         $event = Event::create($request->all());
         $this->storeFilesIntoDatabase($request, $event);
         $event->visitors()->attach($request->get('visitors'));
+        dispatch(new SendEventInvitationJob($event));
+
         return redirect()->route('events.index')->with('status', 'Events added successfully !');
     }
 
@@ -116,5 +120,11 @@ class EventsController extends Controller
     {
         $event->delete();
         return redirect()->route('events.index')->with('status', 'Events deleted successfully !');
+    }
+
+    public function gett($ev)
+    {
+        $ss=new EventService;
+        return $ss->getEventVisitors($ev);
     }
 }

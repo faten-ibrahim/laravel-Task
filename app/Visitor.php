@@ -2,10 +2,11 @@
 
 namespace App;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class Visitor extends Model 
 {
-    use SoftDeletes;
+    use SoftDeletes,Notifiable;
     protected $table = "users";
     protected $fillable = [
         'first_name', 'last_name', 'phone', 'email', 'password', 'gender', 'country_id', 'city_id'

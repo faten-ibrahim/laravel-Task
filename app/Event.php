@@ -51,4 +51,16 @@ class Event extends Model
     {
         return $this->belongsToMany(Visitor::class, 'event_visitor', 'event_id', 'visitor_id');
     }
+
+    public function scopeToday($query)
+    {
+        return $query
+            ->where('start_date', '=', Carbon::today()->startOfDay());
+    } 
+
+    public function scopeNotToday($query)
+    {
+        return $query
+            ->where('end_date', '!=', Carbon::today()->startOfDay());
+    } 
 }

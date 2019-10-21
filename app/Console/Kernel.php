@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\DeleteRemovedFiles',
+        // 'App\Console\Commands\DeleteRemovedFiles',
+        'App\Console\Commands\UpdateDailyPublishedEvents'
     ];
 
     /**
@@ -25,12 +26,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
-        // $schedule->command('delete:files')
-        //     ->daily();
-        // $schedule->command('delete:files')
-        //     ->everyMinute();
-        $schedule->job(new DeleteRemovedFiles)->everyMinute();
+        // $schedule->command('delete:files')->everyMinute();
+        $schedule->command('update:publishedEvents')->daily();
     }
 
     /**
