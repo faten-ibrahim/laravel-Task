@@ -43,9 +43,9 @@
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="start_date">Start date</label>
-                                            <div class='input-group date' id='datetimepicker1'>
-                                                <input id="start_date" type="text" class="date form-control" name="start_date">
+                                            <label for="">Start date</label>
+                                            <div class='input-group date' id='example1'>
+                                                <input type='text' name="start_date" class="form-control" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -54,8 +54,8 @@
 
                                         <div class="form-group">
                                             <label for="end_date">End date</label>
-                                            <div class='input-group date' id='datetimepicker1'>
-                                                <input name="end_date" type='text' class="date form-control" />
+                                            <div class='input-group date' id='example2'>
+                                                <input type='text' name="end_date" class="form-control" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -96,31 +96,24 @@
 <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
 <script src="{{ asset('/theme/js/api/googleMap.js') }}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript">
-    $('.date').datepicker({
-        // format: 'mm-dd-yyyy',
-        startDate: new Date()
-    });
+<script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#content'))
+        .catch(error => {
+            console.error(error);
+        });
 </script>
- <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
-        <script>   
-            ClassicEditor
-                    .create( document.querySelector('#content') )    
-                    .catch( error => {
-                        console.error( error );
-                    } );
-        </script>
 @endsection
 @section('fileZoneScript')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script>
     var uploadedDocumentMap = {}
     Dropzone.autoDiscover = false;
-    var path='/uploads/events/';
+    var path = '/uploads/events/';
     let dropzone = new Dropzone('#document-dropzone', {
-      
-        url: '{{ route('files.storeFiles') }}?path=' +path ,
+
+        url: '{{ route('files.storeFiles') }}?path=' + path,
         maxFilesize: 1, // MB
         acceptedFiles: ".jpg,.png,.pdf,.xlsx",
         addRemoveLinks: true,
@@ -135,14 +128,14 @@
         removedfile: function(file) {
             file.previewElement.remove()
             $.post({
-                url: '{{ route('files.removeFile') }}?path=' +path,
+                url: '{{ route('files.removeFile') }}?path=' + path,
                 data: {
                     name: file.name,
                     _token: $('[name="_token"]').val()
                 },
                 dataType: 'json',
                 success: function(data) {
-                    console.log("deleted successfully from",path)
+                    console.log("deleted successfully from", path)
                 }
             });
             var name = ''
@@ -174,7 +167,15 @@
         }
     });
 </script>
+<script>
+ $(function () {
+    $('#example1').datetimepicker({
+        minDate : new Date(),
+    });
+    $('#example2').datetimepicker();
+});
+</script>
 @stop
 @section('validation')
-    {!! JsValidator::formRequest('App\Http\Requests\StoreEventRequest') !!}
+{!! JsValidator::formRequest('App\Http\Requests\StoreEventRequest') !!}
 @endsection

@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'Resto') }}</title>
 
-    <link href="{{ asset('/theme/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- <link href="{{ asset('/theme/css/bootstrap.min.css') }}" rel="stylesheet"> -->
     <link href="{{ asset('/theme/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
     <link href="{{ asset('/theme/css/plugins/chosen/bootstrap-chosen.css') }}" rel="stylesheet">
     <!-- Drop Zone -->
@@ -40,7 +40,20 @@
 
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.6/r-2.2.2/datatables.min.css"/> --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+    <!-- dataTime Picker  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
 </head>
 
 <body>
@@ -186,7 +199,7 @@
     <!-- <script src="{{ asset('/theme/js/plugins/chosen/chosen.jquery.js') }}"></script> -->
     <!-- Select2 -->
     <script src="{{ asset('/theme/js/plugins/select2/select2.full.min.js') }}"></script>
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <!-- Drop Zone -->

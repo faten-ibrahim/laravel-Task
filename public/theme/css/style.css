@@ -8625,3 +8625,8 @@ body.md-skin {
   .table-condensed{
     cursor: pointer;
   }
+
+  .sidebar-collapse ul{
+    background-color: #263949;
+    min-height: 620px;
+  }

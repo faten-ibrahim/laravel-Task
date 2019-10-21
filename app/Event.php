@@ -11,7 +11,7 @@ class Event extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'main_title', 'secondary_title','content', 'start_date', 'end_date', 'location', 'location_lat', 'location_lang'
+        'main_title', 'secondary_title', 'content', 'start_date', 'end_date', 'location', 'location_lat', 'location_lang'
     ];
 
     protected $dates = [
@@ -55,12 +55,12 @@ class Event extends Model
     public function scopeToday($query)
     {
         return $query
-            ->where('start_date', '=', Carbon::today()->startOfDay());
-    } 
+            ->whereDate('start_date', '=', Carbon::today());
+    }
 
     public function scopeNotToday($query)
     {
         return $query
-            ->where('end_date', '!=', Carbon::today()->startOfDay());
-    } 
+            ->whereDate('end_date', '!=', Carbon::today());
+    }
 }

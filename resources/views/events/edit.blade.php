@@ -42,24 +42,24 @@
                                         </div>
                                         <br>
                                          <div class="form-group">
-                                             <label for="start_date">Start date</label>
-                                             <div class='input-group date' id='datetimepicker1'>
-                                                 <input id="start_date" value="{{ $event->start_date }}" type="text" class="date form-control" name="start_date">
-                                                 <span class="input-group-addon">
-                                                     <span class="glyphicon glyphicon-calendar"></span>
-                                                 </span>
-                                             </div>
-                                         </div>
+                                            <label for="">Start date</label>
+                                            <div class='input-group date' id='example1'>
+                                                <input type='text' name="start_date" value="{{ $event->start_date }}" class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
 
-                                         <div class="form-group">
-                                             <label for="end_date">End date</label>
-                                             <div class='input-group date' id='datetimepicker1'>
-                                                 <input name="end_date" value="{{ $event->end_date }}" type='text' class="date form-control" />
-                                                 <span class="input-group-addon">
-                                                     <span class="glyphicon glyphicon-calendar"></span>
-                                                 </span>
-                                             </div>
-                                         </div>
+                                        <div class="form-group">
+                                            <label for="end_date">End date</label>
+                                            <div class='input-group date' id='example2'>
+                                                <input type='text' name="end_date" value="{{ $event->end_date }}" class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </span>
+                                            </div>
+                                        </div>
                                         
                                          <div class="form-group">
                                             <label for="document">Upload</label>
@@ -97,14 +97,6 @@
          @parent
         <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
         <script src="{{ asset('/theme/js/api/googleMap.js') }}"></script>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-        <script type="text/javascript">
-             $('.date').datepicker({
-                //  format: 'mm-dd-yyyy',
-                 startDate: new Date()
-             });
-        </script>
         <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
         <script>   
             ClassicEditor
@@ -197,6 +189,14 @@
                  }
              });
          </script>
+        <script>
+            $(function () {
+                $('#example1').datetimepicker({
+                    minDate : new Date(),
+                });
+                $('#example2').datetimepicker();
+            });
+        </script>
          @stop
          @section('validation')
         {!! JsValidator::formRequest('App\Http\Requests\StoreEventRequest') !!}
