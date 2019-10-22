@@ -121,8 +121,15 @@
             'X-CSRF-TOKEN': "{{ csrf_token() }}"
         },
         success: function(file, response) {
-            console.log(response.fileId);
-            $('form').append('<input type="hidden" name="document[]" value="' + response.fileId + '">')
+            // console.log(file.name);
+            // console.log(file.type);
+            $('form').append('<input type="hidden" name="document[]" value="' + response.fileId + '"><div id="radio"></div>');
+            if (RegExp('image/*').test(file.type)){
+                let preview = $('.dz-preview').has('img[alt="'+file.name+'"]').last();
+                // console.log(preview)
+                $(preview).append('Select as cover <input type="radio" name="cover_image" value="' + response.fileId + '">');
+            }
+          
             uploadedDocumentMap[file.name] = response.fileId
         },
         removedfile: function(file) {

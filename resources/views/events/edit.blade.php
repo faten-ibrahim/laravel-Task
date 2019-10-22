@@ -123,6 +123,7 @@
                  },
                  init: function() {
                     var eventId = {!! $event->id !!};
+                    var coverImageId = {!! $event->cover_image !!};
                     var thisDropzone = this;
                     $.ajax({
                         type: "GET",
@@ -136,6 +137,13 @@
                                     thisDropzone.emit("addedfile", mockFile);
                                     thisDropzone.emit("thumbnail", mockFile, "/uploads/events/"+mockFile.name);
                                     thisDropzone.emit("complete",mockFile);
+                                    let preview = $('.dz-preview').has('img[alt="'+mockFile.name+'"]').last();
+                                    if(key==coverImageId){
+                                        $(preview).append('Select as cover <input type="radio" name="cover_image" value="' + key + '" checked >');
+                                    }else{
+                                        $(preview).append('Select as cover <input type="radio" name="cover_image" value="' + key + '">');
+                                    }
+                                   
                                 });
                             } 
                         }
@@ -143,9 +151,14 @@
                     
                 },
                  success: function(file, response) {
-                     console.log(response.fileId);
-                     $('form').append('<input type="hidden" name="document[]" value="' + response.fileId + '">')
-                     uploadedDocumentMap[file.name] = response.fileId
+                    // console.log(response.fileId);
+                    $('form').append('<input type="hidden" name="document[]" value="' + response.fileId + '">');
+                    if (RegExp('image/*').test(file.type)){
+                        let preview = $('.dz-preview').has('img[alt="'+file.name+'"]').last();
+                        // console.log(preview)
+                        $(preview).append('Select as cover <input type="radio" name="cover_image" value="' + response.fileId + '">');
+                    }
+                    uploadedDocumentMap[file.name] = response.fileId
                  },
                  removedfile: function(file) {
                      file.previewElement.remove()
