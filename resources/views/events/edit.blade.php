@@ -123,7 +123,7 @@
                  },
                  init: function() {
                     var eventId = {!! $event->id !!};
-                    var coverImageId = {!! $event->cover_image !!}
+                    var coverImageId = {!! $event->cover_image !!};
                     var thisDropzone = this;
                     $.ajax({
                         type: "GET",
@@ -206,8 +206,11 @@
             $(function () {
                 $('#example1').datetimepicker({
                     minDate : new Date(),
+                    format: 'YYYY-MM-DD HH:mm:ss'
                 });
-                $('#example2').datetimepicker();
+                $('#example2').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
             });
         </script>
          @stop
