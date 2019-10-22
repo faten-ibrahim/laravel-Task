@@ -29,7 +29,7 @@ class CreateEventsTable extends Migration
             $table->double('location_lat')->nullable();
             $table->double('location_lang')->nullable();
             $table->boolean('is_published')->default(false);
-            $table->unsignedBigInteger('cover_image');
+            $table->unsignedBigInteger('cover_image')->nullable();
             $table->foreign('cover_image')
             ->references('id')->on('files')->onDelete('cascade');
             $table->timestamps();

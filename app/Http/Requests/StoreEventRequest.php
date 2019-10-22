@@ -31,6 +31,7 @@ class StoreEventRequest extends FormRequest
             'start_date' =>'required|date|after:yesterday',
             'end_date'=>'required|date|after:start_date',
             'location'=>'nullable',
+            'cover_image'=>'required|exists:files'
             // 'location_lat'=>new locationCoordinates,
             // 'location_lang'=>new locationCoordinates
 

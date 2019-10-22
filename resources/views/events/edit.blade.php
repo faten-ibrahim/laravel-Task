@@ -123,7 +123,7 @@
                  },
                  init: function() {
                     var eventId = {!! $event->id !!};
-                    var coverImageId = {!! $event->cover_image !!};
+                    var coverImageId = {!! $event->cover_image !!}
                     var thisDropzone = this;
                     $.ajax({
                         type: "GET",
