@@ -178,8 +178,11 @@
  $(function () {
     $('#example1').datetimepicker({
         minDate : new Date(),
+        format: 'YYYY-MM-DD HH:mm:ss'
     });
-    $('#example2').datetimepicker();
+    $('#example2').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
 });
 </script>
 @stop

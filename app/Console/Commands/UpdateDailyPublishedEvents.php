@@ -38,7 +38,9 @@ class UpdateDailyPublishedEvents extends Command
      */
     public function handle()
     {
-        Event::update(['is_published'=>true])->today();
-        Event::update(['is_published'=>false])->notToday();
+        $publishedEvents=Event::today();
+        $publishedEvents->update(['is_published'=>true]);
+        $unpublishedEvents=Event::notToday();
+        $unpublishedEvents->update(['is_published'=>false]);
     }
 }
