@@ -1,8 +1,6 @@
 <?php
 namespace App\Services;
 
-use App\Event;
-
 class EventService
 {
     public function getEventVisitors($event)

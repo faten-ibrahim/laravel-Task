@@ -43,7 +43,11 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'news-list',
             'news-delete',
             'news-edit',
-            'news-create'
+            'news-create',
+            'event-list', 
+            'event-delete', 
+            'event-edit', 
+            'event-create'
         ];
 
 
@@ -104,5 +108,6 @@ class CreateRolesAndPermissionsSeeder extends Seeder
         $user->givePermissionTo('job-list');
         $user->givePermissionTo('staff-list');
         $user->givePermissionTo('news-list');
+        $user->givePermissionTo('event-list');
     }
 }

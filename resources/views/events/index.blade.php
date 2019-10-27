@@ -9,7 +9,7 @@
 <br>
 
 
-@can('create',App\News::class)
+@can('create',App\Event::class)
 <a class="btn btn-info btn-sm" href="{{route('events.create')}}"><i class="fa fa-plus"></i><span>Add New Event</span></a><br><br>
 @endcan
 
@@ -23,7 +23,7 @@
             <th>Published</th>
             <th>Start date</th>
             <th>End date</th>
-            @canAny(['news-update','news-delete'])
+            @canAny(['event-update','event-delete'])
             <th>Actions</th>
             @endcan
 
@@ -70,7 +70,7 @@
                 data:'end_date'
             },
             
-            @canAny(['news-update', 'news-delete']) {
+            @canAny(['event-update', 'event-delete']) {
                 data: 'action',
                 name: 'action',
                 orderable: false,

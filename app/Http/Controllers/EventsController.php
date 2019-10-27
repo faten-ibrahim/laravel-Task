@@ -15,6 +15,10 @@ use Carbon\Carbon;
 class EventsController extends Controller
 {
     use ImageUploadTrait;
+    public function __construct()
+    {
+        $this->authorizeResource(Event::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -91,7 +95,7 @@ class EventsController extends Controller
     public function edit(Event $event)
     {
         $visitors = $event->visitors()->select('first_name', 'last_name', 'visitor_id')->get();
-        return view('events.edit', compact('event','visitors'));
+        return view('events.edit', compact('event', 'visitors'));
     }
 
     /**
@@ -120,11 +124,5 @@ class EventsController extends Controller
     {
         $event->delete();
         return redirect()->route('events.index')->with('status', 'Events deleted successfully !');
-    }
-
-    public function gett($ev)
-    {
-        $ss=new EventService;
-        return $ss->getEventVisitors($ev);
     }
 }

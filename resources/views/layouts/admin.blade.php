@@ -113,7 +113,7 @@
                                 @can('viewAny',App\News::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('news.index') }}" style="color: #fff;font-size: 15px;">News</a></li>
                                 @endcan
-                                @can('viewAny',App\News::class)
+                                @can('viewAny',App\Event::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('events.index') }}" style="color: #fff;font-size: 15px;">Events</a></li>
                                 @endcan
                             </ul>
