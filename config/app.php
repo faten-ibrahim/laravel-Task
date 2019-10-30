@@ -172,6 +172,7 @@ return [
         'JD\Cloudder\CloudderServiceProvider',
         Maatwebsite\Excel\ExcelServiceProvider::class,
         'BenSampo\Enum\EnumServiceProvider',
+        Collective\Html\HtmlServiceProvider::class,
 
 
 
@@ -240,7 +241,8 @@ return [
         'Countries' => 'Webpatser\Countries\CountriesFacade',
         'Cloudder' => 'JD\Cloudder\Facades\Cloudder',
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

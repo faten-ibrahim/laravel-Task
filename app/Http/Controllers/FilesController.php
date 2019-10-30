@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use Illuminate\Http\Request;
 use App\File;
+use App\Folder;
 use App\News;
 use Illuminate\Support\Facades\Response;
 use  App\Traits\ImageUploadTrait;
@@ -21,12 +22,11 @@ class FilesController extends Controller
 
     public function storeFiles(Request $request)
     {
-        if($request->path){
+        if ($request->path) {
             return $this->storeFilesIntoStorage($request, $request->path);
-        }else{
+        } else {
             return $this->storeFilesIntoStorage($request);
         }
-       
     }
 
     public function removeFiles(Request $request)
@@ -34,12 +34,12 @@ class FilesController extends Controller
         $filename = $request->name;
         // $filename=preg_replace('/^[^-]*-/', '', $filename);
         File::where('name', $filename)->delete();
-        if($request->path){
+        if ($request->path) {
             $file_path =  public_path($request->path) . '/' . $filename;
-        }else{
+        } else {
             $file_path = $this->photos_path . '/' . $filename;
         }
-        
+
         if (file_exists($file_path)) {
             unlink($file_path);
         }
@@ -48,12 +48,10 @@ class FilesController extends Controller
 
     public function getFiles(Request $request)
     {
-        if($request->model=='news')
-        {
+        if ($request->model == 'news') {
             return response()->json(News::find($request->id)->files()->pluck('name', 'id'));
-        }else{
+        } else {
             return response()->json(Event::find($request->id)->files()->pluck('name', 'id'));
         }
-        
     }
 }

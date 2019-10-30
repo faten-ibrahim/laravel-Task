@@ -116,6 +116,9 @@
                                 @can('viewAny',App\Event::class)
                                 <li style="padding-bottom:5px"><a href="{{ route('events.index') }}" style="color: #fff;font-size: 15px;">Events</a></li>
                                 @endcan
+                                @can('viewAny',App\Folder::class)
+                                <li style="padding-bottom:5px"><a href="{{ route('folders.index') }}" style="color: #fff;font-size: 15px;">Library</a></li>
+                                @endcan
                             </ul>
                         </li>
                     </ul>

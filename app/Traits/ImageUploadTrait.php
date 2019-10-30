@@ -3,7 +3,10 @@
 namespace App\Traits;
 
 use App\File;
+use App\Folder;
 use Illuminate\Http\Request;
+
+use function PHPSTORM_META\type;
 
 trait ImageUploadTrait
 {
@@ -44,19 +47,18 @@ trait ImageUploadTrait
 
 
     // To store news images and files
-    public function storeFilesIntoStorage(Request $request ,$path='')
+    public function storeFilesIntoStorage(Request $request, $path = '')
     {
         $file = $request->file('file');
         // $name  = date('Y-m-d') . '-' . $file->getClientOriginalName();
         $name = $file->getClientOriginalName();
         // $filePath=$file->store($name, 'public');
-        if($path)
-        {
+        if ($path) {
             $file->move(public_path($path), $name);
-        }else{
+        } else {
             $file->move(public_path('uploads/news'), $name);
         }
-       
+
         $file = File::create([
             'name' => $name,
             'mime_type' =>  $file->getClientOriginalExtension(),
@@ -75,4 +77,54 @@ trait ImageUploadTrait
         }
     }
 
+    // Store folders Media
+    public function storeMedia($file, $path, $folder, $type)
+    {
+        $name  = date('Y-m-d H:i:s') . '-' . $file->getClientOriginalName();
+        $file->move(public_path($path), $name);
+
+        $file = $folder->files()->create([
+            'name' =>  $name,
+            'type' => $type,
+            'mime_type' => $file->getClientOriginalExtension(),
+        ]);
+
+        return $file;
+    }
+
+    // update folders Media
+    public function updateMedia($file, $fileId, $path, $folder, $type)
+    {
+        $name  = date('Y-m-d H:i:s') . '-' . $file->getClientOriginalName();
+        $file->move(public_path($path), $name);
+        // dd($folder->files()->where('id',$fileId)->first());
+        $folder->files()->where('id', $fileId)->update([
+            'name' =>  $name,
+            'type' => $type,
+            'mime_type' => $file->getClientOriginalExtension(),
+        ]);
+    }
+
+    public function checkFileExistance(Request $request, $flag = 'store', $fileId = null)
+    {
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $type = 'image';
+        } elseif ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $type = 'file';
+        } elseif ($request->hasFile('video')) {
+            $file = $request->file('video');
+            $type = 'video';
+        }else{
+            return ;
+        }
+        $folder = Folder::find($request->folderId);
+        $path = '/uploads/folders/' . $folder->name;
+        if ($flag == 'store') {
+            return $this->storeMedia($file, $path, $folder, $type);
+        } else {
+            $this->updateMedia($file, $fileId, $path, $folder, $type);
+        }
+    }
 }

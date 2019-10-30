@@ -8630,3 +8630,11 @@ body.md-skin {
     background-color: #263949;
     min-height: 620px;
   }
+
+  .fileBox{
+    max-width: 30%;
+    border: 1px #e0cdcf solid;
+    margin-top: 20px;
+    margin-left: 1%;
+    min-height: 200px !important;
+  }

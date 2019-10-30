@@ -47,9 +47,9 @@ class CreateRolesAndPermissionsSeeder extends Seeder
             'event-list', 
             'event-delete', 
             'event-edit', 
-            'event-create'
+            'event-create',
+            'CrudFolder'
         ];
-
 
         foreach ($permissions as $permission) {
             Permission::create(['name' => $permission]);

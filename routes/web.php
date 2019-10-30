@@ -23,10 +23,10 @@ Route::get('/', function () {
 //     return view('view_visitors_export');
 // });
 
-Route::get('ss', 'NewsController@getRelatedNews');
+Route::get('ss', 'FoldersController@getFolders');
 
 // Route::get('get_staff','StaffController@getStaffMembers');
-Route::get('vs/{event}','EventsController@gett');
+Route::get('vs/{event}', 'EventsController@gett');
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'is-active'], function () {
@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/visitors/{visitor}/toggle', 'VisitorsController@toggleBan')
             ->name('visitors.toggleStatus');
 
-        Route::get('get-visitors-list','VisitorsController@getVisitorsList')->name('get-visitors-list');
+        Route::get('get-visitors-list', 'VisitorsController@getVisitorsList')->name('get-visitors-list');
 
         /*************************
         News CRUD Operations
@@ -109,6 +109,32 @@ Route::group(['middleware' => ['auth']], function () {
             'EventsController'
         );
 
-        Route::get('get_events','EventsController@getEvents');
+        Route::get('get_events', 'EventsController@getEvents');
+
+
+        Route::resource(
+            'folders',
+            'FoldersController'
+        );
+
+
+        Route::resource(
+            'folderMedia',
+            'MediaController'
+        );
+
+        Route::get('/folders/image/create/{folder?}', function ($folder) {
+            return view('folders.media.images.create', compact('folder'));
+        })->name('folders.media.images.create');
+
+        Route::get('/folders/file/create/{folder?}', function ($folder) {
+            return view('folders.media.files.create', compact('folder'));
+        })->name('folders.media.files.create');
+
+        Route::get('/folders/video/create/{folder?}', function ($folder) {
+            return view('folders.media.videos.create', compact('folder'));
+        })->name('folders.media.videos.create');
+
+        Route::get('/folders/{folderId}/media/edit/{media}', 'MediaController@edit')->name('folderMedia.edit');
     });
 });
