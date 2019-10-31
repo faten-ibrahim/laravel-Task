@@ -32,6 +32,11 @@
                                         {!! Form::file('video',null,['class' => 'form-control']) !!}
                                     </div>
 
+                                    <div class="form-group">
+                                        {!! Form::label('Upload from Youtube', 'path') !!}
+                                        {!! Form::text('path', null, ['class' => 'form-control']) !!}
+                                    </div>
+
                                     <br>
                                     {!! Form::submit('submit' ,['class'=>'btn btn-sm btn-primary pull-right m-t-n-xs']) !!}
                                     {!! Form::close() !!}

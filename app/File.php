@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class File extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['name','mime_type','type'];
+    protected $fillable = ['name','mime_type','type','path'];
     /**
      * Get the owning imageable model.
      */

@@ -45,11 +45,18 @@ class MediaController extends Controller
      */
     public function store(StoreMediaRequest $request)
     {
-        $file = $this->checkFileExistance($request);
+        // dd($request->all());
+        if($request->path){
+            $folder = Folder::find($request->folderId);
+            $file = $folder->files()->create(array_merge($request->all(),['name'=>$request->file_name,'type' => 'video']));
+        }else{
+            $file = $this->checkFileExistance($request);
+        }
         if ($file) {
             $file->description()->create($request->all());
             return redirect()->route('folders.index')->with('status', 'file Added successfully !');
         }
+       
     }
 
     /**
@@ -73,6 +80,7 @@ class MediaController extends Controller
         // $file=File::find($media);
         // dd($file->fileable->id);
         $file = File::with('description')->find($media);
+        // dd($file);
         // dd($file->description->description);
         if ($file->type == 'image') {
             $route = 'folders.media.images.edit';
@@ -81,6 +89,7 @@ class MediaController extends Controller
         } elseif ($file->type == 'video') {
             $route = 'folders.media.videos.edit';
         }
+        
 
         return view($route, compact('folderId', 'file'));
     }
@@ -94,7 +103,12 @@ class MediaController extends Controller
      */
     public function update(StoreMediaRequest $request, $fileId)
     {
-        $this->checkFileExistance($request, 'update', $fileId);
+        if($request->path){
+            $folder = Folder::find($request->folderId);
+            $folder->files()->update(array_merge($request->all(),['name'=>$request->file_name,'type' => 'video']));
+        }else{
+            $this->checkFileExistance($request, 'update', $fileId);
+        }
         File::find($fileId)->description->update($request->all());
         return redirect()->route('folders.index')->with('status', 'file updated successfully !');
     }
