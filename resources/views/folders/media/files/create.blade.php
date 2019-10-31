@@ -13,7 +13,7 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {!! Form::open(['route' => 'folderMedia.store', 'method'=>'post','enctype'=>'multipart/form-data' ]) !!}
+                                    {!! Form::open(['route' => 'files.store', 'method'=>'post','enctype'=>'multipart/form-data' ]) !!}
                                     <div>
                                         {!! Form::hidden('folderId', $folder, ['class' => 'form-control']) !!}
                                     </div>

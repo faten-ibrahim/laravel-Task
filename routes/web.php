@@ -119,7 +119,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
         Route::resource(
-            'folderMedia',
+            'files',
             'MediaController'
         );
 
@@ -135,6 +135,6 @@ Route::group(['middleware' => ['auth']], function () {
             return view('folders.media.videos.create', compact('folder'));
         })->name('folders.media.videos.create');
 
-        Route::get('/folders/{folderId}/media/edit/{media}', 'MediaController@edit')->name('folderMedia.edit');
+        Route::get('/folders/{folderId}/media/edit/{file}', 'MediaController@edit')->name('files.edit');
     });
 });

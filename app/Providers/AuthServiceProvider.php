@@ -8,6 +8,7 @@ use App\File;
 use App\Folder;
 use App\Job;
 use App\News;
+use App\Test;
 use App\Policies\CityPolicy;
 use App\Policies\EventPolicy;
 use App\Policies\FilePolicy;
@@ -17,6 +18,7 @@ use App\Policies\NewsPolicy;
 use App\Policies\RolePolicy;
 use App\Policies\StaffMemberPolicy;
 use App\Policies\VisitorPolicy;
+use App\Policies\TestPolicy;
 use App\StaffMember;
 use App\Visitor;
 use Illuminate\Support\Facades\Gate;
@@ -40,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
         News::class => NewsPolicy::class,
         Visitor::class=>VisitorPolicy::class,
         Folder::class=>FolderPolicy::class,
-        File::class=>FilePolicy::class
+        File::class=>FilePolicy::class,
     ];
 
     /**

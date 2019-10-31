@@ -24,7 +24,7 @@
         <div class="col-md-4 fileBox">
             <h5>image</h5>
             <a class="btn btn-success btn-sm" href="/folders/{{$folder->id}}/media/edit/{{$file->id}}"><i class="fa fa-edit"></i><span>edit</span></a>
-            <form method="POST" style="display: inline;" action="/folderMedia/{{$file->id}}">@csrf {{ method_field('
+            <form method="POST" style="display: inline;" action="/files/{{$file->id}}">@csrf {{ method_field('
                    DELETE ')}}<button type="submit" onclick=" confirm('Are you sure you want to delete this image \?');" class="bttn btn btn-sm btn-danger">
                     <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i><span>Delete</span></button></form>
         </div>
@@ -32,7 +32,7 @@
         <div class="col-md-4 fileBox">
             <h5>File</h5>
             <a class="btn btn-success btn-sm" href="/folders/{{$folder->id}}/media/edit/{{$file->id}}"><i class="fa fa-edit"></i><span>edit</span></a>
-            <form method="POST" style="display: inline;" action="/folderMedia/{{$file->id}}">@csrf {{ method_field('
+            <form method="POST" style="display: inline;" action="/files/{{$file->id}}">@csrf {{ method_field('
                    DELETE ')}}<button type="submit" onclick=" confirm('Are you sure you want to delete this file \?');" class="bttn btn btn-sm btn-danger">
                     <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i><span>Delete</span></button></form>
         </div>
@@ -40,7 +40,7 @@
         <div class="col-md-4 fileBox">
             <h5>Video</h5>
             <a class="btn btn-success btn-sm" href="/folders/{{$folder->id}}/media/edit/{{$file->id}}"><i class="fa fa-edit"></i><span>edit</span></a>
-            <form method="POST" style="display: inline;" action="/folderMedia/{{$file->id}}">@csrf {{ method_field('
+            <form method="POST" style="display: inline;" action="/files//{{$file->id}}">@csrf {{ method_field('
                    DELETE ')}}<button type="submit" onclick=" confirm('Are you sure you want to delete this video \?');" class="bttn btn btn-sm btn-danger">
                     <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="Delete"></i><span>Delete</span></button></form>
         </div>

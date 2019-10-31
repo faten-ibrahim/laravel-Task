@@ -17,9 +17,9 @@ class FoldersController extends Controller
     private $file;
 
     public function __construct()
-    {
-        $this->authorizeResource(Folder::class);
+    {   
         $this->file = new FilesController();
+        $this->authorizeResource(Folder::class);
     }
     /**
      * Display a listing of the resource.
@@ -101,6 +101,7 @@ class FoldersController extends Controller
      */
     public function show(Folder $folder)
     {
+        // dd($folder);
         $files = $folder->files()->select('id', 'name', 'type')->get();
         return view('folders.show', compact('folder', 'files'));
     }

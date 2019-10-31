@@ -12,7 +12,6 @@ use  App\Traits\ImageUploadTrait;
 class MediaController extends Controller
 {
     use ImageUploadTrait;
-
     public function __construct()
     {
         $this->authorizeResource(File::class);
@@ -26,7 +25,6 @@ class MediaController extends Controller
     {
         //
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +34,6 @@ class MediaController extends Controller
     {
         //
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -46,40 +43,38 @@ class MediaController extends Controller
     public function store(StoreMediaRequest $request)
     {
         // dd($request->all());
-        if($request->path){
+        if ($request->path) {
             $folder = Folder::find($request->folderId);
-            $file = $folder->files()->create(array_merge($request->all(),['name'=>$request->file_name,'type' => 'video']));
-        }else{
+            $file = $folder->files()->create(array_merge($request->all(), ['name' => $request->file_name, 'type' => 'video']));
+        } else {
             $file = $this->checkFileExistance($request);
         }
         if ($file) {
             $file->description()->create($request->all());
             return redirect()->route('folders.index')->with('status', 'file Added successfully !');
         }
-       
     }
-
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(File $file)
     { }
-
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($folderId, $media)
+    public function edit($folderId, File $file)
     {
         // dd(File::find($media)->fileable()->get('id'));
         // $file=File::find($media);
         // dd($file->fileable->id);
-        $file = File::with('description')->find($media);
+        // $file = File::with('description')->find($file);
+        $file->load('description');
         // dd($file);
         // dd($file->description->description);
         if ($file->type == 'image') {
@@ -89,11 +84,9 @@ class MediaController extends Controller
         } elseif ($file->type == 'video') {
             $route = 'folders.media.videos.edit';
         }
-        
 
         return view($route, compact('folderId', 'file'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -101,27 +94,26 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreMediaRequest $request, $fileId)
+    public function update(StoreMediaRequest $request, File $file)
     {
-        if($request->path){
+        if ($request->path) {
             $folder = Folder::find($request->folderId);
-            $folder->files()->update(array_merge($request->all(),['name'=>$request->file_name,'type' => 'video']));
-        }else{
-            $this->checkFileExistance($request, 'update', $fileId);
+            $folder->files()->update(array_merge($request->all(), ['name' => $request->file_name, 'type' => 'video']));
+        } else {
+            $this->checkFileExistance($request, 'update', $file->id);
         }
-        File::find($fileId)->description->update($request->all());
+        $file->description->update($request->all());
         return redirect()->route('folders.index')->with('status', 'file updated successfully !');
     }
-
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(File $file)
     {
-        File::find($id)->delete();
+        $file->delete();
         return redirect()->route('folders.index')->with('status', 'file deleted successfully !');
     }
 }

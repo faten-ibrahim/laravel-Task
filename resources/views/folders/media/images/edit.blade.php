@@ -12,7 +12,7 @@
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-md-12">
-                                    {!! Form::model($file, array('route' => array('folderMedia.update', $file->id), 'method' => 'PUT' , 'enctype'=>'multipart/form-data') ) !!}
+                                    {!! Form::model($file, array('route' => array('files.update', $file->id), 'method' => 'PUT' , 'enctype'=>'multipart/form-data') ) !!}
                                     <div>
                                         {!! Form::hidden('folderId', $folderId ) !!}
                                     </div>

@@ -18,6 +18,7 @@ class FilePolicy
      */
     public function viewAny(User $user)
     {
+
         //
     }
 
@@ -30,7 +31,7 @@ class FilePolicy
      */
     public function view(User $user, File $file)
     {
-        return ($user->staff_member->folders->contains($file->fileable) && $user->staff_member->hasPermissionTo('CrudFolder'));
+         return ($user->staff_member->folders->contains($file->fileable()->first()) && $user->staff_member->hasPermissionTo('CrudFolder'));
     }
 
     /**
@@ -41,7 +42,7 @@ class FilePolicy
      */
     public function create(User $user, File $file)
     {
-        return ($user->staff_member->folders->contains($file->fileable) && $user->staff_member->hasPermissionTo('CrudFolder'));
+        return ($user->staff_member->folders->contains($file->fileable()->first()) && $user->staff_member->hasPermissionTo('CrudFolder'));
     }
 
     /**
@@ -53,7 +54,8 @@ class FilePolicy
      */
     public function update(User $user, File $file)
     {
-        return ($user->staff_member->folders->contains($file->fileable) && $user->staff_member->hasPermissionTo('CrudFolder'));
+
+        return ($user->staff_member->folders->contains($file->fileable()->first()) && $user->staff_member->hasPermissionTo('CrudFolder'));
     }
 
     /**
@@ -65,7 +67,7 @@ class FilePolicy
      */
     public function delete(User $user, File $file)
     {
-        return ($user->staff_member->folders->contains($file->fileable) && $user->staff_member->hasPermissionTo('CrudFolder'));
+         return ($user->staff_member->folders->contains($file->fileable()->first()) && $user->staff_member->hasPermissionTo('CrudFolder'));
     }
 
     /**
