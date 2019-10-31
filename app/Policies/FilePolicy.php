@@ -40,9 +40,10 @@ class FilePolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function create(User $user, File $file)
+    public function create(User $user)
     {
-        return ($user->staff_member->folders->contains($file->fileable()->first()) && $user->staff_member->hasPermissionTo('CrudFolder'));
+        return $user->staff_member->hasPermissionTo('CrudFolder');
+        // return ($user->staff_member->folders->contains($file->fileable()->first()) && $user->staff_member->hasPermissionTo('CrudFolder'));
     }
 
     /**
