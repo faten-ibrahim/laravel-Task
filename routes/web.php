@@ -15,18 +15,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // Route::get('/ex', function () {
 //     return view('view_visitors_export');
 // });
+// Route::get('vs/{event}', 'EventsController@gett');
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('ss', 'FoldersController@getFolders');
-
-// Route::get('get_staff','StaffController@getStaffMembers');
-Route::get('vs/{event}', 'EventsController@gett');
 Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => 'is-active'], function () {

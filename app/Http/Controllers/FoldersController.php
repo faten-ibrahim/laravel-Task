@@ -17,7 +17,7 @@ class FoldersController extends Controller
     private $file;
 
     public function __construct()
-    {   
+    {
         $this->file = new FilesController();
         $this->authorizeResource(Folder::class);
     }
@@ -36,7 +36,11 @@ class FoldersController extends Controller
 
     public function getFolders()
     {
-        $folders = auth()->user()->staff_member->folders;
+        if (auth()->user()->hasRole('Admin')) {
+            $folders = Folder::all();
+        } else {
+            $folders = auth()->user()->staff_member->folders;
+        }
         return Datatables::of($folders)
             ->addColumn('folderName', function ($row) {
                 return view('folders.folderName', compact('row'));
