@@ -85,14 +85,6 @@ return [
          */
         'default_bucket' => env('FIREBASE_STORAGE_DEFAULT_BUCKET'),
     ],
-    /**
-     * ------------------------------------------------------------------------
-     * Caching
-     * ------------------------------------------------------------------------
-     *
-     * The Firebase Admin SDK can cache some data returned from the Firebase
-     * API, for example Google's public keys used to verify ID tokens.
-     *
-     */
+   
     'cache_store' => env('FIREBASE_CACHE_STORE', 'file'),
 ];
