@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Event;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database\RuleSet;
-
 class FirebaseService
 {
     private $eventsTable;
@@ -27,8 +26,6 @@ class FirebaseService
     }
     public function store(Event $event)
     {
-
-
         $this->eventsTable
             ->push([
                 'id' => $event->id,
