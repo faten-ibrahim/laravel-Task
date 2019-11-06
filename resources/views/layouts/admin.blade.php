@@ -213,6 +213,32 @@
     <!-- JS Validtion -->
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
     @yield('validation')
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script> -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script> -->
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAx4WxShXwxt1mxSPuANsUAwqa5qBdLsnk",
+            authDomain: "ibtikar-bd261.firebaseapp.com",
+            databaseURL: "https://ibtikar-bd261.firebaseio.com",
+            projectId: "ibtikar-bd261",
+            storageBucket: "ibtikar-bd261.appspot.com",
+            messagingSenderId: "155475945765",
+            appId: "1:155475945765:web:985d6dfde6fed090aa52cc",
+            measurementId: "G-NN04RFTQQZ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        // firebase.analytics();
+    </script>
+
 </body>
 
 </html>

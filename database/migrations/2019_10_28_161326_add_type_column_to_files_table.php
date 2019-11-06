@@ -14,7 +14,7 @@ class AddTypeColumnToFilesTable extends Migration
     public function up()
     {
         Schema::table('files', function (Blueprint $table) {
-            $table->string('type',100);
+            $table->string('type',100)->nullable();
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Event;
+use App\Services\FirebaseService;
 use Illuminate\Console\Command;
 
 class UpdateDailyPublishedEvents extends Command
@@ -38,9 +39,17 @@ class UpdateDailyPublishedEvents extends Command
      */
     public function handle()
     {
-        $publishedEvents=Event::today();
-        $publishedEvents->update(['is_published'=>true]);
-        $unpublishedEvents=Event::notToday();
-        $unpublishedEvents->update(['is_published'=>false]);
+        $service = new FirebaseService();
+        $publishedEvents = Event::today();
+        foreach ($publishedEvents->get() as $event) {
+            $service->store($event);
+        }
+        $publishedEvents->update(['is_published' => true]);
+
+        $unpublishedEvents = Event::notToday();
+        foreach ($unpublishedEvents->get() as $event) {
+            $service->destroy($event->id);
+        }
+        $unpublishedEvents->update(['is_published' => false]);
     }
 }

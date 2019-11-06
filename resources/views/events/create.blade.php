@@ -93,7 +93,7 @@
 @endsection
 @section('script')
 @parent
-<script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&libraries=places&callback=initialize" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAilhmQ53WmMriu4R0VmosM2o3HBqo4pqo&libraries=places&callback=initialize" async defer></script>
 <script src="{{ asset('/theme/js/api/googleMap.js') }}"></script>
 
 <script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>

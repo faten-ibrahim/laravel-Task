@@ -7,6 +7,7 @@ use App\EventVisitor;
 use App\Http\Requests\StoreEventRequest;
 use App\Jobs\SendEventInvitationJob;
 use App\Services\EventService;
+use App\Services\FirebaseService;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Traits\ImageUploadTrait;
@@ -71,7 +72,6 @@ class EventsController extends Controller
         $this->storeFilesIntoDatabase($request, $event);
         $event->visitors()->attach($request->get('visitors'));
         dispatch(new SendEventInvitationJob($event));
-
         return redirect()->route('events.index')->with('status', 'Events added successfully !');
     }
 
